@@ -44,6 +44,16 @@ describe('Dropdown', () => {
     expect(inputDriver.getValue()).toBe('Option 1');
   });
 
+  it('should update text when selected option changes', () => {
+    const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<Dropdown options={options}/>);
+    driver.focus();
+    dropdownLayoutDriver.clickAtOption(0);
+    expect(inputDriver.getValue()).toBe('Option 1');
+    options[0].value = 'Updated';
+    driver.setProps({ options, selectedId:0 });
+    expect(inputDriver.getValue()).toBe('Updated');
+  });
+
   it('should be read only', () => {
     const {inputDriver} = createDriver(<Dropdown options={options}/>);
     expect(inputDriver.getReadOnly()).toBeTruthy();
