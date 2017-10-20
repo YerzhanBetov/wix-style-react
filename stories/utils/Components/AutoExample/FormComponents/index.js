@@ -124,17 +124,19 @@ class NodesList extends React.Component {
   view = e => typeof e === 'function' ? React.createElement(e) : e;
 
   render() {
-    const {value = {}, values = [], onChange} = this.props;
+    const {value = {}, values = [], onChange, dataHook} = this.props;
 
     return values.length > 3 ?
       <Dropdown
+        dataHook={dataHook}
         options={values.map((value, id) => ({id, value: this.view(value)}))}
         selectedId={values.findIndex(({type}) => isEqual(type, value.type)) || 0}
         onSelect={({value}) => onChange(value)}
         valueParser={({value}) => typeof value.type === 'string' ? value.type : value.type.name}
         /> :
         <WixRadioGroup
-          value={value}
+          dataHook={dataHook}
+          value={this.state && this.state.selected}
           onChange={ev => {
             this.setState({selected: ev});
             onChange(this.view(values[ev]));
@@ -150,6 +152,7 @@ class NodesList extends React.Component {
 }
 
 NodesList.propTypes = {
+  dataHook: PropTypes.string,
   value: PropTypes.node,
   values: PropTypes.arrayOf(PropTypes.any),
   onChange: PropTypes.func
