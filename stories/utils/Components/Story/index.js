@@ -15,20 +15,26 @@ import ComponentMetaInfoGetter from '../ComponentMetaInfoGetter';
 import styles from './styles.scss';
 
 /**
- * # story( )
+ * # `story()`
  *
- * ### Note about special case with `componentSrcFolder` property:
+ * function that given small configuration object will create all the documentation you need.
  *
- * In case you pass `componentSrcFolder` property, you don't need to pass "name", "source", "component", "readme" or "readmeTestkit" properties (but you can override any of that values).
- * Instead, it will automatically resolve all of them:
- * * __name__ - `displayName` of the component, or on the `name` of class or function.
- * * __source__ - it will import source of component using `!raw-loader!` using `webpack`'s dynamic `import()`
- * * __component__ - it will import component using `webpack`'s dynamic `import()`
- * * __readme__ - it will import file with name `README.md` from the component directory using `webpack`'s dynamic `import()`
- * * __readmeTestkit__ - it will import file with name `README.TESTKIT.md` from the component directory using `webpack`'s dynamic `import()`
+ * Minimum example:
  *
- * Additionally, it will parse the source of component and if inside of propTypes there are spread operators - it will correctly resolve it (import that sources and get the `propTypes` from them. It's not the black magic 🎩, don't even think that way!).
- * This correctly parsed source will be passed down to `AutoDocs` and `AutoExample` so they will be able to generate full table of props and full example.
+ * ```js
+ * story({
+ *   category: 'Core',
+ *   componentSrcFolder: 'ToggleSwitch'
+ * });
+ * ```
+ *
+ * * __category__ `string` - name of storybook section the story should be put under
+ * * __componentSrcFolder__ `string` - "relative" path to component. Path is resolved against `src` folder.
+ *
+ * This should be enough for majority of cases.
+ * Refer to API table below for more configuration.
+ *
+ * under the hood uses `<AutoDocs/>`, `<AutoExample/>` & some black magic.
  */
 function Story(props) {
   const {
@@ -142,8 +148,9 @@ Story.propTypes = {
   category: PropTypes.string.isRequired,
 
   /**
-   * Name of the component, must be correct (will be used as story title, as part of `import` example, as part of github link)
+   * Name of the component, used as story title, as part of `import` example and as part of link to source on github
    *
+   * if not specified, `displayName` or `name` of class or function will be used instead.
    */
   name: PropTypes.string,
 
@@ -155,26 +162,41 @@ Story.propTypes = {
   storyName: PropTypes.string,
 
   /**
+   * the README.md file in your component folder.
+   *
    * A markdown-compatible string to be printed above interactive component example.
-   * In case this property will be omitted - just name of component will be displayed.
+   * should be resolved automatically.
+   * If somehow it doesn't work automatically, you can provide readme yourself.
    */
   readme: PropTypes.string,
 
   /**
+   * the README.TESTKIT.md file in your component folder.
+   *
    * A markdown-compatible string to be printed within "TestKit" tab.
    * No "TestKit" tab will displayed if this property is not provided.
+   *
+   * should be resolved automatically.
+   * If somehow it doesn't work automatically, you can provide readme yourself.
    */
   readmeTestkit: PropTypes.string,
 
    /**
-   * The actual source of a component.
-   *   > Use `!raw-loader!` to get it, e.g.: `import source from '!raw-loader!wix-style-react/ColorPicker/color-picker';`
-   *   > Beware that the actual source is required and not just something like `export {default} from './component.js'`
+   * Raw source of component as a string.
+   * should be resolved automatically by trying to import source of component using `!raw-loader!` and `webpack`'s dynamic `import()`.
+   *
+   * If somehow it doesn't work automatically, you can provide source yourself:
+   * * Use `!raw-loader!` to get it, e.g.: `import source from '!raw-loader!wix-style-react/ColorPicker/color-picker';`
+   * * Beware that the actual source is required and not just something like `export {default} from './component.js'`
    */
   source: PropTypes.string,
 
   /**
-   * Reference to react component which will be used within interactive example
+   * Reference to react component which will be used in interactive example
+   * should be resolved automatically.
+   *
+   * If somehow it doesn't work automatically, you can provide component yourself:
+   * * __component__ - it will import component using `webpack`'s dynamic `import()`
    */
   component: PropTypes.element,
 
