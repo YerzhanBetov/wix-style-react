@@ -31,9 +31,12 @@ class Dropdown extends InputWithOptions {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.selectedId !== nextProps.selectedId) {
-      this.update(nextProps, {isFirstTime: false});
-    }
+    this.update(nextProps, {isFirstTime: false});
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {value} = (nextProps.options.find(({id}) => id === nextProps.selectedId) || {});
+    return this.state.value !== value;
   }
 
   inputClasses() {
