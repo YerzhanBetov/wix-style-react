@@ -14,7 +14,7 @@ describe('Dropdown', () => {
 
   const createDriver = createDriverFactory(dropdownDriverFactory);
 
-  const options = [
+  const getOptions = () => [
     {id: 0, value: 'Option 1'},
     {id: 1, value: 'Option 2'},
     {id: 2, value: 'Option 3', disabled: true},
@@ -24,38 +24,39 @@ describe('Dropdown', () => {
   ];
 
   it('should select item with selectedId on init state', () => {
-    const {inputDriver, dropdownLayoutDriver} = createDriver(<Dropdown options={options} selectedId={0}/>);
+    const {inputDriver, dropdownLayoutDriver} = createDriver(<Dropdown options={getOptions()} selectedId={0}/>);
 
     expect(dropdownLayoutDriver.isOptionSelected(0)).toBeTruthy();
     expect(inputDriver.getValue()).toBe('Option 1');
   });
 
   it('should select an item when clicked', () => {
-    const {driver, dropdownLayoutDriver} = createDriver(<Dropdown options={options}/>);
+    const {driver, dropdownLayoutDriver} = createDriver(<Dropdown options={getOptions()}/>);
     driver.focus();
     dropdownLayoutDriver.clickAtOption(0);
     expect(dropdownLayoutDriver.isOptionSelected(0)).toBeTruthy();
   });
 
   it('should enter the selected option text when selected', () => {
-    const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<Dropdown options={options}/>);
+    const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<Dropdown options={getOptions()}/>);
     driver.focus();
     dropdownLayoutDriver.clickAtOption(0);
     expect(inputDriver.getValue()).toBe('Option 1');
   });
 
   it('should update text when selected option changes', () => {
-    const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<Dropdown options={options} selectedId={0}/>);
+    const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<Dropdown options={getOptions()} selectedId={0}/>);
     driver.focus();
     dropdownLayoutDriver.clickAtOption(0);
     expect(inputDriver.getValue()).toBe('Option 1');
-    options[0].value = 'Updated';
-    driver.setProps({options, selectedId:0});
+    let newOptions = getOptions();
+    newOptions[0].value = 'Updated';
+    driver.setProps({options: newOptions, selectedId:0});
     expect(inputDriver.getValue()).toBe('Updated');
   });
 
   it('should be read only', () => {
-    const {inputDriver} = createDriver(<Dropdown options={options}/>);
+    const {inputDriver} = createDriver(<Dropdown options={getOptions()}/>);
     expect(inputDriver.getReadOnly()).toBeTruthy();
   });
 
