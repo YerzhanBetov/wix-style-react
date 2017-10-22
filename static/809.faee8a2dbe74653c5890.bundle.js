@@ -1,0 +1,1 @@
+webpackJsonp([809],{3687:function(module,exports){module.exports="@import '../../Typography/Typography.scss';\n@import '../Header/Header.scss';\n\n.headerOnlyTitle {\n  @extend .header;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n\n.headerTitleSubtitle {\n  @extend .headerOnlyTitle;\n\n  .collapsedSwitch {\n    top: 7px;\n  }\n}\n"}});

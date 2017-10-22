@@ -1,0 +1,1 @@
+webpackJsonp([788],{3708:function(module,exports){module.exports="@import '../common.scss';\n\n.root {\n  display: inline-block;\n}\n\n.required {\n  &:before {\n    content: '*';\n    font-size: 22px;\n    margin-left: 6px;\n    color: $B20;\n  }\n}\n\n.icon {\n  color: $B10;\n  margin-left: 8px;\n  position: relative;\n  top: 3px\n}\n"}});

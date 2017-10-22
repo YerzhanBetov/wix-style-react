@@ -1,0 +1,1 @@
+webpackJsonp([51],{467:function(module,exports){module.exports="export {default} from './Label.js';\n"}});

@@ -1,0 +1,1 @@
+webpackJsonp([23],{495:function(module,exports){module.exports="import React from 'react';\nimport PropTypes from 'prop-types';\nimport styles from './styles.scss';\n\nconst Footer = ({children}) =>\n  <div className={styles.footer} data-hook=\"menu-footer\">\n    {children}\n  </div>;\n\nFooter.propTypes = {\n  children: PropTypes.node\n};\n\nexport default Footer;\n\n"}});

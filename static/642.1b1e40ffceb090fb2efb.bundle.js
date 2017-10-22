@@ -1,0 +1,1 @@
+webpackJsonp([642],{3854:function(module,exports){module.exports=".input {\n\tpadding: 11px;\n\tborder-radius: 1px;\n\tfont-size: 16px;\n\tborder: solid 1px rgba(0, 0, 0, 0.2);\n\tbox-sizing: border-box;\n\twidth: 100%;\n\toutline: 0;\n\t&.error {\n\t\tborder-color: red;\n\t}\n\t&:focus:not(.error) {\n\t\tborder: solid 1px rgba(0, 0, 0, 1);\n\t}\n}"}});

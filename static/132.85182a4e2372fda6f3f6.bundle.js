@@ -1,0 +1,1 @@
+webpackJsonp([132],{1815:function(module,exports){module.exports="export default ({element}) => ({\n  getType: () => element.tagName.toLowerCase(),\n  getText: () => element.textContent,\n  hasEllipsis: () => element.className.includes('ellipsis'),\n  getTitle: () => element.title,\n  getClassName: () => element.className\n});\n\n"}});

@@ -1,0 +1,1 @@
+webpackJsonp([810],{3686:function(module,exports){module.exports="@import '../common.scss';\n\n.card {\n\n  $border-radius: 8px;\n\n  background: $D80;\n  border-radius: $border-radius;\n}\n.stretch-vertically {\n  height: 100%;\n  flex-grow: 1;\n}"}});

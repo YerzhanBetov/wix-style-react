@@ -1,0 +1,1 @@
+webpackJsonp([783],{3713:function(module,exports){module.exports=".iconDefault {\n  fill: currentColor;\n  vertical-align: baseline;\n}\n\n:global(.rtl) {\n  .iconDefault {\n    transform: scaleX(-1);\n  }\n}\n"}});

@@ -1,0 +1,1 @@
+webpackJsonp([448],{1499:function(module,exports){module.exports="\nconst dataTableDriverFactory = component => ({\n  clickRowByIndex: index => component.$$('tbody tr').get(index).click(),\n  getRowTextByIndex: index => component.$$('tbody tr').get(index).getText(),\n  element: () => component\n});\n\nexport default dataTableDriverFactory;\n"}});

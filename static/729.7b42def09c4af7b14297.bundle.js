@@ -1,0 +1,1 @@
+webpackJsonp([729],{3767:function(module,exports){module.exports='<svg xmlns="http://www.w3.org/2000/svg" width="8" height="6" viewBox="0 0 8 6">\n  <defs>\n    <style>\n      .cls-1 {\n        fill: #3899ec;\n      }\n    </style>\n  </defs>\n  <rect class="cls-1" y="2" width="8" height="2"/>\n</svg>\n'}});

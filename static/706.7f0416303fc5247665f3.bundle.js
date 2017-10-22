@@ -1,0 +1,1 @@
+webpackJsonp([706],{3790:function(module,exports){module.exports='<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 6 6">\n    <path fill="#3899EC" fill-rule="evenodd" d="M5.25 0L3 2.25.75 0 0 .751l2.25 2.25L0 5.251.75 6 3 3.75 5.25 6l.751-.749-2.25-2.25 2.25-2.25z"/>\n</svg>\n'}});

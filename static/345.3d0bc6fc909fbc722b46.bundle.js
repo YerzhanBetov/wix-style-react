@@ -1,0 +1,1 @@
+webpackJsonp([345],{1602:function(module,exports){module.exports='import React from \'react\';\nimport Icon from \'../Icon\';\n\n/*eslint-disable */\nconst PartialCheck = (props) => (\n  <Icon viewBox="0 0 8 6" {...props}>\n    <g>\n      <defs/>\n      <path d="M0 2h8v2H0z" className="cls-1" />\n    </g>\n  </Icon>\n);\n/*eslint-enable */\n\nexport default PartialCheck;\n'}});

@@ -1,0 +1,1 @@
+webpackJsonp([141],{1806:function(module,exports){module.exports="const TextLinkDriverFactory = component => ({\n  exists: () => !!component,\n  click: () => component.click(),\n  getTextContent: () => component.getText(),\n  element: () => component\n});\n\nexport default TextLinkDriverFactory;\n"}});

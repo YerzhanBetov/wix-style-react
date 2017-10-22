@@ -1,0 +1,1 @@
+webpackJsonp([803],{3693:function(module,exports){module.exports=".root {\n  padding: 12px 18px 0 18px;\n}\n\n.distribute {\n  display: flex;\n  justify-content: space-between;\n  & > * {\n    width: 28%;\n  }\n}\n"}});

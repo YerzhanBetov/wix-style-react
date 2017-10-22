@@ -1,0 +1,1 @@
+webpackJsonp([808],{3688:function(module,exports){module.exports="@import '../../Grid/Grid.scss';\n\n$content-padding: 24px 30px 18px;\n\n.content {\n  @extend .container;\n\n  padding: $content-padding;\n}\n"}});
