@@ -29,7 +29,8 @@ class ExampleStandard extends Component {
     input: {
       size: 'normal',
       placeholder: 'Please type in your first name...',
-      disabled: false
+      disabled: false,
+      clearButton: false
     },
     required: false,
     info: ''
@@ -72,7 +73,7 @@ class ExampleStandard extends Component {
 
   render() {
     return (
-      <from className={styles.form}>
+      <form className={styles.form}>
         <div className={styles.input}>
           <div className={styles.option}>
             <Label>Show label</Label>
@@ -107,6 +108,17 @@ class ExampleStandard extends Component {
                 size="small"
                 checked={this.state.required}
                 onChange={() => this.setState({required: !this.state.required})}
+                />
+            </div>
+          </div>
+
+          <div className={styles.option}>
+            <div className={styles.flex}>
+              <div className={styles.paddRight}><Label>Clear Button: </Label></div>
+              <ToggleSwitch
+                size="small"
+                checked={this.state.input.clearButton}
+                onChange={() => this.setComponentState('input', {clearButton: !this.state.input.clearButton})}
                 />
             </div>
           </div>
@@ -201,7 +213,7 @@ class ExampleStandard extends Component {
         <div className={styles.output}>
           <TextFieldExample {...this.state} onChange={this.props.onChange}/>
         </div>
-      </from>
+      </form>
     );
   }
 }

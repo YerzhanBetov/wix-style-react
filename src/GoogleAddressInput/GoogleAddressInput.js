@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Input from '../Input';
 import InputWithOptions from '../InputWithOptions';
-import isUndefined from 'lodash/isUndefined';
 import {google2address, includes} from './google2address';
+import styles from './GoogleAddressInput.scss';
 
 /**
   * Address input box (using Google Maps)
@@ -69,10 +70,14 @@ class GoogleAddressInput extends React.Component {
           onManuallyInput={this.onManuallyInput}
           value={value}
           options={options}
+          fixedFooter={this.props.poweredByGoogle ? GoogleAddressInput.getGoogleFooter() : null}
           />
       </div>
     );
   }
+
+  static getGoogleFooter = () =>
+    <div className={styles.googleFooter} data-hook="google-footer"/>
 
   focus() {
     this.autocomplete.focus();
@@ -87,7 +92,7 @@ class GoogleAddressInput extends React.Component {
     this.props.onChange && this.props.onChange(e);
     this.props.onSet && this.props.onSet(null);
 
-    if (!isUndefined(this.props.value)) {
+    if (typeof this.props.value !== 'undefined') {
       // Controlled mode
       return;
     }
@@ -159,7 +164,7 @@ class GoogleAddressInput extends React.Component {
   }
 
   onManuallyInput(value) {
-    this._getSuggestions(value, !isUndefined(this.props.value)).then(suggestions => {
+    this._getSuggestions(value, typeof this.props.value !== 'undefined').then(suggestions => {
 
       if (suggestions.length === 0) {
         // No suggestion to the text entered
@@ -231,7 +236,8 @@ GoogleAddressInput.defaultProps = {
   theme: Input.defaultProps.theme,
   autoSelect: true,
   footerOptions: {},
-  clearSuggestionsOnBlur: true
+  clearSuggestionsOnBlur: true,
+  poweredByGoogle: false
 };
 
 GoogleAddressInput.propTypes = {
@@ -281,7 +287,10 @@ GoogleAddressInput.propTypes = {
   footerOptions: PropTypes.object,
 
   /** Clear the suggestions list upon input blur */
-  clearSuggestionsOnBlur: PropTypes.bool
+  clearSuggestionsOnBlur: PropTypes.bool,
+
+  /** Shows the Powered By Google credit in a fixed footer */
+  poweredByGoogle: PropTypes.bool
 };
 
 export default GoogleAddressInput;

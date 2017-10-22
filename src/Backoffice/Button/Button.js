@@ -1,5 +1,5 @@
 import React from 'react';
-import {any, func, node, string} from 'prop-types';
+import {func, node, string} from 'prop-types';
 import styles from './Button.scss';
 import WixComponent from '../../BaseComponents/WixComponent';
 import ButtonLayout from '../../ButtonLayout/ButtonLayout';
@@ -8,7 +8,7 @@ import omit from 'omit';
 class Button extends WixComponent {
   static propTypes = {
     ...ButtonLayout.propTypes,
-    children: any,
+    children: node,
     id: string,
     prefixIcon: node,
     suffixIcon: node,

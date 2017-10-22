@@ -53,6 +53,23 @@ You can run specific files or tests using `jest`'s interactive mode. For example
 * Check github issues to see if no one else is working on the same component
 * Each component in the library extends WixComponent, so please do it with you component as well.
 * Use `WixComponent` as super class for your component, e.g.: `class MyComponent extends WixComponent`
+* If you are using props from another component - use spread `...` instead of `Object.assign`, e.g:
+```js
+// bad
+MyComponent.propTypes = Object.assign({},
+  SomeOtherComponent.propTypes,
+  {
+    customProps: PropTypes.string
+  }
+);
+
+// good
+MyComponent.propTypes = {
+  ...SomeOtherComponent.propTypes,
+  customProps: PropTypes.string
+};
+``` 
+It's important since in a good case we are able to automatically parse the source and create API docs for your component.
 * Design according to [Zeplin](https://app.zeplin.io/project/5864e02695b5754a69f56150) design created by UX guild.
 * Configure storybook to generate documentation for you, follow [Adding Story](https://wix.github.io/wix-style-react/?selectedKind=Introduction&selectedStory=Adding%20Story&full=0&down=0&left=1&panelRight=0) guide.
 * Add unit and e2e tests as well as testkits for enzyme and protractor.

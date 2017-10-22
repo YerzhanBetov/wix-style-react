@@ -156,7 +156,7 @@ class ExampleSideMenuDrill extends React.Component {
     const {items} = this.state;
 
     return (
-      <div style={{width: 220, height: 700, display: 'flex', direction: 'rtl'}} className="rtl">
+      <div style={{width: 220, height: 700, display: 'flex'}}>
         <div style={{display: 'flex', flexGrow: 1}}>
           <SideMenuDrill inFlex stickyFooter={this.renderFooter()}>
             <SideMenu.Header>

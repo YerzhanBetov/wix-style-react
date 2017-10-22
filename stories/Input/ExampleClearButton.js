@@ -24,7 +24,6 @@ class ControlledInput extends Component {
     return (
       <Input
         {...this.props}
-        error={this.state.value === 'Starwars'}
         value={this.state.value}
         onChange={onChange}
         />
@@ -34,8 +33,8 @@ class ControlledInput extends Component {
 
 const Example = ({theme}) =>
   <div className="ltr" style={style}>
-    <span>This shows an error for &quot;Starwars&quot;</span>
-    <ControlledInput theme={theme}/>
+    <span>Shows clear button</span>
+    <ControlledInput theme={theme} clearButton/>
   </div>;
 
 Example.propTypes = {

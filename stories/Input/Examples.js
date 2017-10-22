@@ -18,6 +18,9 @@ import ExampleMagnifyingGlassRaw from '!raw-loader!./ExampleMagnifyingGlass';
 import ExampleControlled from './ExampleControlled';
 import ExampleControlledRaw from '!raw-loader!./ExampleControlled';
 
+import ExampleClearButton from './ExampleClearButton';
+import ExampleClearButtonRaw from '!raw-loader!./ExampleClearButton';
+
 import ExampleRefs from './ExampleRefs';
 import ExampleRefsRaw from '!raw-loader!./ExampleRefs';
 
@@ -43,6 +46,10 @@ const Examples = ({theme}) =>
 
     <CodeExample title="MagnifyingGlass" code={ExampleMagnifyingGlassRaw}>
       <ExampleMagnifyingGlass theme={theme}/>
+    </CodeExample>
+
+    <CodeExample title="Clear button" code={ExampleClearButtonRaw}>
+      <ExampleClearButton theme={theme}/>
     </CodeExample>
 
     <CodeExample title="Controlled input" code={ExampleControlledRaw}>

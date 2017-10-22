@@ -364,13 +364,31 @@ $material-gap: 8px;
 }
 
 .clear-button {
+    $size: 24px;
+    $icon-size: 8px;
+
+    width: $size;
+    height: $size;
+    margin-top: 1px;
+    margin-right: 6px;
+    padding: $size - 2 * $icon-size 0;
+    border-radius: 50%;
+
+    line-height: 0;
+    text-align: center;
+
+    background-color: $B50;
     cursor: pointer;
-    padding: 0 $double-gap;
-    height: 6px;
-    line-height: 6px;
-    font-size: 6px;
 
     path { stroke: $B10; }
+
+    &:hover {
+        background-color: $B40;
+    }
+
+    &:active {
+        background-color: $B30;
+    }
 }
 
 .unit {

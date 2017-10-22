@@ -6,8 +6,10 @@ import CodeExample from '../utils/Components/CodeExample';
 import GoogleAddressInputSource from '!raw-loader!wix-style-react/GoogleAddressInput/GoogleAddressInput';
 import ExampleControlled from './ExampleControlled';
 import ExampleControlledRaw from '!raw-loader!./ExampleControlled';
-
 import ExampleControlledWithFooter from './ExampleControlledWithFooter';
+import ExampleControlledWithFooterRaw from '!raw-loader!./ExampleControlledWithFooter';
+import ExampleControlledWithGoogleFooter from './ExampleControlledWithGoogleFooter';
+import ExampleControlledWithGoogleFooterRaw from '!raw-loader!./ExampleControlledWithGoogleFooter';
 
 storiesOf('Core', module)
   .add('GoogleAddressInput', () => (
@@ -20,8 +22,12 @@ storiesOf('Core', module)
         <ExampleControlled/>
       </CodeExample>
 
-      <CodeExample title="Controlled input - with a footer" code={ExampleControlledRaw}>
+      <CodeExample title="Controlled input - with a footer" code={ExampleControlledWithFooterRaw}>
         <ExampleControlledWithFooter/>
+      </CodeExample>
+
+      <CodeExample title="Controlled input - with a google fixed footer" code={ExampleControlledWithGoogleFooterRaw}>
+        <ExampleControlledWithGoogleFooter/>
       </CodeExample>
     </div>
   ));

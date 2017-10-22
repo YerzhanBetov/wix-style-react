@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import isEqual from 'deep-eql';
 
 import Markdown from '../../Markdown';
 import CodeBlock from '../../CodeBlock';
@@ -40,16 +41,18 @@ Options.propTypes = {
 };
 
 
-const Option = ({label, value, children, onChange}) =>
-  <Row className={styles.option}>
-    <Col span={6}>
-      <Markdown source={`\`${label}\``}/>
-    </Col>
+const Option = ({label, value, children, onChange}) => {
+  return children ?
+    (<Row className={styles.option}>
+      <Col span={6}>
+        <Markdown source={`\`${label}\``}/>
+      </Col>
 
-    <Col span={6}>
-      { React.cloneElement(children, {value, onChange}) }
-    </Col>
-  </Row>;
+      <Col span={6}>
+        {React.cloneElement(children, {value, onChange})}
+      </Col>
+    </Row>) : null;
+};
 
 Option.propTypes = {
   label: PropTypes.string,
@@ -93,7 +96,7 @@ const List = ({value, values = [], onChange, ...props}) =>
   values.length > 3 ?
     <Dropdown
       options={values.map(v => ({id: v, value: v}))}
-      selectedId={values.find((v => v.value === value))}
+      selectedId={value}
       onSelect={({value}) => onChange(value)}
       /> :
     <WixRadioGroup
@@ -114,6 +117,44 @@ const List = ({value, values = [], onChange, ...props}) =>
 List.propTypes = {
   value: PropTypes.string,
   values: PropTypes.arrayOf(PropTypes.string),
+  onChange: PropTypes.func
+};
+
+class NodesList extends React.Component {
+  view = e => typeof e === 'function' ? React.createElement(e) : e;
+
+  render() {
+    const {value = {}, values = [], onChange, dataHook} = this.props;
+
+    return values.length > 3 ?
+      <Dropdown
+        dataHook={dataHook}
+        options={values.map((value, id) => ({id, value: this.view(value)}))}
+        selectedId={values.findIndex(({type}) => isEqual(type, value.type)) || 0}
+        onSelect={({value}) => onChange(value)}
+        valueParser={({value}) => typeof value.type === 'string' ? value.type : value.type.name}
+        /> :
+        <WixRadioGroup
+          dataHook={dataHook}
+          value={this.state && this.state.selected}
+          onChange={ev => {
+            this.setState({selected: ev});
+            onChange(this.view(values[ev]));
+          }}
+          >
+          {values.map((value, i) =>
+            <WixRadioGroup.Radio key={i} value={i}>
+              {this.view(values[i])}
+            </WixRadioGroup.Radio>
+          )}
+        </WixRadioGroup>;
+  }
+}
+
+NodesList.propTypes = {
+  dataHook: PropTypes.string,
+  value: PropTypes.node,
+  values: PropTypes.arrayOf(PropTypes.any),
   onChange: PropTypes.func
 };
 
@@ -151,5 +192,6 @@ export {
   Toggle,
   Input,
   List,
-  Code
+  Code,
+  NodesList
 };

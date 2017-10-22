@@ -7,5 +7,11 @@ story({
   category: 'Core',
   name: 'ColorPicker',
   source,
-  component
+  component,
+  componentProps: setProps => ({
+    onChange: value => setProps({value})
+  }),
+  exampleProps: {
+    onChange: ev => ev.hex()
+  }
 });

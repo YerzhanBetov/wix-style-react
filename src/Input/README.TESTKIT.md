@@ -11,7 +11,9 @@
 | focus | - | - | focus the input |
 | blur | - | - | blur the input |
 | clickClear | - | - | when the clear button is visible, this will click it |
+| clickSuffix | - | - | when suffix is visible, this will click it |
 | enterText | string | - | applied text to the input |
+| clearText | - | - | clears input |
 | getValue | - | string | get the input text |
 | getPlaceholder | - | string | get the placeholder text |
 | getReadOnly | - | boolean | true if the input is read only |
@@ -26,20 +28,22 @@
 | getUnit | - | string | get the input unit, if exists |
 | hasMagnifyingGlass | - | boolean | true if input have magnifying glass, like search |
 | hasMenuArrow | - | boolean | true if input have menu arrow, like dropdown |
-| hasClearButton | - | boolean | true if the clear button ins visible |
+| hasClearButton | - | boolean | true if the clear button is visible |
 | isRTL | - | boolean | true if the input is in RTL mode |
 | isFocusedStyle | - | boolean | true if the element is always focused |
 | isHoveredStyle | - | boolean | true if the element is always hovered |
 | isDisabled | - | boolean | true if the element is disabled |
-| setProps | json | element | returns a clone of this element with the new props from the json | 
+| setProps | json | element | returns a clone of this element with the new props from the json |
 
 ### Protractor
 
 | method | arguments | returned value | description |
 |--------|-----------|----------------|-------------|
+| element | - | element | returns the element |
 | enterText | string | - | applied text to the input |
 | getText | - | string | get the input text |
-| element | - | element | returns the element | 
+| hasClearButton | - | boolean | true if the clear button is visible |
+| clickClear | - | - | when the clear button is visible, this will click it |
 
 ## Usage Example
 

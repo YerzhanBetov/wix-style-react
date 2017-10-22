@@ -39,6 +39,12 @@ class InputWithOptions extends WixComponent {
     this.onCompositionChange = this.onCompositionChange.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.options.length) {
+      this.setState({showOptions: false});
+    }
+  }
+
   onCompositionChange(isComposing) {
     this.setState({isComposing});
   }
@@ -109,7 +115,9 @@ class InputWithOptions extends WixComponent {
   }
 
   showOptions() {
-    this.setState({showOptions: true, lastOptionsShow: Date.now()});
+    if (this.props.options.length) {
+      this.setState({showOptions: true, lastOptionsShow: Date.now()});
+    }
   }
 
   closeOnSelect() {

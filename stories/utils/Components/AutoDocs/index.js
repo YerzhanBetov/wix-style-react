@@ -18,15 +18,16 @@ const prepareParsedProps = props => {
   return required.concat(notRequired);
 };
 
-const renderPropType = (type = {}) => {
-  const wrap = name => children =>
-    <span>{name} [{children}]</span>;
+const wrap = name => children =>
+  <span>{name} [{children}]</span>;
 
-  const failSafe = type => () =>
-    <span>
-      Sorry, unable to parse this propType:
-      <pre>{JSON.stringify(type, null, 2)}</pre>
-    </span>;
+const failSafe = type => () =>
+  <span>
+    Sorry, unable to parse this propType:
+    <pre>{JSON.stringify(type, null, 2)}</pre>
+  </span>;
+
+const renderPropType = (type = {}) => {
 
   const typeHandlers = {
     custom: () => wrap('custom')(),
@@ -66,8 +67,8 @@ const renderPropType = (type = {}) => {
   return <span>{type.name}</span>;
 };
 
-const AutoDocs = ({source = ''}) => {
-  const {description, displayName, props, composes = []} = parser(source);
+const AutoDocs = ({source = '', parsedSource, showTitle}) => {
+  const {description, displayName, props, composes = [], methods = []} = parsedSource ? parsedSource : parser(source);
 
   const propRow = (prop, index) =>
     <tr key={index}>
@@ -78,9 +79,17 @@ const AutoDocs = ({source = ''}) => {
       <td>{prop.description && <Markdown source={prop.description}/>}</td>
     </tr>;
 
+  const methodsToMarkdown = methods =>
+    methods
+      .filter(({name}) => !name.startsWith('_'))
+      .map(method =>
+        `* __${method.name}(${method.params.map(({name}) => name).join(', ')})__: ${method.docblock || ''}`
+      )
+      .join('\n');
+
   return !shouldHideForE2E && (
     <div className="markdown-body">
-      { displayName &&
+      { showTitle && displayName &&
         <div>
           <h1>
             { displayName && <code>{`<${displayName}/>`}</code> }
@@ -125,12 +134,21 @@ const AutoDocs = ({source = ''}) => {
           }
         </tbody>
       </table>
+
+      { methods.length > 0 && <h2>Available <code>methods</code></h2> }
+      { methods.length > 0 && <Markdown source={methodsToMarkdown(methods)}/> }
     </div>
   );
 };
 
 AutoDocs.propTypes = {
-  source: PropTypes.string.isRequired
+  source: PropTypes.string.isRequired,
+  parsedSource: PropTypes.object,
+  showTitle: PropTypes.bool
+};
+
+AutoDocs.defaultProps = {
+  showTitle: true
 };
 
 export default AutoDocs;
