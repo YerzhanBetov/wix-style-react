@@ -13,7 +13,7 @@ class ExampleStandard extends Component {
 
   static propTypes = {
     onChange: PropTypes.func
-  }
+  };
 
   state = {
     withLabel: true,
@@ -28,10 +28,13 @@ class ExampleStandard extends Component {
     },
     input: {
       size: 'normal',
-      placeholder: 'Please type in your first name...'
+      placeholder: 'Please type in your first name...',
+      disabled: false,
+      clearButton: false
     },
-    required: false
-  }
+    required: false,
+    info: ''
+  };
 
   setComponentState(componentName, obj) {
     this.setState(prevState => {
@@ -70,7 +73,7 @@ class ExampleStandard extends Component {
 
   render() {
     return (
-      <from className={styles.form}>
+      <form className={styles.form}>
         <div className={styles.input}>
           <div className={styles.option}>
             <Label>Show label</Label>
@@ -105,6 +108,28 @@ class ExampleStandard extends Component {
                 size="small"
                 checked={this.state.required}
                 onChange={() => this.setState({required: !this.state.required})}
+                />
+            </div>
+          </div>
+
+          <div className={styles.option}>
+            <div className={styles.flex}>
+              <div className={styles.paddRight}><Label>Clear Button: </Label></div>
+              <ToggleSwitch
+                size="small"
+                checked={this.state.input.clearButton}
+                onChange={() => this.setComponentState('input', {clearButton: !this.state.input.clearButton})}
+                />
+            </div>
+          </div>
+
+          <div className={styles.option}>
+            <Label>Info Tooltip</Label>
+            <div className={styles.flex}>
+              <Input
+                size="small"
+                value={this.state.info}
+                onChange={e => this.setState({info: e.target.value})}
                 />
             </div>
           </div>
@@ -172,11 +197,23 @@ class ExampleStandard extends Component {
                 />&nbsp;with ticker
             </div>
           </div>
+
+          <div className={styles.option}>
+            <div className={styles.flex}>
+              <div className={styles.paddRight}><Label>Enabled state: </Label></div>
+              <ToggleSwitch
+                size="small"
+                checked={!this.state.input.disabled}
+                onChange={() => this.setComponentState('input', {disabled: !this.state.input.disabled})}
+                />&nbsp;{this.state.input.disabled ? 'Disabled' : 'Enabled'}
+            </div>
+          </div>
+
         </div>
         <div className={styles.output}>
           <TextFieldExample {...this.state} onChange={this.props.onChange}/>
         </div>
-      </from>
+      </form>
     );
   }
 }

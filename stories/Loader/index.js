@@ -1,22 +1,23 @@
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import Markdown from '../utils/Components/Markdown';
+import AutoDocs from '../utils/Components/AutoDocs';
 import CodeExample from '../utils/Components/CodeExample';
-import Readme from '../../src/Loader/README.md';
 import TabbedView from '../utils/Components/TabbedView';
 import ReadmeTestKit from '../../src/Loader/README.TESTKIT.md';
+import LoaderSource from '!raw-loader!wix-style-react/Loader/Loader';
 
 import ExampleSizes from './ExampleSizes';
-import ExampleSizesRaw from '!raw!./ExampleSizes';
+import ExampleSizesRaw from '!raw-loader!./ExampleSizes';
 
 import ExampleWithText from './ExampleWithText';
-import ExampleWithTextRaw from '!raw!./ExampleWithText';
+import ExampleWithTextRaw from '!raw-loader!./ExampleWithText';
 
 storiesOf('Core', module)
   .add('Loader', () => (
     <TabbedView tabs={['API', 'TestKits']}>
       <div>
-        <Markdown source={Readme}/>
+        <AutoDocs source={LoaderSource}/>
 
         <h1>Usage examples</h1>
 
@@ -28,8 +29,7 @@ storiesOf('Core', module)
           <ExampleWithText/>
         </CodeExample>
       </div>
-      <div>
-        <Markdown source={ReadmeTestKit}/>
-      </div>
+
+      <Markdown source={ReadmeTestKit}/>
     </TabbedView>
   ));

@@ -3,8 +3,11 @@ import {any, bool, oneOf} from 'prop-types';
 import classNames from 'classnames';
 import styles from './ButtonLayout.scss';
 
+/**
+  * General Buttons
+  */
 const ButtonLayout = props => {
-  const {theme, hover, active, disabled, height, children} = props;
+  const {theme, hover, active, disabled, height, children, matchParent} = props;
 
   const className = classNames({
     [styles.button]: true,
@@ -22,6 +25,10 @@ const ButtonLayout = props => {
       display: 'inline-block'
     }
   );
+
+  if (matchParent) {
+    _style.width = '100%';
+  }
 
   if (React.Children.count(children) === 1) {
     return React.cloneElement(
@@ -43,8 +50,15 @@ ButtonLayout.propTypes = {
   active: bool,
   children: any,
   disabled: bool,
+
+  /** The size of the button */
   height: oneOf(['small', 'medium', 'large', 'x-large']),
   hover: bool,
+
+  /** When true the button will match its parent width */
+  matchParent: bool,
+
+  /** The theme of the button */
   theme: oneOf([
     'transparent',
     'fullred',

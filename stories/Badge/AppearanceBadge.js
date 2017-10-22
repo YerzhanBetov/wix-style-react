@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Badge } from 'wix-style-react';
+import {Badge} from 'wix-style-react';
 
 export default () => (
   <div>

@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Input from '../Input';
 import InputWithOptions from '../InputWithOptions';
-import isundefined from 'lodash.isundefined';
-import includes from 'lodash.includes';
-import {google2address} from './google2address';
+import {google2address, includes} from './google2address';
+import styles from './GoogleAddressInput.scss';
 
+/**
+  * Address input box (using Google Maps)
+  */
 class GoogleAddressInput extends React.Component {
   constructor(params) {
     super(params);
@@ -67,10 +70,14 @@ class GoogleAddressInput extends React.Component {
           onManuallyInput={this.onManuallyInput}
           value={value}
           options={options}
+          fixedFooter={this.props.poweredByGoogle ? GoogleAddressInput.getGoogleFooter() : null}
           />
       </div>
     );
   }
+
+  static getGoogleFooter = () =>
+    <div className={styles.googleFooter} data-hook="google-footer"/>
 
   focus() {
     this.autocomplete.focus();
@@ -85,7 +92,7 @@ class GoogleAddressInput extends React.Component {
     this.props.onChange && this.props.onChange(e);
     this.props.onSet && this.props.onSet(null);
 
-    if (!isundefined(this.props.value)) {
+    if (typeof this.props.value !== 'undefined') {
       // Controlled mode
       return;
     }
@@ -157,7 +164,7 @@ class GoogleAddressInput extends React.Component {
   }
 
   onManuallyInput(value) {
-    this._getSuggestions(value, !isundefined(this.props.value)).then(suggestions => {
+    this._getSuggestions(value, typeof this.props.value !== 'undefined').then(suggestions => {
 
       if (suggestions.length === 0) {
         // No suggestion to the text entered
@@ -222,35 +229,68 @@ class GoogleAddressInput extends React.Component {
   }
 }
 
+GoogleAddressInput.displayName = 'GoogleAddressInput';
+
 GoogleAddressInput.defaultProps = {
   magnifyingGlass: true,
   theme: Input.defaultProps.theme,
   autoSelect: true,
   footerOptions: {},
-  clearSuggestionsOnBlur: true
+  clearSuggestionsOnBlur: true,
+  poweredByGoogle: false
 };
 
 GoogleAddressInput.propTypes = {
+  /** Placeholder for the input box */
   placeholder: PropTypes.string,
+
+  /** Value to place before every search term (normally should not be used) */
   valuePrefix: PropTypes.string,
+
+  /** Country code used to help with suggestions and geocoding */
   countryCode: PropTypes.string,
+
+  /** Controlled mode - value to display */
   value: PropTypes.string,
+
+  /** Limit the autocomplete to specific types (see [here](https://developers.google.com/places/supported_types#table3) for list) */
   types: PropTypes.array,
+
+  /** Lower level filtering of autocomplete result types (see [here](https://developers.google.com/places/supported_types) for list)  */
   filterTypes: PropTypes.array,
+
+  /** Should display error marker */
   error: PropTypes.bool,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   onKeyDown: PropTypes.func,
+
+  /** Callback for results. Will return an object containing: originValue (value in the search), googleResult (google geocode result for the search), address (which will include: formatted (google formatted address), country, countryCode, street, number, postalCode, latLng (lat, lng)) */
   onSet: PropTypes.func,
+
+  /** Google map client implementation (should implement autocomplete and geocode functions). Normally you would use wix-style-react/clients/GoogleMapsClient */
   Client: PropTypes.func.isRequired,
+
+  /** Show or hide magnifying glass icon */
   magnifyingGlass: PropTypes.bool,
   theme: Input.propTypes.theme,
+
+  /** Sets the input to readOnly */
   readOnly: PropTypes.bool,
   autoSelect: PropTypes.bool,
+
+  /** Display a footer as the last suggestion in the list */
   footer: PropTypes.any,
+
+  /** Set the footer's options (e.g. disabled, overrideStyles, etc. ) */
   footerOptions: PropTypes.object,
-  clearSuggestionsOnBlur: PropTypes.bool
+
+  /** Clear the suggestions list upon input blur */
+  clearSuggestionsOnBlur: PropTypes.bool,
+
+  /** Shows the Powered By Google credit in a fixed footer */
+  poweredByGoogle: PropTypes.bool
 };
 
 export default GoogleAddressInput;

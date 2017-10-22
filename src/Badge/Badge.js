@@ -1,37 +1,48 @@
 import React from 'react';
+import WixComponent from '../BaseComponents/WixComponent';
 import classnames from 'classnames';
 import {node, oneOf, string} from 'prop-types';
 
 import typography, {convertFromUxLangToCss} from '../Typography';
-import styles from './Badge.scss';
+import badgeStyles from './Badge.scss';
 
 /**
-  * General purpose badge component to indicate important (or not so) things
-  */
-const Badge = ({children, type, appearance, alignment, dataHook}) => {
-  const className = classnames(
-    styles.badge,
-    styles[type],
-    styles[alignment],
-    typography[convertFromUxLangToCss(appearance)
-  ]);
+ * General purpose badge component to indicate important (or not so) things
+ */
+class Badge extends WixComponent {
+  constructor(props) {
+    super(props);
+    this.setStyles(badgeStyles, typography);
+  }
 
-  return (
-    <span className={className} data-hook={dataHook}>
-      {children}
-    </span>
-  );
-};
+  render() {
+    const {children, type, appearance, alignment, shape, dataHook} = this.props;
+    const {styles, typography} = this;
+    const className = classnames(
+      styles.badge,
+      styles[type],
+      styles[alignment],
+      styles[shape],
+      typography[convertFromUxLangToCss(appearance)
+        ]);
+
+    return (
+      <span className={className} data-hook={dataHook}>
+        {children}
+      </span>
+    );
+  }
+}
 
 Badge.propTypes = {
   /** node to render into badge */
   children: node.isRequired,
 
   /** define purpose of a badge, different color for each type */
-  type: oneOf(['default', 'primary', 'success', 'info', 'warning', 'danger']).isRequired,
+  type: oneOf(['default', 'primary', 'success', 'info', 'warning', 'danger', 'businessManagerCounter']),
 
   /** set `vertical-align` */
-  alignment: oneOf(['top', 'bottom', 'middle']).isRequired,
+  alignment: oneOf(['top', 'bottom', 'middle']),
 
   /** choose appearance of typography. For Typography examples see storybook **Common** -> **Typography** */
   appearance: oneOf([
@@ -41,7 +52,10 @@ Badge.propTypes = {
     'T3', 'T3.1', 'T3.2', 'T3.3', 'T3.4',
     'T4', 'T4.1', 'T4.2', 'T4.3',
     'T5', 'T5.1'
-  ]).isRequired,
+  ]),
+
+  /** set the shape */
+  shape: oneOf(['ellipse', 'rectangle']),
 
   /** set one to find component in testing environment */
   dataHook: string
@@ -50,7 +64,8 @@ Badge.propTypes = {
 Badge.defaultProps = {
   type: 'default',
   appearance: 'H4',
-  alignment: 'middle'
+  alignment: 'middle',
+  shape: 'ellipse'
 };
 
 Badge.displayName = 'Badge';

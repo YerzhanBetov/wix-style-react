@@ -32,12 +32,12 @@ class RichTextArea extends WixComponent {
     resizable: PropTypes.bool,
     value: PropTypes.string,
     onChange: PropTypes.func,
-    onImageRequest: PropTypes.func,
+    onImageRequest: PropTypes.func
   }
 
   static defaultProps = {
     errorMessage: '',
-    value: '<p></p>',
+    value: '<p></p>'
   }
 
   /* eslint-disable react/prop-types */

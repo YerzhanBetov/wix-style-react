@@ -2,14 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './FilePicker.scss';
 import WixComponent from '../BaseComponents/WixComponent';
-import {Add} from '../Icons/dist';
+import Add from '../Icons/dist/components/Add';
+import uniqueId from 'lodash/uniqueId';
 
+/**
+  * File picker component
+  */
 class FilePicker extends WixComponent {
   constructor(props) {
     super(props);
     this.state = {
       selectedFileName: props.subLabel
     };
+    this.id = props.id || uniqueId('file_picker_input_');
   }
 
   onChooseFile(file) {
@@ -29,19 +34,21 @@ class FilePicker extends WixComponent {
     return (
       <div>
         {header && (<span className={styles.header}>{header}</span>)}
-        <label className={styles.label} htmlFor="file_input_id">
+        <label className={styles.label} htmlFor={this.id}>
           <div className={styles.icon}><Add width="42" height="42"/></div>
-          <div>
+          <div className={styles.content}>
             <span className={styles.cta} data-hook="main-label">{mainLabel}</span>
             <span className={styles.info} data-hook="sub-label">{this.state.selectedFileName}</span>
-            {error && <span data-hook="filePicker-error" className={styles.error}>{errorMessage}</span>}
+            {error && <span className={styles.error} data-hook="filePicker-error">{errorMessage}</span>}
           </div>
         </label>
-        <input id="file_input_id" className={styles.input} type="file" accept={supportedFormats} onChange={e => this.onChooseFile(e.target.files[0])}/>
+        <input id={this.id} className={styles.input} type="file" accept={supportedFormats} onChange={e => this.onChooseFile(e.target.files[0])}/>
       </div>
     );
   }
 }
+
+FilePicker.displayName = 'FilePicker';
 
 FilePicker.defaultProps = {
   mainLabel: 'Choose File',
@@ -53,14 +60,32 @@ FilePicker.defaultProps = {
 };
 
 FilePicker.propTypes = {
+  /** Some text that will appear above the Icon */
   header: PropTypes.string,
+
+  /** Callback function for when a file is uploaded */
   onChange: PropTypes.func,
+
+  /** Some text that will appear as a main label besides the Icon */
   mainLabel: PropTypes.string,
+
+  /** Some text that will appear as a sub label besides the Icon   */
   subLabel: PropTypes.string,
+
+  /** supported formats seperated by comma (.png, .pdf) */
   supportedFormats: PropTypes.string,
+
+  /** Max size of file allowed */
   maxSize: PropTypes.number,
+
+  /** should present error */
   error: PropTypes.bool,
-  errorMessage: PropTypes.string
+
+  /** error message to present */
+  errorMessage: PropTypes.string,
+
+  /** id for the filePicker */
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export default FilePicker;

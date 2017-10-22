@@ -1,19 +1,27 @@
 @import '../common.scss';
 
 .menu {
-	margin: 0;
 	padding: 0;
 	list-style-type: none;
 
 	:global(.ltr) &, & {
 		text-align: left;
-		margin-right: 6px;
-		margin-left: 0;
 	}
 
 	:global(.rtl) & {
 		text-align: right;
-		margin-left: 6px;
-		margin-right: 0;
 	}
+}
+
+.topPlacement {
+	margin: 0 -6px 8px -6px;
+}
+.rightPlacement {
+	margin: 0 -6px 0 0px;
+}
+.bottomPlacement {
+	margin: 8px -6px 0 -6px;
+}
+.leftPlacement {
+	margin: 0 0 0 -6px;
 }

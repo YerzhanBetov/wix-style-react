@@ -19,12 +19,12 @@ class ExampleBounce extends Component {
   bounce() {
     this.clearPendingTimeout();
     if (this.state.bounce) {
-      this.setState({ bounce: false });
+      this.setState({bounce: false});
     } else {
-      this.setState({ bounce: true });
-        this._timeoutId = setTimeout(() => {
-          this._timeoutId = null;
-          this.setState({ bounce: false });
+      this.setState({bounce: true});
+      this._timeoutId = setTimeout(() => {
+        this._timeoutId = null;
+        this.setState({bounce: false});
       }, 2000);
     }
   }

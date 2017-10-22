@@ -1,6 +1,6 @@
 import React, {Children} from 'react';
 import PropTypes from 'prop-types';
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import {TransitionGroup, CSSTransition} from 'react-transition-group';
 import classNames from 'classnames';
 import css from './Notification.scss';
 import WixComponent from '../BaseComponents/WixComponent';
@@ -22,7 +22,7 @@ export const notificationTypeToPosition = {
 
 const animationsTimeouts = {
   enter: 500,
-  leave: 350
+  exit: 350
 };
 
 function FirstChild(props) {
@@ -79,14 +79,14 @@ class Notification extends WixComponent {
     this.setState({hideByCloseClick: true});
     setTimeout(() => {
       this.props.onClose && this.props.onClose('hide-by-close-click');
-    }, animationsTimeouts.leave + 100);
+    }, animationsTimeouts.exit + 100);
   }
 
   hideNotificationOnTimeout() {
     this.setState({hideByTimer: true});
     setTimeout(() => {
       this.props.onClose && this.props.onClose('hide-by-timer');
-    }, animationsTimeouts.leave + 100);
+    }, animationsTimeouts.exit + 100);
   }
 
   bypassCloseFlags() {
@@ -116,7 +116,7 @@ class Notification extends WixComponent {
     const {
       type,
       theme,
-      size,
+      size
     } = this.props;
 
     const position = notificationTypeToPosition[type];
@@ -169,36 +169,36 @@ class Notification extends WixComponent {
     const childrenComponents = mapChildren(children);
 
     return (
-      <div
-        data-hook="notification-wrapper"
-        className={this.getWrapperClassNames()}
-        style={{zIndex}}
+      <CSSTransition
+        classNames={{
+          enter: css.notificationAnimationEnter,
+          enterActive: css.notificationAnimationEnterActive,
+          exit: css.notificationAnimationExit,
+          exitActive: css.notificationAnimationExitActive
+        }}
+        timeout={animationsTimeouts}
         >
-        <div className={css.contentWrapper}>
-          {this.renderLabel(childrenComponents.label)}
-          {this.renderActionButton(childrenComponents.ctaButton)}
+        <div
+          data-hook="notification-wrapper"
+          className={this.getWrapperClassNames()}
+          style={{zIndex}}
+          >
+          <div className={css.contentWrapper}>
+            {this.renderLabel(childrenComponents.label)}
+            {this.renderActionButton(childrenComponents.ctaButton)}
+          </div>
+          {this.renderCloseButton(childrenComponents.closeButton)}
         </div>
-        {this.renderCloseButton(childrenComponents.closeButton)}
-      </div>
+      </CSSTransition>
     );
   }
 
   render() {
     return (
       <div className={css.notificationComponent}>
-        <ReactCSSTransitionGroup
-          component={FirstChild}
-          transitionName={{
-            enter: css.notificationAnimationEnter,
-            enterActive: css.notificationAnimationEnterActive,
-            leave: css.notificationAnimationLeave,
-            leaveActive: css.notificationAnimationLeaveActive,
-          }}
-          transitionEnterTimeout={animationsTimeouts.enter}
-          transitionLeaveTimeout={animationsTimeouts.leave}
-          >
+        <TransitionGroup component={FirstChild}>
           {this.shouldShowNotification() ? this.renderNotification() : null}
-        </ReactCSSTransitionGroup>
+        </TransitionGroup>
       </div>
     );
   }

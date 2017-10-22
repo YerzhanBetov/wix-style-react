@@ -2,30 +2,18 @@ import React, {cloneElement} from 'react';
 import PropTypes from 'prop-types';
 import WixComponent from '../BaseComponents/WixComponent';
 import ReactDOM from 'react-dom';
-
 import TooltipContent from './TooltipContent';
 import position from './TooltipPosition';
-
 import styles from './TooltipContent.scss';
 
 const renderSubtreeIntoContainer = ReactDOM.unstable_renderSubtreeIntoContainer;
 
+/** A Tooltip component */
 class Tooltip extends WixComponent {
-
-  componentElements() {
-    const elements = super.componentElements();
-    return this._mountNode ? elements.concat(this._mountNode) : elements;
-  }
-
-  onClickOutside(e) {
-    if (this.props.shouldCloseOnClickOutside) {
-      this.hide();
-    } else if (this.props.onClickOutside) {
-      this.props.onClickOutside && this.props.onClickOutside(e);
-    }
-  }
+  static displayName = 'Tooltip';
 
   static propTypes = {
+    /** alignment of the tooltip's text  */
     textAlign: PropTypes.string,
     children: PropTypes.node,
     content: PropTypes.node.isRequired,
@@ -39,21 +27,37 @@ class Tooltip extends WixComponent {
     active: PropTypes.bool,
     bounce: PropTypes.bool,
     disabled: PropTypes.bool,
+
+    /** The tooltip max width  */
     maxWidth: PropTypes.string,
+
+    /** Callback when cliking outside  */
     onClickOutside: PropTypes.func,
 
-    /**
-     * Callback to be called when the tooltip has been shown
-     */
+    /** override the theme text color of the tooltip  */
+    color: PropTypes.string,
+
+    /** override the theme text line height of the tooltip  */
+    lineHeight: PropTypes.string,
+
+    /** Callback to be called when the tooltip has been shown */
     onShow: PropTypes.func,
+
+    /** Callback to be called when the tooltip has been hidden */
+    onHide: PropTypes.func,
+
+    /** z index of the tooltip  */
     zIndex: PropTypes.number,
 
     /**
-     * By default tooltip is appended to a body, to avoid CSS collisions.
-     * But if you want your tooltip to scroll with a content, append tooltip to a parent.
-     * Just make sure the CSS are not leaked.
-     */
+      * In some cases when you need a tooltip scroll with your element, you can append the tooltip to the direct parent, just
+      * don't forget to apply `relative`, `absolute` positioning. And be aware that some of your styles may leak into
+      * tooltip content.
+      */
     appendToParent: PropTypes.bool,
+
+    /** Element to attach the tooltip to  */
+    appendTo: PropTypes.any,
 
     /**
      * Allows to shift the tooltip position by x and y pixels.
@@ -72,7 +76,10 @@ class Tooltip extends WixComponent {
     moveArrowTo: PropTypes.number,
     size: PropTypes.oneOf(['normal', 'large']),
     shouldCloseOnClickOutside: PropTypes.bool,
-    relative: PropTypes.bool
+    relative: PropTypes.bool,
+
+    /** Allows changing the padding of the content */
+    padding: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   };
 
   static defaultProps = {
@@ -81,11 +88,12 @@ class Tooltip extends WixComponent {
     showTrigger: 'mouseenter',
     hideTrigger: 'mouseleave',
     showDelay: 200,
-    hideDelay: 500,
+    hideDelay: 0,
     zIndex: 2000,
-    maxWidth: '1200px',
+    maxWidth: '378px',
     onClickOutside: null,
     onShow: null,
+    onHide: null,
     active: false,
     theme: 'light',
     disabled: false,
@@ -107,6 +115,20 @@ class Tooltip extends WixComponent {
     hidden: true
   };
 
+  componentElements() {
+    const elements = super.componentElements();
+    return this._mountNode ? elements.concat(this._mountNode) : elements;
+  }
+
+  onClickOutside(e) {
+    if (this.props.shouldCloseOnClickOutside) {
+      this.hide();
+    }
+
+    this.props.onClickOutside && this.props.onClickOutside(e);
+  }
+
+
   componentDidUpdate() {
     if (this._mountNode && this.state.visible) {
       const arrowPlacement = {top: 'bottom', left: 'right', right: 'left', bottom: 'top'};
@@ -126,10 +148,13 @@ class Tooltip extends WixComponent {
           bounce={this.props.bounce}
           arrowPlacement={arrowPlacement[this.props.placement]}
           style={{zIndex: this.props.zIndex, position}}
+          padding={this.props.padding}
           arrowStyle={this.state.arrowStyle}
           maxWidth={this.props.maxWidth}
           size={this.props.size}
           textAlign={this.props.textAlign}
+          lineHeight={this.props.lineHeight}
+          color={this.props.color}
           >
           {this.props.content}
         </TooltipContent>);
@@ -168,7 +193,7 @@ class Tooltip extends WixComponent {
   }
 
   render() {
-    const child = this.props.children;
+    const child = Array.isArray(this.props.children) ? this.props.children[0] : this.props.children;
     if (child) {
       return cloneElement(child, {
         ref: ref => this._childNode = ReactDOM.findDOMNode(ref),
@@ -198,7 +223,9 @@ class Tooltip extends WixComponent {
     if (typeof document === 'undefined') {
       return null;
     }
-
+    if (this.props.appendTo) {
+      return this.props.appendTo;
+    }
     return this.props.appendToParent ? this._childNode.parentElement : document ? document.body : null;
   }
 
@@ -219,6 +246,9 @@ class Tooltip extends WixComponent {
     }
     if (!this.state.visible) {
       this._showTimeout = setTimeout(() => {
+        if (typeof document === 'undefined') {
+          return;
+        }
         if (this.props.onShow) {
           this.props.onShow();
         }
@@ -254,11 +284,11 @@ class Tooltip extends WixComponent {
     if (this._hideTimeout) {
       return;
     }
-
     if (this.state.visible) {
       this._hideTimeout = setTimeout(() => {
         if (this._mountNode) {
           ReactDOM.unmountComponentAtNode(this._mountNode);
+          this.props.onHide && this.props.onHide();
           this._getContainer() && this._getContainer().removeChild(this._mountNode);
           this._mountNode = null;
         }
@@ -361,6 +391,16 @@ class Tooltip extends WixComponent {
         top: el.offsetTop,
         width: el.offsetWidth,
         height: el.offsetHeight
+      };
+    }
+    if (this.props.appendTo) {
+      const containerRect = this.props.appendTo.getBoundingClientRect();
+      const selfRect = el.getBoundingClientRect();
+      return {
+        left: selfRect.left - containerRect.left + this.props.appendTo.scrollLeft,
+        top: selfRect.top - containerRect.top + this.props.appendTo.scrollTop,
+        width: selfRect.width,
+        height: selfRect.height
       };
     }
     return el.getBoundingClientRect();

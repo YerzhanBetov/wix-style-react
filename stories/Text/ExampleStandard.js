@@ -19,5 +19,11 @@ export default () =>
 
     <div>As `span` with `T1` appearance:</div>
     <Text appearance="T1" dataHook="story-text">Hello, World!</Text>
-  </div>;
 
+    <br/>
+    <hr/>
+    <br/>
+
+    <div>`ellipsis` attribute:</div>
+    <div style={{display: 'flex', width: '200px'}}><Text dataHook="story-ellipsed-text" ellipsis>This is a long sentence that we cant see how it will end</Text></div>
+  </div>;

@@ -7,7 +7,7 @@ const items = [{id: 1, title: 'First item'}, {id: 2, title: 'Second item'}, {id:
 
 class TabsTemplate extends Component {
   state = {
-    activeId: items[0].id,
+    activeId: items[0].id
   };
 
   componentDidUpdate(props) {
@@ -49,7 +49,7 @@ TabsTemplate.propTypes = {
 function getExampleCode(element) {
   return reactElementToJSXString(element, {
     filterProps: ['onClick'],
-    showDefaultProps: false,
+    showDefaultProps: false
   });
 }
 

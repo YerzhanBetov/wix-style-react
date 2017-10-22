@@ -4,17 +4,18 @@ import DropdownLayout from 'wix-style-react/DropdownLayout';
 const style = {
   display: 'inline-block',
   padding: '0 5px',
-  width: '140px',
+  width: '160px',
   lineHeight: '22px'
 };
 
 const options = [
+  {id: 'first title', value: 'title', title: true},
   {id: 1, value: 'Option 1'},
+  {id: 'title', value: 'this is a title', title: true},
   {id: 2, value: 'Option 2'},
   {id: 0, value: '-'},
-  {id: 3, value: 'Option 3'},
   {id: 'disabled', value: 'Disabled', disabled: true},
-  {id: 4, value: 'Option 4'},
+  {id: 4, value: 'Option 4'}
 ];
 
 class ControlledExample extends Component {

@@ -1,5 +1,15 @@
 @import '../common.scss';
 
+$content-width: 250px;
+
+.content > span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: $content-width;
+}
+
 .header {
   display: block;
   margin-bottom: 13px;
@@ -13,17 +23,22 @@
   display: inline-flex;
   flex-direction: row;
   cursor: pointer;
+
+  &:hover {
+    svg {
+      border-radius: 50%;
+      background: $B40;
+    }
+  }
 }
 
 .cta {
-  display: block;
   font-family: $FontRoman;
   font-size: 20px;
   color: $B10;
 }
 
 .info {
-  display: block;
   font-family: $FontLight;
   font-size: 16px;
   color: $D30;

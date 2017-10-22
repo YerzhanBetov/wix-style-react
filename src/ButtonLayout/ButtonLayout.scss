@@ -33,7 +33,7 @@
     cursor: pointer;
     outline: none;
 
-    transition: background-color 100ms linear, border-color 100ms linear, color 100ms linear;
+    transition: all 100ms linear;
 }
 
 .button>.inner {
@@ -249,7 +249,7 @@
       @extend .t3_2;
     }
 
-    background-color: rgba($D10, 0.12);
+    background-color: rgba($D10, 0.24);
     border: 0;
 }
 
@@ -394,7 +394,7 @@
       @extend .t3_2;
     }
 
-    background-color: rgba($D10, 0.18);
+    background-color: rgba($D10, 0.3);
 }
 
 .emptypurple:hover, .emptypurple.hover,
@@ -528,7 +528,7 @@
       @extend .t3_2;
     }
 
-    background-color: rgba($D10, 0.12);
+    background-color: rgba($D10, 0.36);
 }
 
 .close-standard:active, .close-standard.active,

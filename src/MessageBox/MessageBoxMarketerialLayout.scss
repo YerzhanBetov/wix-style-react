@@ -51,9 +51,6 @@ $headerImageHeight: 185px;
   height           : 25px;
   border-radius    : 50%;
   border           : none;
-  display          : flex;
-  justify-content  : center;
-  align-items      : center;
   background-color : rgba(red($D10), green($D10), blue($D10), 0.2);
   cursor           : pointer;
 }
@@ -102,7 +99,7 @@ $headerImageHeight: 185px;
   margin-bottom: 8px;
 }
 .secondary-button-container{
-  @include FontLight(); 
+  @include FontLight();
   margin-top: 21px;
   font-size: 14px;
   line-height: 1.29;
@@ -111,4 +108,26 @@ $headerImageHeight: 185px;
     cursor: pointer;
 
   }
+}
+
+.flexContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.dynamicBody {
+  flex-grow: 1;
+  overflow: auto;
+  min-height: 2em;
+}
+
+.fixedHeader {
+  flex-shrink: 0;
+}
+
+.fixedFooter {
+  flex-shrink: 0;
 }

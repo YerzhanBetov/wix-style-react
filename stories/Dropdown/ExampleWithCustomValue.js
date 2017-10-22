@@ -18,21 +18,20 @@ class CustomValuesInDropdown extends React.Component {
   }
 
   render() {
-
-    const onSelect = (option) => console.log('Selected ', valueParser(option));
-
-    const onChange = () => this.setState({checkboxChecked: !this.state.checkboxChecked});
-
     const valueParser = option => (typeof option.value === 'string') ?
       option.value :
       option.value.props.children[0].props.children;
+
+    const onSelect = option => console.log('Selected ', valueParser(option));
+
+    const onChange = () => this.setState({checkboxChecked: !this.state.checkboxChecked});
 
     const customValue = (
       <div>
         <span>Custom Value</span>
         <span style={{marginLeft: '5px'}} onClick={e => e.stopPropagation()}>
-        <Checkbox onChange={onChange} checked={this.state.checkboxChecked}/>
-      </span>
+          <Checkbox onChange={onChange} checked={this.state.checkboxChecked}/>
+        </span>
       </div>
     );
 

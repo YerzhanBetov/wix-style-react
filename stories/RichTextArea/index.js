@@ -1,5 +1,5 @@
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import InteractiveCodeExample from '../utils/Components/InteractiveCodeExample';
 import Markdown from '../utils/Components/Markdown';
 import ReadmeTestkit from '../../src/RichTextArea/README.TESTKIT.md';
@@ -14,7 +14,7 @@ storiesOf('Core', module)
       <div>
         <Markdown source={ReadMe}/>
         <InteractiveCodeExample title="Customize a <RichTextArea/>">
-          <RichTextAreaExample />
+          <RichTextAreaExample/>
         </InteractiveCodeExample>
       </div>
       <div>

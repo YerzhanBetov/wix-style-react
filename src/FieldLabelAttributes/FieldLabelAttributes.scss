@@ -1,0 +1,21 @@
+@import '../common.scss';
+
+.root {
+  display: inline-block;
+}
+
+.required {
+  &:before {
+    content: '*';
+    font-size: 22px;
+    margin-left: 6px;
+    color: $B20;
+  }
+}
+
+.icon {
+  color: $B10;
+  margin-left: 8px;
+  position: relative;
+  top: 3px
+}

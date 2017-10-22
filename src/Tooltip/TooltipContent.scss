@@ -3,11 +3,11 @@
 $zIndex: 2000;
 $font-size: 14px;
 $line-height: 1.29;
-$padding: 18px;
+$padding: 12px 24px;
 $border-radius: 8px;
 $shadow-color: rgba(0, 0, 0, 0.2);
 $shadow-color-arrow: rgba(0, 0, 0, .1);
-$shadow: 0 0 11px 0 $shadow-color;
+$shadow: 0 6px 6px 0 rgba(22, 45, 60, 0.06), 0 0 18px 0 rgba(22, 45, 60, 0.12);
 
 .root {
   position: absolute;

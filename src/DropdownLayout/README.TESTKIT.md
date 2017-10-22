@@ -25,6 +25,11 @@
 | clickAtOption | number | - | simulate click on option at index <number> |
 | clickAtOptionWithValue | string | - | press esc key on the input element |
 | isOptionADivider | number | boolean | true if option at index <number> is a divider |
+| isOptionHeightSmall | number | boolean | true if option at index <number> has small height |
+| isOptionHeightBig | number | boolean | true if option at index <number> has big height |
+| isLinkOption | number | boolean | true if option is a link |
+| mouseEnter | - | - | simulate mouseEnter dropdown wrapper |
+| mouseLeave | - | - | simulate mouseLeave dropdown wrapper |
 | setProps | json | element | returns a clone of this element with the new props from the json | 
 
 ## Usage Example

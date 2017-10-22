@@ -17,14 +17,14 @@ class ControlledBreadcrumbs extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <div className={`${styles.onGrayBackground} ${styles.exampleWrapper}`}>
         <Breadcrumbs
           dataHook={'story-breadcrumbs-active'}
           items={items}
           activeId={this.state.activeId}
           onClick={this.onClick}
-        />
+          />
       </div>
     );
   }

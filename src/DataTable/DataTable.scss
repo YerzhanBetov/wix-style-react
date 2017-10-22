@@ -1,10 +1,10 @@
 @import '../common';
 
 .table {
-    border-collapse: collapse;
-    font-family:HelveticaNeueW01-55Roma,HelveticaNeueW02-55Roma,HelveticaNeueW10-55Roma,sans-serif;
-    table-layout: fixed;
-    background-color: white;
+  border-collapse: collapse;
+  font-family:HelveticaNeueW01-55Roma,HelveticaNeueW02-55Roma,HelveticaNeueW10-55Roma,sans-serif;
+  table-layout: fixed;
+  background-color: white;
 }
 
 .table th {
@@ -22,11 +22,50 @@
   border-bottom: solid 1px $D70;
 }
 
+.table td.details {
+  padding: 0px;
+  height: 0px;
+  border-bottom: none;
+}
+
+.table td.active {
+  padding: 0px;
+  height: auto;
+  border-bottom: solid 1px $D70;
+}
+
 .table td.important {
   font-size: 16px;
   color: $paletteD2;
 }
 
 .clickableDataRow {
+  td {
+    border-bottom: none medium;
+  }
   cursor: pointer;
+
+  &:nth-last-child(2) {
+    td {
+      border-bottom: 1px solid $D70;
+    }
+  }
+}
+
+.sortArrowAsc,
+.sortArrowDesc{
+  font-size: 9px;
+  margin: 0 4px;
+}
+.sortArrowDesc svg{
+  transform: rotate(180deg);
+}
+
+.row-details:not(:last-child) {
+  border-bottom: 1px solid $D70;
+
+  .row-details-inner {
+    border-top: 1px solid $D70;
+  }
+
 }

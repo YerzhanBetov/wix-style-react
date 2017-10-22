@@ -1,38 +1,45 @@
 import React, {Component} from 'react';
 import {node, bool, oneOf} from 'prop-types';
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
-import slideLeft from './SlideLeftAnimation.scss';
-import slideRight from './SlideRightAnimation.scss';
+import {CSSTransition} from 'react-transition-group';
+import slideIn from './SlideInAnimation.scss';
+import slideOut from './SlideOutAnimation.scss';
 
 export const SlideDirection = {
-  left: 'left',
-  right: 'right'
+  in: 'in',
+  out: 'out'
 };
+
+const animationDuration = 300; // Synced with SlideAnimation.scss file
 
 class SlideAnimation extends Component {
   render() {
-    const {animateAppear, animateEnter, animateLeave, children, direction} = this.props;
-    const animationDuration = 300; // Synced with SlideAnimation.scss file
-    const transitionName = direction === SlideDirection.left ? slideLeft : slideRight;
+    const {isVisible, animateAppear, animateEnter, animateLeave, children, direction} = this.props;
+    const transitionNames = direction === SlideDirection.in ? slideIn : slideOut;
+    const childTimeout = {
+      enter: animateEnter ? animationDuration : 0,
+      exit: animateLeave ? animationDuration : 0
+    };
+
     return (
-      <ReactCSSTransitionGroup
-        transitionAppear={animateAppear}
-        transitionLeave={animateLeave}
-        transitionAppearTimeout={animateAppear ? animationDuration : 0}
-        transitionEnterTimeout={animateEnter ? animationDuration : 0}
-        transitionLeaveTimeout={animateLeave ? animationDuration : 0}
-        transitionName={transitionName}
+      <CSSTransition
+        in={isVisible}
+        appear={animateAppear}
+        exit={animateLeave}
+        classNames={transitionNames}
+        timeout={childTimeout}
+        unmountOnExit
         >
-        {children}
-      </ReactCSSTransitionGroup>
+        {children || <span/>}
+      </CSSTransition>
     );
   }
 }
 
 SlideAnimation.propTypes = {
+  isVisible: bool.isRequired,
   direction: oneOf([
-    SlideDirection.left,
-    SlideDirection.right
+    SlideDirection.in,
+    SlideDirection.out
   ]),
   animateAppear: bool,
   animateEnter: bool,
@@ -41,7 +48,7 @@ SlideAnimation.propTypes = {
 };
 
 SlideAnimation.defaultProps = {
-  direction: SlideDirection.left,
+  direction: SlideDirection.in,
   animateAppear: true,
   animateEnter: true,
   animateLeave: true,

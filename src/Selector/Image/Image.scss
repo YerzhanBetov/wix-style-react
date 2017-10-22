@@ -1,0 +1,9 @@
+@import '../../common.scss';
+
+.size {
+    &-tiny  { height: 24px; width: 24px; }
+    &-small  { height: 42px; width: 42px; }
+    &-portrait  { height: 60px; width: 48px; }
+    &-large  { height: 60px; width: 60px; }
+    &-cinema  { height: 60px; width: 102px; }
+}

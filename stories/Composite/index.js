@@ -1,5 +1,5 @@
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 
 import CodeExample from '../utils/Components/CodeExample';
 import Markdown from '../utils/Components/Markdown';
@@ -7,7 +7,7 @@ import Markdown from '../utils/Components/Markdown';
 import Readme from '../../src/Composite/README.md';
 
 import ExampleComposite from './ExampleComposite';
-import ExampleCompositeRaw from '!raw!./ExampleComposite';
+import ExampleCompositeRaw from '!raw-loader!./ExampleComposite';
 
 storiesOf('Common', module)
   .add('Composites', () => (

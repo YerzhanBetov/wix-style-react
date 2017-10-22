@@ -3,11 +3,16 @@
 $header-padding: 27px 30px 26px;
 
 .header {
-
+  display: flex;
+  justify-content: space-between;
   padding: $header-padding;
 
   &.with-divider {
     border-bottom: 1px solid $D70;
+  }
+
+  .container {
+    flex-grow: 1;
   }
 
   .title {

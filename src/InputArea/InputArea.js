@@ -6,8 +6,10 @@ import WixComponent from '../BaseComponents/WixComponent';
 
 import styles from './InputArea.scss';
 
+/**
+  * General inputArea container
+  */
 class InputArea extends WixComponent {
-
   constructor(props) {
     super(props);
     this._onKeyDown = this._onKeyDown.bind(this);
@@ -80,7 +82,7 @@ class InputArea extends WixComponent {
 
     return (
       <div className={styles.wrapper}>
-        <div data-hook="textarea-div" className={classes}>
+        <div className={classes}>
           <textarea
             rows={rows}
             maxLength={maxLength}
@@ -153,52 +155,91 @@ class InputArea extends WixComponent {
 
   _onChange(e) {
     this.props.hasCounter && this.setState({counter: e.target.value.length});
-    this.props.onChange(e);
+    this.props.onChange && this.props.onChange(e);
   }
 }
 
 InputArea.displayName = 'InputArea';
 
 InputArea.defaultProps = {
-  theme: 'normal',
+  theme: 'normal'
 };
 
 InputArea.propTypes = {
-  id: PropTypes.string,
-  value: PropTypes.string,
-  style: PropTypes.oneOf(['normal', 'paneltitle', 'material', 'amaterial']),
-  theme: PropTypes.oneOf(['normal', 'paneltitle', 'material', 'amaterial']),
-  forceHover: PropTypes.bool,
-  forceFocus: PropTypes.bool,
-  placeholder: PropTypes.string,
-  error: PropTypes.bool,
-  defaultValue: PropTypes.string,
-  tabIndex: PropTypes.number,
-  menuArrow: PropTypes.bool,
+  ariaControls: PropTypes.string,
+  ariaDescribedby: PropTypes.string,
+  ariaLabel: PropTypes.string,
+
+  /** Standard React Input autoFocus (focus the element on mount) */
   autoFocus: PropTypes.bool,
+
+  /** Standard React Input autoSelect (select the entire text of the element on focus) */
   autoSelect: PropTypes.bool,
+  dataHook: PropTypes.string,
+
+  /** Default value for those who wants to use this component un-controlled */
+  defaultValue: PropTypes.string,
+
+  /** Sets UI to erroneous */
+  error: PropTypes.bool,
+
+  /** The error message to display when hovering the error icon, if not given or empty there will be no tooltip */
+  errorMessage: PropTypes.string,
+  forceFocus: PropTypes.bool,
+  forceHover: PropTypes.bool,
+
+  /** When true a letters counter will appear */
+  hasCounter: PropTypes.bool,
+  iconLeft: PropTypes.object,
+  id: PropTypes.string,
+
+  /** i.e. '12px' */
+  maxHeight: PropTypes.string,
+
+  /** Define max length allowed in the inputArea */
+  maxLength: PropTypes.number,
+  menuArrow: PropTypes.bool,
+
+  /** i.e. '12px' */
+  minHeight: PropTypes.string,
+
+  /** onBlur callback */
+  onBlur: PropTypes.func,
+
+  /** onChange callback */
   onChange: PropTypes.func,
   onClear: PropTypes.func,
-  onBlur: PropTypes.func,
-  onFocus: PropTypes.func,
-  onEscapePressed: PropTypes.func,
   onEnterPressed: PropTypes.func,
+  onEscapePressed: PropTypes.func,
+
+  /** onFocus callback */
+  onFocus: PropTypes.func,
   onKeyDown: PropTypes.func,
   onKeyUp: PropTypes.func,
-  iconLeft: PropTypes.object,
+
+  /** onShow prop for the error tooltip */
+  onTooltipShow: PropTypes.func,
+
+  /** Placeholder to display */
+  placeholder: PropTypes.string,
+
+  /** Sets the input to readOnly */
   readOnly: PropTypes.bool,
-  rows: PropTypes.number,
-  minHeight: PropTypes.string,
-  maxHeight: PropTypes.string,
-  maxLength: PropTypes.number,
   resizable: PropTypes.bool,
-  hasCounter: PropTypes.bool,
-  errorMessage: PropTypes.string,
-  ariaLabel: PropTypes.string,
-  ariaDescribedby: PropTypes.string,
-  ariaControls: PropTypes.string,
+
+  /** Sets initial height according to the number of rows (chrome uses the rows for minHeight as well) */
+  rows: PropTypes.number,
+  style: PropTypes.oneOf(['normal', 'paneltitle', 'material', 'amaterial']),
+  tabIndex: PropTypes.number,
+
+  /** The theme of the input, can be one of `normal`, `paneltitle` */
+  theme: PropTypes.oneOf(['normal', 'paneltitle', 'material', 'amaterial']),
+
+  /** Placement of the error tooltip */
   tooltipPlacement: PropTypes.string,
-  onTooltipShow: PropTypes.func
+
+  /** Inputs value */
+  value: PropTypes.string
 };
 
 export default InputArea;

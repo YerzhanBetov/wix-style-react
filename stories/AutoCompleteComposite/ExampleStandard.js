@@ -14,7 +14,7 @@ const options = [
   {id: 2, value: 'Second Option'},
   {id: 3, value: 'Third Option'},
   {id: 4, value: 'Fourth Option'},
-  {id: 4, value: 'Fifth Option'},
+  {id: 4, value: 'Fifth Option'}
 ];
 
 class ExampleStandard extends Component {

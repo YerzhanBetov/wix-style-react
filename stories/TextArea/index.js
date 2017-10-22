@@ -1,5 +1,5 @@
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import InteractiveCodeExample from '../utils/Components/InteractiveCodeExample';
 import Markdown from '../utils/Components/Markdown';
 

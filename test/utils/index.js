@@ -1,0 +1,1 @@
+export {isClassExists} from './utils';

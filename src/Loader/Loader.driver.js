@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Loader from '../Loader';
+import {isClassExists} from '../../test/utils';
 
 const loaderDriverFactory = ({element, wrapper}) => {
-  const isClassExists = (element, className) => !!element && element.className.indexOf(className) !== -1;
   const text = () => element.childNodes[1];
   const getColor = () => {
     if (!element) {

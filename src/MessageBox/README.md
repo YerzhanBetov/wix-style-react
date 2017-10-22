@@ -33,6 +33,7 @@
 | disableCancel | bool | false | - | Disable cancel button |
 | disableConfirmation | bool| false | - | Disable confirmation button |
 | width| string | '600px' | - | Set the message box width |
+| noBodyPadding| bool | false | - | Should the body of the layout will have surrounding padding |
 
 ## MessageBoxFunctionalLayout TestKit API
 

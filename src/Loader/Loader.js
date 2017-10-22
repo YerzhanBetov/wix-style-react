@@ -5,6 +5,9 @@ import WixComponent from '../BaseComponents/WixComponent';
 
 import styles from './Loader.scss';
 
+/**
+  * General Loader
+  */
 class Loader extends WixComponent {
   render() {
     const {size, color, text} = this.props;
@@ -18,14 +21,21 @@ class Loader extends WixComponent {
   }
 }
 
+Loader.displayName = 'Loader';
+
 Loader.defaultProps = {
   size: 'medium',
-  color: 'blue',
+  color: 'blue'
 };
 
 Loader.propTypes = {
+  /** The size of loader */
   size: PropTypes.oneOf(['small', 'medium', 'large']).isRequired,
+
+  /** Color of the loader */
   color: PropTypes.oneOf(['blue', 'white']).isRequired,
+
+  /** Text to be shown below the loader */
   text: PropTypes.string
 };
 

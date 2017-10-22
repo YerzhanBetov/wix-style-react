@@ -1,0 +1,22 @@
+.wrapper {
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.option {
+  margin-bottom: 5px !important;
+}
+
+.title {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #cbccce;
+  padding: 10px;
+}
+
+.preview {
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f6f8fa;
+}

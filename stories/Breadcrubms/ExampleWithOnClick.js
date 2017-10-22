@@ -11,9 +11,10 @@ export default () =>
       <Breadcrumbs
         dataHook={'story-breadcrumbs-onclick'}
         items={items}
-        onClick={(item) => {
-          alert(`clicked element is: ${JSON.stringify(item)}`)
-        }}/>
+        onClick={item => {
+          alert(`clicked element is: ${JSON.stringify(item)}`);
+        }}
+        />
     </div>
   </div>;
 

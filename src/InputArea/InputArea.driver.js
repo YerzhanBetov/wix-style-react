@@ -5,8 +5,8 @@ import styles from './InputArea.scss';
 import $ from 'jquery';
 
 const inputAreaDriverFactory = ({element, wrapper, component}) => {
-  const $component = $(element);//.find('[data-hook="textarea-div"]');
-  const textAreaElement = element && element.querySelector('div[data-hook=textarea-div]');
+  const $component = $(element);
+  const textAreaElement = element && element.childNodes[0];
   const textArea = $component.find('textarea')[0];
   return {
     trigger: (trigger, event) => ReactTestUtils.Simulate[trigger](textArea, event),

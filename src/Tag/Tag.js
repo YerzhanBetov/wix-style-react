@@ -4,16 +4,21 @@ import styles from './Tag.scss';
 import classNames from 'classnames';
 import WixComponent from '../BaseComponents/WixComponent';
 import Typography from '../Typography';
+import SmallX from '../Icons/dist/components/SmallX';
 
+/**
+  * A Tag component
+  */
 class Tag extends WixComponent {
   render() {
-    const {id, children, thumb, removable, onRemove, size, wrap, disabled} = this.props;
+    const {id, children, thumb, removable, onRemove, size, wrap, disabled, theme} = this.props;
 
     const className = classNames({
       [styles.tag]: true,
       [styles.large]: size === 'large',
       [styles.tagWrap]: wrap,
-      [styles.disabled]: disabled
+      [styles.disabled]: disabled,
+      [styles[`${theme}Theme`]]: true
     });
 
     const innerClassName = classNames({
@@ -27,7 +32,7 @@ class Tag extends WixComponent {
       <span className={className} disabled={disabled} id={id} title={title}>
         {thumb && <span className={styles.thumb}>{thumb}</span>}
         <span className={innerClassName}>{children}</span>
-        {removable && !disabled && <a className={styles.tagRemoveButton} onClick={() => onRemove(id)}/>}
+        {removable && !disabled && <a className={styles.tagRemoveButton} onClick={() => onRemove(id)}><SmallX/></a>}
       </span>
     );
   }
@@ -35,19 +40,37 @@ class Tag extends WixComponent {
 
 Tag.propTypes = {
   children: PropTypes.string.isRequired,
+
+  /** when set to true this component is disabled  */
+  disabled: PropTypes.bool,
+
+  /** The id of the Tag  */
   id: PropTypes.string.isRequired,
-  thumb: PropTypes.element,
+
+  /** Callback function when removing the Tag  */
   onRemove: PropTypes.func,
+
+  /** If the Tag is removable then it will contain a small clickable X */
   removable: PropTypes.bool,
+
+  /** The height of the Tag */
   size: PropTypes.oneOf(['small', 'large']),
-  wrap: PropTypes.bool,
-  disabled: PropTypes.bool
+
+  /** theme of the Tag */
+  theme: PropTypes.oneOf(['standard', 'error', 'warning']),
+
+  /** An optional thumb to display as part of the Tag */
+  thumb: PropTypes.element,
+
+  /** wether to display elipsis (...) for long content */
+  wrap: PropTypes.bool
 };
 
 Tag.defaultProps = {
   onRemove: () => {},
   size: 'small',
   removable: true,
+  theme: 'standard'
 };
 
 export default Tag;

@@ -7,6 +7,8 @@ import Content from './Content';
 import Header from './Header';
 import LinkHeader from './LinkHeader';
 import ButtonHeader from './ButtonHeader';
+import CollapsedHeader from './CollapsedHeader';
+
 class Card extends WixComponent {
 
   static propTypes = {
@@ -14,7 +16,8 @@ class Card extends WixComponent {
     stretchVertically: bool
   };
   static defaultProps = {
-    stretchVertically: false
+    stretchVertically: false,
+    collapsStyle: 'none'
   };
 
   render() {
@@ -22,6 +25,7 @@ class Card extends WixComponent {
       [styles.card]: true,
       [styles.stretchVertically]: this.props.stretchVertically
     });
+
     return (
       <div className={cssClasses}>
         {this.props.children}
@@ -34,5 +38,6 @@ Card.Content = Content;
 Card.Header = Header;
 Card.LinkHeader = LinkHeader;
 Card.ButtonHeader = ButtonHeader;
+Card.CollapsedHeader = CollapsedHeader;
 
 export default Card;

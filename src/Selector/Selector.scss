@@ -1,0 +1,28 @@
+@import '../common.scss';
+
+.selector {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 84px;
+  justify-content: space-between;
+  padding: 0 30px;
+
+  &:hover {
+    background-color: $B50;
+
+    &:active {
+      background-color: $B30;
+    }
+  }
+
+  .main {
+    align-items: center;
+    display: flex;
+    flex: 1;
+  }
+
+  .extra {
+    max-width: 180px;
+  }
+}

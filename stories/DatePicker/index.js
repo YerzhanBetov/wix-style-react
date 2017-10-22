@@ -1,32 +1,25 @@
-import React from 'react';
-import {storiesOf} from '@kadira/storybook';
-import Markdown from '../utils/Components/Markdown';
-import CodeExample from '../utils/Components/CodeExample';
-import Readme from '../../src/DatePicker/README.md';
-import ExampleControlled from './ExampleControlled';
-import ExampleControlledRaw from '!raw!./ExampleControlled';
-import ExampleControlledRtl from './ExampleControlledRtl';
-import ExampleControlledRawRtl from '!raw!./ExampleControlledRtl';
-import ExampleControlledExcludePast from './ExampleControlledExcludePast';
-import ExampleControlledRawExcludePast from '!raw!./ExampleControlledExcludePast';
+import moment from 'moment';
+import story from '../utils/Components/Story';
 
-storiesOf('Core', module)
-  .add('DatePicker', () => (
-    <div>
-      <Markdown source={Readme}/>
+import readme from '../../src/DatePicker/README.md';
+import source from '!raw-loader!wix-style-react/DatePicker/DatePicker';
+import component from 'wix-style-react/DatePicker';
+import readmeTestkit from '../../src/DatePicker/README.TESTKIT.md';
 
-      <h1>Usage examples</h1>
-
-      <CodeExample title="Controlled input" code={ExampleControlledRaw}>
-        <ExampleControlled/>
-      </CodeExample>
-
-      <CodeExample title="Controlled input - RTL" code={ExampleControlledRawRtl}>
-          <ExampleControlledRtl/>
-      </CodeExample>
-
-      <CodeExample title="Controlled input - exclude past dates" code={ExampleControlledRawExcludePast}>
-        <ExampleControlledExcludePast/>
-      </CodeExample>
-    </div>
-  ));
+story({
+  category: 'Core',
+  name: 'DatePicker',
+  readme,
+  readmeTestkit,
+  source,
+  component,
+  componentProps: setProps => ({
+    onChange: value => setProps({value}),
+    dateFormat: 'YYYY/MM/DD',
+    dataHook: 'storybook-datepicker',
+    value: moment('2017/01/01')
+  }),
+  exampleProps: {
+    onChange: ev => moment(ev).format('YYYY/MM/DD')
+  }
+});

@@ -5,10 +5,10 @@ $slide-animation-time: 0.3s;
   transition: transform $slide-animation-time ease-in-out;
 }
 
-.leave-base {
+.exit-base {
   transform: translate(0%);
 }
 
-.leaveActive-base {
+.exitActive-base {
   transition: transform $slide-animation-time ease-in-out;
 }

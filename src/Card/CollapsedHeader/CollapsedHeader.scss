@@ -1,0 +1,17 @@
+@import '../../Typography/Typography.scss';
+@import '../Header/Header.scss';
+
+.headerOnlyTitle {
+  @extend .header;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerTitleSubtitle {
+  @extend .headerOnlyTitle;
+
+  .collapsedSwitch {
+    top: 7px;
+  }
+}

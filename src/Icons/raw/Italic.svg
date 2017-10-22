@@ -1,16 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="8px" height="14px" viewBox="0 0 8 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: sketchtool 42 (36781) - http://www.bohemiancoding.com/sketch -->
-    <title>C75408F6-5BE2-4B62-A1D8-5070241C37FB</title>
-    <desc>Created with sketchtool.</desc>
-    <defs></defs>
-    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="03-Inputs-/-02-Text-Area-/-02-Rich-Text" transform="translate(-76.000000, -45.000000)" fill="#577083">
-            <g id="Rich-Text-Editor" transform="translate(0.000000, 30.000000)">
-                <g id="Actions">
-                    <polygon id="Icon-Italic" points="84 17 84 15 77 15 77 17 79.712 17 78.121 27 76 27 76 29 83 29 83 27 80.147 27 81.738 17"></polygon>
-                </g>
-            </g>
-        </g>
-    </g>
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 30 30" width="30px" height="30px" xml:space="preserve">
+<polygon points="19,11 19,9 12,9 12,11 14.7,11 13.1,21 11,21 11,23 18,23 18,21 15.1,21 16.7,11 "/>
 </svg>

@@ -14,6 +14,8 @@ export default class Form extends Component {
     label: PropTypes.object,
     firstInput: PropTypes.object,
     lastInput: PropTypes.object,
+    required: PropTypes.bool,
+    info: PropTypes.string
   };
 
   componentDidUpdate(props) {
@@ -26,7 +28,7 @@ export default class Form extends Component {
 
   getComponent() {
     return (
-      <Range>
+      <Range required={this.props.required} info={this.props.info}>
         {this.props.withLabel ? <Label {...this.props.label}/> : null}
         <Input id="first" {...this.props.firstInput}/>
         <Input id="last" {...this.props.lastInput}/>

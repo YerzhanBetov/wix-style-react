@@ -14,7 +14,7 @@ class SideMenuDrill extends WixComponent {
       currentMenuId: this.props.menuKey,
       previousMenuId: null,
       showMenuA: true,
-      slideDirection: SlideDirection.left
+      slideDirection: SlideDirection.in
     };
 
     this.processChildren({props: this.props}, state);
@@ -39,7 +39,7 @@ class SideMenuDrill extends WixComponent {
 
     // returning to an already selected menu item (force nav)
     if (this.lastClickedMenuKey === selectedItemMenuId) {
-      this.navigateToMenu(selectedItemMenuId, SlideDirection.left);
+      this.navigateToMenu(selectedItemMenuId, SlideDirection.in);
       this.lastClickedMenuKey = null;
     }
 
@@ -55,12 +55,17 @@ class SideMenuDrill extends WixComponent {
 
   getSlideDirectionTo(selectedItemMenuId) {
     const {currentMenuId, menus} = this.state;
-    return menus[currentMenuId].level < menus[selectedItemMenuId].level ? SlideDirection.left : SlideDirection.right;
+    return menus[currentMenuId].level < menus[selectedItemMenuId].level ? SlideDirection.in : SlideDirection.out;
   }
 
   navigateToMenu(nextMenuId, slideDirection) {
     const previousMenuId = this.state.currentMenuId;
     const showMenuA = !this.state.showMenuA;
+
+    if (nextMenuId === previousMenuId) {
+      return;
+    }
+
     this.setState({currentMenuId: nextMenuId, previousMenuId, showMenuA, slideDirection});
   }
 
@@ -105,7 +110,7 @@ class SideMenuDrill extends WixComponent {
         }
       },
       onBackHandler: event => {
-        this.navigateToMenu(parentMenuKey, SlideDirection.right);
+        this.navigateToMenu(parentMenuKey, SlideDirection.out);
 
         if (menu.props.onBackHandler) {
           menu.props.onBackHandler.apply(menu, [event]);
@@ -160,6 +165,10 @@ class SideMenuDrill extends WixComponent {
   }
 
   renderNavigation(menu) {
+    if (!menu) {
+      return null;
+    }
+
     if (menu.props.menuKey === this.props.menuKey) {
       // Render root items
       return menu.props.children;
@@ -170,15 +179,17 @@ class SideMenuDrill extends WixComponent {
   }
 
   renderMenu(menu) {
-    return (
+    const navigationMenu = this.renderNavigation(menu);
+
+    return navigationMenu && (
       <div className={styles.drillViewPanel}>
-        {this.renderNavigation(menu)}
+        {navigationMenu}
       </div>
     );
   }
 
   render() {
-    const {menus, currentMenuId, previousMenuId, showMenuA} = this.state;
+    const {menus, currentMenuId, previousMenuId, showMenuA, slideDirection} = this.state;
     const menuAId = showMenuA ? currentMenuId : previousMenuId;
     const menuBId = showMenuA ? previousMenuId : currentMenuId;
 
@@ -188,13 +199,14 @@ class SideMenuDrill extends WixComponent {
     return (
       <SideMenu dataHook="drill-view" inFlex={this.props.inFlex}>
         <div className={styles.drillViewContainer}>
-          <SlideAnimation direction={this.state.slideDirection} animateAppear={false}>
-            { showMenuA ? this.renderMenu(menuA) : null }
+          <SlideAnimation direction={slideDirection} animateAppear={false} isVisible={showMenuA}>
+            {this.renderMenu(menuA)}
           </SlideAnimation>
-          <SlideAnimation direction={this.state.slideDirection} animateAppear={false}>
-            { !showMenuA ? this.renderMenu(menuB) : null }
+          <SlideAnimation direction={slideDirection} animateAppear={false} isVisible={!showMenuA}>
+            {this.renderMenu(menuB)}
           </SlideAnimation>
         </div>
+        {this.props.stickyFooter}
       </SideMenu>
     );
   }

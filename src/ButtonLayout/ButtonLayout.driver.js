@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {isClassExists} from '../../test/utils';
 
 const buttonLayoutDriverFactory = ({element, wrapper, component}) => {
-  const isClassExists = (element, className) => element.className.indexOf(className) !== -1;
   const getAttribute = (element, attribute) => element.getAttribute(attribute);
 
   return {

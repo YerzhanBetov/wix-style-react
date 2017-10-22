@@ -1,3 +1,4 @@
+@import "../common.scss";
 $transition-speed:.3s;
 
 .toggleSwitch {
@@ -21,6 +22,10 @@ $transition-speed:.3s;
             transition: all $transition-speed cubic-bezier(0,1,0,1);
         }
     }
+
+    &.disabled {
+        background: $GR10;
+    }
 }
 
 .toggleSwitch label {
@@ -37,6 +42,11 @@ $transition-speed:.3s;
     background: #b0def8;
     position:   relative;
     cursor:     pointer;
+
+    &.disabled {
+        cursor: default;
+        background: $GR10;
+    }
 }
 
 .innerLabel {
@@ -54,6 +64,10 @@ $transition-speed:.3s;
     justify-content: center;
     align-items: center;
     box-shadow: 1.5px 1.5px 1px rgba(0,0,0,0.2);
+
+    &.disabled {
+        cursor: default;
+    }
 }
 
 :global(.rtl) {
@@ -89,6 +103,12 @@ $transition-speed:.3s;
     path {
         fill:#3899eb;
     }
+
+    &.disabled {
+        path {
+            fill: $GR10;
+        }
+    }
 }
 
 .toggleInactive {
@@ -98,6 +118,12 @@ $transition-speed:.3s;
 
     path {
         fill:#6daae3;
+    }
+
+    &.disabled {
+        path {
+            fill: $GR10;
+        }
     }
 }
 

@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
 import $ from 'jquery';
 import Slider from '../Slider';
-import _ from 'lodash/fp';
-
 
 const sliderDriverFactory = component => {
   const $component = $(component);

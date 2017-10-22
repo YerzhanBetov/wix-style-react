@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button} from '../Backoffice';
+import Button from '../Backoffice/Button';
 import * as styles from './FooterLayout.scss';
 
 const FooterLayout = ({children, theme, cancelText, onCancel, onOk, confirmText, buttonsHeight, enableOk, enableCancel}) => {

@@ -9,7 +9,8 @@ const modalDriverFactory = ({element, wrapper, component}) => {
   const getContent = () => document.body.querySelector('.ReactModal__Content');
 
   return {
-    exists: () => !!(getPortal()) && !!element,
+    exists: () => !!(getPortal()),
+    element: () => element,
     isOpen: () => !!(getContent()),
     isThemeExist: theme => !!getPortal().querySelector(`.${theme}`),
     getChildBySelector: selector => getPortal().querySelector(selector),

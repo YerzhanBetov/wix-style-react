@@ -24,7 +24,7 @@ export default class TextButton extends Component {
   }
 
   render() {
-    const buttonColor = this.state.isHover? '#4EB7F5' : '#3899EC';
+    const buttonColor = this.state.isHover ? '#4EB7F5' : '#3899EC';
 
     const style = {
       color: buttonColor,

@@ -1,6 +1,8 @@
 @import "../common.scss";
+@import '../Typography/Typography.scss';
 
 $option_height: 35px;
+$big_option_hight: 47px;
 $content_container_height: 260px;
 $top-arrow-size: 8px;
 
@@ -96,30 +98,48 @@ $top-arrow-size: 8px;
 .option {
   line-height: $option_height;
   min-height: $option_height;
-  height: $option_height;
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: left;
 
   padding-top: 0;
+  padding-left: 24px;
+  padding-right: 20px;
   @include FontLight();
 
   font-size: 16px;
   color: $D10;
-  cursor:pointer;
+  cursor: pointer;
 
   width:100%;
+  display: flex;
+  align-items: center;  
+
+  &.small-height {
+    height: $option_height;
+  }
+
+  &.big-height {
+    height: $big_option_hight;
+  }
+}
+
+a[data-hook=link-item] {
+  text-decoration: none;
 }
 
 .disabled {
   color: $D50;
+  cursor: default;
 }
 
-:global(.ltr) .option {
-  text-align: left;
-  padding-left: 24px;
-  padding-right: 20px;
+.title {
+  @extend .h4;
+  background: $D70;
+  color: $D20;
+  font-size: 10px;
 }
 
 :global(.rtl) .option {

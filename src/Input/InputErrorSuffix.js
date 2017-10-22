@@ -12,11 +12,13 @@ class InputErrorSuffix extends React.Component {
         dataHook="input-tooltip"
         disabled={this.props.errorMessage.length === 0}
         placement="top"
-        moveBy={{x: 2, y: 0}}
         alignment="center"
+        textAlign="left"
         content={this.props.errorMessage}
         overlay=""
         theme="dark"
+        maxWidth="230px"
+        hideDelay={150}
         >
         <div className={styles.exclamation}><SvgExclamation width={2} height={11}/></div>
       </Tooltip>

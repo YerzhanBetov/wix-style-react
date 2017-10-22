@@ -16,6 +16,7 @@
 | getTarget | - | - | get the TextLink a tag target attribute |
 | getRel | - | - | get the TextLink a tag rel attribute |
 | exists | - | bool | fulfilled if element in the DOM |
+| click | - | - | clicks on the text link |
 
 ## Usage Example
 

@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import {protractorTestkitFactoryCreator} from '../src/test-common';
 /*eslint no-duplicate-imports: 0*/
 export {getStoryUrl, waitForVisibilityOf, scrollToElement} from '../src/test-common';
@@ -14,11 +15,14 @@ export const badgeTestkitFactory = protractorTestkitFactoryCreator(badgeDriverFa
 import buttonDriverFactory from '../src/Backoffice/Button/Button.protractor.driver';
 export const buttonTestkitFactory = protractorTestkitFactoryCreator(buttonDriverFactory);
 
-import viewerButtonDriverFactory from '../src/Viewer/Button/Button.protractor.driver';
-export const viewerButtonTestkitFactory = protractorTestkitFactoryCreator(viewerButtonDriverFactory);
-
 import buttonSelectionDriverFactory from '../src/ButtonSelection/ButtonSelection.protractor.driver';
 export const buttonSelectionTestkitFactory = protractorTestkitFactoryCreator(buttonSelectionDriverFactory);
+
+import tpaButtonDriverFactory from '../src/TPA/Button/Button.protractor.driver';
+export const tpaButtonTestkitFactory = protractorTestkitFactoryCreator(tpaButtonDriverFactory);
+
+import tpaInputDriverFactory from '../src/TPA/Input/Input.protractor.driver';
+export const tpaInputTestkitFactory = protractorTestkitFactoryCreator(tpaInputDriverFactory);
 
 import dataTableDriverFactory from '../src/DataTable/DataTable.protractor.driver';
 export const dataTableTestkitFactory = protractorTestkitFactoryCreator(dataTableDriverFactory);
@@ -34,6 +38,12 @@ export const checkboxTestkitFactory = protractorTestkitFactoryCreator(checkboxDr
 
 import dropdownDriverFactory from '../src/Dropdown/Dropdown.protractor.driver';
 export const dropdownTestkitFactory = protractorTestkitFactoryCreator(dropdownDriverFactory);
+
+import buttonWithOptionsDriverFactory from '../src/ButtonWithOptions/ButtonWithOptions.protractor.driver';
+export const buttonWithOptionsTestkitFactory = protractorTestkitFactoryCreator(buttonWithOptionsDriverFactory);
+
+import languagePickerDriverFactory from '../src/LanguagePicker/LanguagePicker.protractor.driver';
+export const languagePickerTestkitFactory = protractorTestkitFactoryCreator(languagePickerDriverFactory);
 
 import filePickerDriverFactory from '../src/FilePicker/FilePicker.protractor.driver';
 export const filePickerTestkitFactory = protractorTestkitFactoryCreator(filePickerDriverFactory);
@@ -68,4 +78,20 @@ export const imageViewerTestkitFactory = protractorTestkitFactoryCreator(imageVi
 import textDriverFactory from '../src/Text/Text.protractor.driver';
 export const textTestkitFactory = protractorTestkitFactoryCreator(textDriverFactory);
 
-export {protractorToastTestkitFactory} from '../src/Toast/testkit/Toast.protractor';
+import tpaTextLinkDriverFactory from '../src/TPA/TextLink/TextLink.protractor.driver';
+export const tpaTextLinkTestkitFactory = protractorTestkitFactoryCreator(tpaTextLinkDriverFactory);
+
+import popoverMenuDriverFactory from '../src/PopoverMenu/PopoverMenu.protractor.driver';
+export const popoverMenuTestkitFactory = protractorTestkitFactoryCreator(popoverMenuDriverFactory);
+
+import multiSelectDriverFactory from '../src/MultiSelect/MultiSelect.protractor.driver';
+export const multiSelectTestkitFactory = protractorTestkitFactoryCreator(multiSelectDriverFactory);
+
+import datePickerDriverFactory from '../src/DatePicker/DatePicker.protractor.driver';
+export const datePickerTestkitFactory = protractorTestkitFactoryCreator(datePickerDriverFactory);
+
+import editableSelectorDriverFactory from '../src/EditableSelector/EditableSelector.protractor.driver';
+export const editableSelectorTestkitFactory = protractorTestkitFactoryCreator(editableSelectorDriverFactory);
+
+import iconWithOptionsDriverFactory from '../src/IconWithOptions/IconWithOptions.protractor.driver';
+export const iconWithOptionsTestkitFactory = protractorTestkitFactoryCreator(iconWithOptionsDriverFactory);

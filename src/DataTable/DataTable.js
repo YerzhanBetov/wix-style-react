@@ -1,17 +1,32 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import s from './DataTable.scss';
 import classNames from 'classnames';
 import InfiniteScroll from './InfiniteScroll';
 import WixComponent from '../BaseComponents/WixComponent';
+import ArrowVertical from '../Icons/dist/components/ArrowVertical';
+import {Animator} from 'wix-animations';
+
+export const DataTableHeader = props => (
+  <div>
+    <table style={{width: props.width}} className={s.table}>
+      <TableHeader {...props}/>
+    </table>
+  </div>
+);
+
+DataTableHeader.propTypes = {
+  width: PropTypes.number
+};
 
 class DataTable extends WixComponent {
   constructor(props) {
     super(props);
-
+    let state = {selectedRows: {}};
     if (props.infiniteScroll) {
-      this.state = this.createInitialScrollingState(props);
+      state = {...state, ...this.createInitialScrollingState(props)};
     }
+    this.state = state;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -25,7 +40,6 @@ class DataTable extends WixComponent {
           this.setState({lastPage: this.calcLastPage(nextProps)});
         }
       }
-
       if (!isLoadingMore) {
         this.setState(this.createInitialScrollingState(nextProps));
       }
@@ -76,11 +90,8 @@ class DataTable extends WixComponent {
     return (
       <div>
         <table id={this.props.id} style={style} className={s.table}>
-          <thead>
-            <tr>
-              {this.props.columns.map(this.renderHeaderCell)}
-            </tr>
-          </thead>
+          {!this.props.hideHeader &&
+          <TableHeader {...this.props}/>}
           {this.renderBody(rowsToRender)}
         </table>
       </div>);
@@ -92,24 +103,44 @@ class DataTable extends WixComponent {
     </tbody>
   );
 
+  onRowClick = (rowData, rowNum) => {
+    const {onRowClick, rowDetails} = this.props;
+    onRowClick && onRowClick(rowData, rowNum);
+    rowDetails && this.toggleRowDetails(rowNum);
+  }
+
   renderRow = (rowData, rowNum) => {
-    const {onRowClick, rowDataHook, dynamicRowClass} = this.props;
+    const {onRowClick, onMouseEnterRow, onMouseLeaveRow, rowDataHook, dynamicRowClass, rowDetails} = this.props;
     const rowClasses = [this.props.rowClass];
     const optionalRowProps = {};
 
-    if (onRowClick) {
-      optionalRowProps.onClick = event => {
-        if (event.isDefaultPrevented()) {
-          return;
-        }
+    const handlers = [
+      {rowEventHandler: this.onRowClick, eventHandler: 'onClick'},
+      {rowEventHandler: onMouseEnterRow, eventHandler: 'onMouseEnter'},
+      {rowEventHandler: onMouseLeaveRow, eventHandler: 'onMouseLeave'}
+    ];
 
-        onRowClick(rowData, rowNum);
-      };
+    handlers.forEach(({rowEventHandler, eventHandler}) => {
+      if (rowEventHandler) {
+        optionalRowProps[eventHandler] = event => {
+          if (event.isDefaultPrevented()) {
+            return;
+          }
+          rowEventHandler(rowData, rowNum);
+        };
+      }
+    });
+
+    if (onRowClick || rowDetails) {
       rowClasses.push(s.clickableDataRow);
     }
 
     if (rowDataHook) {
-      optionalRowProps['data-hook'] = rowDataHook;
+      if (typeof rowDataHook === 'string') {
+        optionalRowProps['data-hook'] = rowDataHook;
+      } else {
+        optionalRowProps['data-hook'] = rowDataHook(rowData, rowNum);
+      }
     }
 
     if (dynamicRowClass) {
@@ -118,29 +149,42 @@ class DataTable extends WixComponent {
 
     optionalRowProps.className = classNames(rowClasses);
 
-    return (
-      <tr
-        key={rowNum}
-        {...optionalRowProps}
-        >
+    const rowsToRender = [(
+      <tr data-table-row="dataTableRow" key={rowNum} {...optionalRowProps}>
         {this.props.columns.map((column, colNum) => this.renderCell(rowData, column, rowNum, colNum))}
       </tr>
-    );
+    )];
+
+    if (rowDetails) {
+      const showDetails = !!this.state.selectedRows[rowNum];
+
+      rowsToRender.push(
+        <tr key={`${rowNum}_details`} className={classNames(s.rowDetails)}>
+          <td
+            data-hook={`${rowNum}_details`} className={classNames(s.details, showDetails ? s.active : '')}
+            colSpan={this.props.columns.length}
+            >
+            <div className={classNames(s.rowDetailsInner)}>
+              <Animator show={showDetails} height>
+                {rowDetails(rowData, rowNum)}
+              </Animator>
+            </div>
+          </td>
+        </tr>
+      );
+    }
+
+    return rowsToRender;
   };
 
   renderCell = (rowData, column, rowNum, colNum) => {
     const classes = classNames({[s.important]: column.important});
-    return <td className={classes} key={colNum}>{column.render && column.render(rowData, rowNum)}</td>;
-  };
-
-  renderHeaderCell = (column, colNum) => {
-    const style = {
-      width: column.width,
-      padding: this.props.thPadding,
-      height: this.props.thHeight,
-      fontSize: this.props.thFontSize
-    };
-    return <th style={style} key={colNum}>{column.title}</th>;
+    return (<td
+      style={column.style} className={classes}
+      key={colNum}
+      >
+      {column.render && column.render(rowData, rowNum)}
+    </td>);
   };
 
   calcLastPage = ({data, itemsPerPage}) => Math.ceil(data.length / itemsPerPage) - 1;
@@ -151,6 +195,72 @@ class DataTable extends WixComponent {
     } else {
       this.props.loadMore && this.props.loadMore();
     }
+  }
+
+  toggleRowDetails = selectedRow => {
+    let selectedRows = {[selectedRow]: !this.state.selectedRows[selectedRow]};
+    if (this.props.allowMultiDetailsExpansion) {
+      selectedRows = Object.assign({}, this.state.selectedRows, {[selectedRow]: !this.state.selectedRows[selectedRow]});
+    }
+    this.setState({selectedRows});
+  }
+}
+
+class TableHeader extends Component {
+  static propTypes = {
+    onSortClick: PropTypes.func,
+    thPadding: PropTypes.string,
+    thHeight: PropTypes.string,
+    thFontSize: PropTypes.string,
+    thBorder: PropTypes.string,
+    thColor: PropTypes.string,
+    thOpacity: PropTypes.string,
+    thLetterSpacing: PropTypes.string,
+    columns: PropTypes.array
+  };
+
+  renderSortingArrow = (sortDescending, colNum) => {
+    if (sortDescending === undefined) {
+      return null;
+    }
+    const sortDirectionClassName = sortDescending ? s.sortArrowAsc : s.sortArrowDesc;
+    return <span data-hook={`${colNum}_title`} className={sortDirectionClassName}><ArrowVertical/></span>;
+  };
+
+  renderHeaderCell = (column, colNum) => {
+    const style = {
+      width: column.width,
+      padding: this.props.thPadding,
+      height: this.props.thHeight,
+      fontSize: this.props.thFontSize,
+      border: this.props.thBorder,
+      color: this.props.thColor,
+      opacity: this.props.thOpacity,
+      letterSpacing: this.props.thLetterSpacing,
+      cursor: column.sortable === undefined ? 'arrow' : 'pointer'
+    };
+
+    const optionalHeaderCellProps = {};
+    if (column.sortable) {
+      optionalHeaderCellProps.onClick = () => this.props.onSortClick && this.props.onSortClick(column, colNum);
+    }
+    return (
+      <th
+        style={style}
+        key={colNum}
+        {...optionalHeaderCellProps}
+        >
+        {column.title}{this.renderSortingArrow(column.sortDescending, colNum)}
+      </th>);
+  };
+
+  render() {
+    return (
+      <thead>
+        <tr>
+          {this.props.columns.map(this.renderHeaderCell)}
+        </tr>
+      </thead>);
   }
 }
 
@@ -190,13 +300,20 @@ DataTable.propTypes = {
       PropTypes.node,
       PropTypes.string
     ]).isRequired,
-    render: PropTypes.func.isRequired
+    render: PropTypes.func.isRequired,
+    sortable: PropTypes.bool,
+    sortDescending: PropTypes.bool
   })),
   showHeaderWhenEmpty: PropTypes.bool,
-  rowDataHook: PropTypes.string,
+  rowDataHook: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.string
+  ]),
   rowClass: PropTypes.string,
   dynamicRowClass: PropTypes.func,
   onRowClick: PropTypes.func,
+  onMouseEnterRow: PropTypes.func,
+  onMouseLeaveRow: PropTypes.func,
   infiniteScroll: PropTypes.bool,
   itemsPerPage: PropTypes.number,
   width: PropTypes.string,
@@ -207,7 +324,14 @@ DataTable.propTypes = {
   scrollElement: PropTypes.object,
   thPadding: PropTypes.string,
   thHeight: PropTypes.string,
-  thFontSize: PropTypes.string
+  thFontSize: PropTypes.string,
+  thBorder: PropTypes.string,
+  thColor: PropTypes.string,
+  thOpacity: PropTypes.string,
+  thLetterSpacing: PropTypes.string,
+  rowDetails: PropTypes.func,
+  allowMultiDetailsExpansion: PropTypes.bool,
+  hideHeader: PropTypes.bool
 };
 
 DataTable.displayName = 'DataTable';

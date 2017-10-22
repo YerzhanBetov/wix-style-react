@@ -35,7 +35,9 @@ class ExampleStandard extends Component {
       disabled: false,
       placeholder: '0',
       resizable: false
-    }
+    },
+    required: false,
+    info: ''
   };
 
   setComponentState(componentName, obj) {
@@ -65,12 +67,12 @@ class ExampleStandard extends Component {
                 size="small"
                 value={this.state.label.children}
                 onChange={e => this.setComponentState('label', {children: e.target.value})}
-              />&nbsp;
+                />&nbsp;
               <ToggleSwitch
                 size="small"
                 checked={this.state.withLabel}
                 onChange={() => this.setState({withLabel: !this.state.withLabel})}
-              />
+                />
             </div>
           </div>
           <div className={styles.option}>
@@ -80,10 +82,11 @@ class ExampleStandard extends Component {
                 <Label>Left</Label>
               </div>
               <div>
-                <Input size="small"
-                       value={this.state.firstInput.placeholder}
-                       onChange={e => this.setComponentState('firstInput', {placeholder: e.target.value})}
-                />
+                <Input
+                  size="small"
+                  value={this.state.firstInput.placeholder}
+                  onChange={e => this.setComponentState('firstInput', {placeholder: e.target.value})}
+                  />
               </div>
             </div>
           </div>
@@ -91,10 +94,11 @@ class ExampleStandard extends Component {
             <div className={styles['label-margin']}>
               <Label>Right</Label>
             </div>
-            <Input size="small"
-                   value={this.state.lastInput.placeholder}
-                   onChange={e => this.setComponentState('lastInput', {placeholder: e.target.value})}
-            />
+            <Input
+              size="small"
+              value={this.state.lastInput.placeholder}
+              onChange={e => this.setComponentState('lastInput', {placeholder: e.target.value})}
+              />
           </div>
           <div className={styles.flex}>
             <div className={styles['label-margin']}>
@@ -104,7 +108,7 @@ class ExampleStandard extends Component {
               size="small"
               checked={this.state.firstInput.disabled}
               onChange={() => this.toggleInputState('disabled')}
-            />
+              />
           </div>
           <div className={styles.flex}>
             <div className={styles['label-margin']}>
@@ -114,7 +118,29 @@ class ExampleStandard extends Component {
               size="small"
               checked={this.state.firstInput.error}
               onChange={() => this.toggleInputState('error')}
-            />
+              />
+          </div>
+
+          <div className={styles.option}>
+            <div className={styles.flex}>
+              <div className={styles.paddRight}><Label>Required Field:</Label></div>
+              <ToggleSwitch
+                size="small"
+                checked={this.state.required}
+                onChange={() => this.setState({required: !this.state.required})}
+                />
+            </div>
+          </div>
+
+          <div className={styles.option}>
+            <Label>Info Tooltip</Label>
+            <div className={styles.flex}>
+              <Input
+                size="small"
+                value={this.state.info}
+                onChange={e => this.setState({info: e.target.value})}
+                />
+            </div>
           </div>
         </div>
         <div className={styles.output}>

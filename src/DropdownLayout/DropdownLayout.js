@@ -3,11 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import WixComponent from '../BaseComponents/WixComponent';
-import isEqual from 'lodash.isequal';
-import isobject from 'lodash.isobject';
-import trim from 'lodash.trim';
-import isstring from 'lodash.isstring';
-import has from 'lodash.has';
+import isEqual from 'deep-eql';
+import trim from 'lodash/trim';
 
 const modulu = (n, m) => {
   const remain = n % m;
@@ -23,6 +20,7 @@ class DropdownLayout extends WixComponent {
 
     this.state = {
       hovered: NOT_HOVERED_INDEX,
+      selectedId: props.selectedId
     };
 
     this._onSelect = this._onSelect.bind(this);
@@ -34,8 +32,8 @@ class DropdownLayout extends WixComponent {
   }
 
   isLegalOption(option) {
-    return isobject(option) && has(option, 'id') && trim(option.id).length > 0 &&
-        has(option, 'value') && (React.isValidElement(option.value) || (isstring(option.value) && trim(option.value).length > 0));
+    return typeof option === 'object' && typeof option.id !== 'undefined' && trim(option.id).length > 0 &&
+        (typeof option.value !== 'undefined') && (React.isValidElement(option.value) || (typeof option.value === 'string' && trim(option.value).length > 0));
   }
 
   onClickOutside(event) {
@@ -47,6 +45,7 @@ class DropdownLayout extends WixComponent {
 
   _onSelect(index) {
     const {options, onSelect, selectedId} = this.props;
+    this.setState({selectedId: options[index] ? options[index].id : undefined});
     options[index] && onSelect && onSelect(options[index], options[index].id === selectedId);
     return !!onSelect && options[index];
   }
@@ -80,7 +79,7 @@ class DropdownLayout extends WixComponent {
   }
 
   _onKeyDown(event) {
-    if (!this.props.visible) {
+    if (!this.props.visible || this.props.isComposing) {
       return false;
     }
 
@@ -103,7 +102,15 @@ class DropdownLayout extends WixComponent {
       }
 
       case 'Tab': {
-        return this._onSelect(this.state.hovered);
+        if (this.props.closeOnSelect) {
+          return this._onSelect(this.state.hovered);
+        } else {
+          event.preventDefault();
+          if (!this._onSelect(this.state.hovered)) {
+            return false;
+          }
+        }
+        break;
       }
 
       case 'Escape': {
@@ -123,7 +130,7 @@ class DropdownLayout extends WixComponent {
 
   _onClose() {
     this.setState({
-      hovered: NOT_HOVERED_INDEX,
+      hovered: NOT_HOVERED_INDEX
     });
 
     if (this.props.onClose) {
@@ -136,8 +143,7 @@ class DropdownLayout extends WixComponent {
   }
 
   render() {
-    const {options, visible, dropDirectionUp, selectedId, tabIndex, fixedHeader, fixedFooter, withArrow} = this.props;
-
+    const {options, visible, dropDirectionUp, tabIndex, fixedHeader, fixedFooter, withArrow, onMouseEnter, onMouseLeave} = this.props;
     const contentContainerClassName = classNames({
       [styles.contentContainer]: true,
       [styles.shown]: visible,
@@ -147,21 +153,12 @@ class DropdownLayout extends WixComponent {
     });
 
     return (
-      <div tabIndex={tabIndex} className={classNames(styles.wrapper, styles[`theme-${this.props.theme}`])} onKeyDown={this._onKeyDown}>
+      <div tabIndex={tabIndex} className={classNames(styles.wrapper, styles[`theme-${this.props.theme}`])} onKeyDown={this._onKeyDown} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         <div className={contentContainerClassName} style={{maxHeight: this.props.maxHeightPixels + 'px'}}>
           {this.renderNode(fixedHeader)}
           <div className={styles.options} style={{maxHeight: this.props.maxHeightPixels - 35 + 'px'}} ref={options => this.options = options} data-hook="dropdown-layout-options">
             {options.map((option, idx) => (
-              option.value === '-' ?
-                (this.renderDivider(idx)) :
-                (this.renderItem({
-                  option,
-                  idx,
-                  selected: option.id === selectedId,
-                  hovered: idx === this.state.hovered,
-                  disabled: option.disabled,
-                  overrideStyle: option.overrideStyle
-                }))
+              this.renderOption({option, idx})
             ))}
           </div>
           {this.renderNode(fixedFooter)}
@@ -171,11 +168,33 @@ class DropdownLayout extends WixComponent {
     );
   }
 
-  renderDivider(idx) {
-    return (<div key={idx} className={styles.divider}/>);
+  renderOption({option, idx}) {
+    const {value, id, disabled, title, overrideStyle, linkTo} = option;
+    if (value === '-') {
+      return this.renderDivider(idx, `dropdown-item-${id}`);
+    }
+
+    const content = this.renderItem({
+      option,
+      idx,
+      selected: id === this.state.selectedId,
+      hovered: idx === this.state.hovered,
+      disabled: disabled || title,
+      title,
+      overrideStyle,
+      dataHook: `dropdown-item-${id}`
+    });
+
+    return linkTo ? <a key={idx} data-hook="link-item" href={linkTo}>{content}</a> : content;
   }
 
-  renderItem({option, idx, selected, hovered, disabled, overrideStyle}) {
+  renderDivider(idx, dataHook) {
+    return (<div key={idx} className={styles.divider} data-hook={dataHook}/>);
+  }
+
+  renderItem({option, idx, selected, hovered, disabled, title, overrideStyle, dataHook}) {
+    const {itemHeight} = this.props;
+
     const optionClassName = classNames({
       [styles.option]: !overrideStyle,
       [styles.selected]: selected && !overrideStyle,
@@ -183,7 +202,11 @@ class DropdownLayout extends WixComponent {
       [styles.hovered]: hovered && !overrideStyle,
       wixstylereactHovered: hovered && overrideStyle, //global class for items that use the overrideStyle
       [styles.disabled]: disabled,
+      [styles.title]: title,
+      [styles.smallHeight]: itemHeight === 'small',
+      [styles.bigHeight]: itemHeight === 'big'
     });
+
     return (
       <div
         className={optionClassName}
@@ -191,6 +214,7 @@ class DropdownLayout extends WixComponent {
         key={idx}
         onMouseEnter={() => this._onMouseEnter(idx)}
         onMouseLeave={this._onMouseLeave}
+        data-hook={dataHook}
         >
         {option.value}
       </div>
@@ -209,7 +233,15 @@ class DropdownLayout extends WixComponent {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.visible !== nextProps.visible) {
-      this.setState({hovered: NOT_HOVERED_INDEX});
+      if (nextProps.visible) {
+        this.setState({hovered: this.props.options.findIndex(item => item.id === this.state.selectedId) || NOT_HOVERED_INDEX});
+      } else {
+        this.setState({hovered: NOT_HOVERED_INDEX});
+      }
+    }
+
+    if (this.props.selectedId !== nextProps.selectedId) {
+      this.setState({selectedId: nextProps.selectedId});
     }
 
     if (!isEqual(this.props.options, nextProps.options)) {
@@ -226,7 +258,7 @@ class DropdownLayout extends WixComponent {
   }
 
   isSelectableOption(option) {
-    return option.value !== '-' && !option.disabled;
+    return option.value !== '-' && !option.disabled && !option.title;
   }
 }
 
@@ -249,7 +281,7 @@ DropdownLayout.propTypes = {
   })),
   selectedId: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.number,
+    PropTypes.number
   ]),
   tabIndex: PropTypes.number,
   theme: PropTypes.string,
@@ -257,14 +289,20 @@ DropdownLayout.propTypes = {
   fixedHeader: PropTypes.node,
   fixedFooter: PropTypes.node,
   maxHeightPixels: PropTypes.number,
-  withArrow: PropTypes.bool
+  withArrow: PropTypes.bool,
+  closeOnSelect: PropTypes.bool,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  itemHeight: PropTypes.oneOf(['small', 'big'])
 };
 
 DropdownLayout.defaultProps = {
   options: [],
-  tabIndex: 1,
+  tabIndex: 0,
   selectedId: NOT_HOVERED_INDEX,
-  maxHeightPixels: 260
+  maxHeightPixels: 260,
+  closeOnSelect: true,
+  itemHeight: 'small'
 };
 
 DropdownLayout.NONE_SELECTED_ID = NOT_HOVERED_INDEX;

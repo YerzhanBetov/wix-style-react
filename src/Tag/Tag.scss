@@ -2,7 +2,7 @@
 
 .tag {
   @include FontLight();
-  background-color: $B40;
+  position: relative;
   border-radius: 100px;
   display: flex;
   align-items: center;
@@ -13,19 +13,21 @@
   height: 24px;
 
   .thumb {
-    margin-right: 5px;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 18px;
+    height: 18px;
+    left: -6px;
   }
 
   .tagRemoveButton {
     cursor: pointer;
-    padding-left: 10px;
-    padding-bottom: 2px;
-    color: $B10;
-    font-size: 14px;
-
-    &:before {
-      content: 'x';
-    }
+    margin-left: 12px;
+    width: 6px;
+    font-size: 6px;
+    line-height: 6px;
+    display: inherit;
   }
 
   &.disabled {
@@ -36,6 +38,18 @@
 
 .large {
   height: 36px;
+
+  .thumb {
+    height: 24px;
+    width: 24px;
+  }
+
+  .tagRemoveButton {
+    margin-left: 20px;
+    width: 8px;
+    font-size: 8px;
+    line-height: 8px;
+  }
 }
 
 .tagWrap {
@@ -48,3 +62,30 @@
   text-overflow: ellipsis;
 }
 
+.standard-theme {
+  background-color: $B40;
+  .tagRemoveButton {
+    color: $B10;
+  }
+}
+
+.warning-theme {
+  background-color: $Y40;
+  .tagRemoveButton {
+    color: white;
+  }
+}
+.warning-theme:hover {
+  background-color: $Y30;
+}
+
+.error-theme {
+  background-color: $R40;
+  .tagRemoveButton {
+    color: black;
+  }
+}
+
+.error-theme:hover {
+  background-color: $R30;
+}

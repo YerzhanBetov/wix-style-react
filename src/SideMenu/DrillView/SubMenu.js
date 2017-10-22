@@ -4,16 +4,14 @@ import styles from './DrillView.scss';
 import Navigation from '../core/navigation';
 import {node, string, bool, func} from 'prop-types';
 import NavigationLink from '../core/navigation/Link';
-import NavigationBadge from '../core/navigation/Badge';
 import NavigationBackLink from '../core/navigation/BackLink';
 import NavigationCategory from '../core/navigation/Category';
 
-const SubMenu = ({children, title, isOpen, isActive, onSelectHandler, onBackHandler, backLabel, showCategory, withBadge, linkDataHook}) => {
+const SubMenu = ({children, title, isOpen, isActive, onSelectHandler, onBackHandler, backLabel, showCategory, badge, linkDataHook}) => {
   if (!isOpen) {
-    const badge = withBadge && <NavigationBadge inline/>;
 
     return (
-      <NavigationLink isActive={isActive} onClick={onSelectHandler} badge={badge} withArrow data-hook={linkDataHook}>
+      <NavigationLink isActive={isActive} onClick={onSelectHandler} badge={badge} withArrow={!badge} data-hook={linkDataHook}>
         {title}
       </NavigationLink>
     );
@@ -49,7 +47,6 @@ SubMenu.defaultProps = {
   onBackHandler: () => {},
   backLabel: 'Back',
   showCategory: true,
-  withBadge: false,
   linkDataHook: 'menu-drill-sub-menu-link'
 };
 
@@ -62,7 +59,7 @@ SubMenu.propTypes = {
   onBackHandler: func,
   backLabel: string,
   showCategory: bool,
-  withBadge: bool,
+  badge: node,
   linkDataHook: string,
   children: node.isRequired
 };

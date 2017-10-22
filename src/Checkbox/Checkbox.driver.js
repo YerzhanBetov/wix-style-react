@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
 import $ from 'jquery';
+import {isClassExists} from '../../test/utils';
 
 const checkboxDriverFactory = ({element, wrapper, component}) => {
 
   const checkbox = $(element).find('input')[0];
-  const isClassExists = (element, className) => !!(element.className.match(new RegExp('\\b' + className + '\\b')));
 
   return {
     exists: () => !!element,
@@ -14,6 +14,7 @@ const checkboxDriverFactory = ({element, wrapper, component}) => {
     isChecked: () => isClassExists(element, 'checked'),
     isDisabled: () => isClassExists(element, 'disabled'),
     isIndeterminate: () => $(element).find('.indeterminate').length === 1,
+    hasError: () => isClassExists(element, 'hasError'),
     getLabel: () => element.textContent,
     setProps: props => {
       const ClonedWithProps = React.cloneElement(component, Object.assign({}, component.props, props), ...(component.props.children || []));

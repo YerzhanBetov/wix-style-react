@@ -1,0 +1,66 @@
+:global(.rtl) {
+
+	.wix-style-react-floating-tabs {
+		direction: rtl;
+
+		.wix-style-react-floating-tabs-button {
+			&:first-child {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+			&:last-child {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+		}
+	}
+}
+
+:global(.ltr) {
+	.wix-style-react-floating-tabs {
+		direction: ltr;
+
+		.wix-style-react-floating-tabs-button {
+			&:first-child {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+			&:last-child {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+		}
+	}
+}
+
+.wix-style-react-floating-tabs {
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.wix-style-react-floating-tabs-button {
+
+		&:not(:first-child):not(:last-child) {
+			border-radius: 0;
+		}
+	}
+
+	.wix-style-react-floating-tabs-buttons {
+		display: flex;
+		direction: row;
+	}
+	.wix-style-react-floating-tabs-buttons-item {
+		flex: 1;
+	}
+
+	.wix-style-react-floating-tab-item {
+		width:100%;
+		display: none;
+
+		&:global(.active) {
+			width:100%;
+			display: block;
+		}
+	}
+}

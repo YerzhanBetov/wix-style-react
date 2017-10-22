@@ -75,7 +75,7 @@ describe('MessageBox', () => {
   describe('closeButton attribute', () => {
     it('should appear by default', () => {
       const props = {
-        onCancel: sinon.spy(),
+        onCancel: sinon.spy()
       };
       const driver = createDriver(<MessageBoxFunctionalLayout {...props}/>);
       expect(driver.getHeaderCloseButton()).toBeTruthy();
@@ -92,7 +92,7 @@ describe('MessageBox', () => {
 
     it(`should trigger the 'onCancel' action upon clicking the header close button`, () => {
       const props = {
-        onCancel: sinon.spy(),
+        onCancel: sinon.spy()
       };
       const driver = createDriver(<MessageBoxFunctionalLayout {...props}/>);
       driver.clickOnHeaderCloseButton();
@@ -165,6 +165,20 @@ describe('MessageBox', () => {
         <div data-hook="inner-div"/>
       </MessageBoxFunctionalLayout>);
       expect(driver.getChildBySelector('[data-hook="inner-div"]')).not.toBeNull();
+    });
+
+    it('should render with zero padding when explicitly asked for', () => {
+      const normalRendering = {};
+      const zeroPaddingRendering = {noBodyPadding: true};
+      const regularDriver = createDriver(<MessageBoxFunctionalLayout {...normalRendering}>
+        <div>Content</div>
+      </MessageBoxFunctionalLayout>);
+      expect(regularDriver.toHaveBodyPadding()).toBeTruthy();
+
+      const zeroPaddingDriver = createDriver(<MessageBoxFunctionalLayout {...zeroPaddingRendering}>
+        <div>Content</div>
+      </MessageBoxFunctionalLayout>);
+      expect(zeroPaddingDriver.toHaveBodyPadding()).toBeFalsy();
     });
   });
 

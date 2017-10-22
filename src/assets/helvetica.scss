@@ -115,6 +115,16 @@
 }
 
 @font-face{
+  font-family:"HelveticaNeueW01-75Bold";
+  font-weight: bold;
+  src:url("../assets/fonts/helvetica_neue_bold.eot?#iefix");
+  src:url("../assets/fonts/helvetica_neue_bold.eot?#iefix") format("eot"),
+  url("../assets/fonts/helvetica_neue_bold.woff") format("woff"),
+  url("../assets/fonts/helvetica_neue_bold.ttf") format("truetype"),
+  url("../assets/fonts/helvetica_neue_bold.svg#helvetica_neue_bold") format("svg");
+}
+
+@font-face{
   font-family:"HelveticaNeueW02-45Ligh";
   src:url("../assets/fonts/helvetica_neue_light.eot?#iefix");
   src:url("../assets/fonts/helvetica_neue_light.eot?#iefix") format("eot"),
@@ -143,6 +153,16 @@
 }
 
 @font-face{
+  font-family:"HelveticaNeueW02-75Bold";
+  font-weight: bold;
+  src:url("../assets/fonts/helvetica_neue_w02_75bold.eot?#iefix");
+  src:url("../assets/fonts/helvetica_neue_w02_75bold.eot?#iefix") format("eot"),
+  url("../assets/fonts/helvetica_neue_w02_75bold.woff") format("woff"),
+  url("../assets/fonts/helvetica_neue_w02_75bold.ttf") format("truetype"),
+  url("../assets/fonts/helvetica_neue_w02_75bold.svg#helvetica_neue_w02_75bold") format("svg");
+}
+
+@font-face{
   font-family:"HelveticaNeueW10-45Ligh";
   src:url("../assets/fonts/helvetica_neue_w10_45ligh.eot?#iefix");
   src:url("../assets/fonts/helvetica_neue_w10_45ligh.eot?#iefix") format("eot"),
@@ -159,6 +179,16 @@
   url("../assets/fonts/helvetica_neue_w10_65medi.woff") format("woff"),
   url("../assets/fonts/helvetica_neue_w10_65medi.ttf") format("truetype"),
   url("../assets/fonts/helvetica_neue_w10_65medi.svg#helvetica_neue_w10_65medi") format("svg");
+}
+
+@font-face{
+  font-family:"HelveticaNeueW10-75Bold";
+  font-weight: bold;
+  src:url("../assets/fonts/helvetica_neue_w10_75bold.eot?#iefix");
+  src:url("../assets/fonts/helvetica_neue_w10_75bold.eot?#iefix") format("eot"),
+  url("../assets/fonts/helvetica_neue_w10_75bold.woff") format("woff"),
+  url("../assets/fonts/helvetica_neue_w10_75bold.ttf") format("truetype"),
+  url("../assets/fonts/helvetica_neue_w10_75bold.svg#helvetica_neue_w02_75bold") format("svg");
 }
 
 @font-face{

@@ -22,7 +22,7 @@ class ExampleStandard extends Component {
       type: GLOBAL_NOTIFICATION,
       size: 'big',
       timeout: DEFAULT_TIMEOUT,
-      zIndex: 10000,
+      zIndex: 10000
     },
     actionButton: {
       type: 'button',
@@ -86,7 +86,7 @@ class ExampleStandard extends Component {
             </div>
           </div>
           {
-            this.state.notification.type === LOCAL_NOTIFICATION ?
+            this.state.notification.type !== GLOBAL_NOTIFICATION ?
               <div className={styles.option}>
                 <Label>Timeout in ms (for local notifications)</Label>
                 <div className={styles.column}>

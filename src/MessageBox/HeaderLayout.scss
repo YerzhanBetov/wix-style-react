@@ -27,11 +27,9 @@
     height           : 25px;
     border-radius    : 50%;
     border           : none;
-    display          : flex;
-    justify-content  : center;
-    align-items      : center;
     background-color : rgba(red($D10), green($D10), blue($D10), 0.2);
     cursor           : pointer;
+    font-size        : 11px;
 }
 
 .close:hover, .close:focus {
@@ -39,7 +37,7 @@
 }
 
 .close > svg {
-    margin           : 1px auto 0 auto;
+    margin           : 3px auto 0 auto;
     path { stroke: #fff; }
 }
 

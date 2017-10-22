@@ -4,5 +4,5 @@ module.exports.config = {
 
   onPrepare() {
     browser.ignoreSynchronization = true;
-  },
+  }
 };

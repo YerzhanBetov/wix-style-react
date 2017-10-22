@@ -22,14 +22,14 @@ describe('Button', () => {
 
   it('should not call onClick when disabled', () => {
     const onClick = jest.fn();
-    const driver = createDriver(<Button onClick={onClick} disabled={true}/>);
+    const driver = createDriver(<Button onClick={onClick} disabled/>);
 
     driver.click();
     expect(onClick).toHaveBeenCalledTimes(0);
   });
 
   it('should get disabled class', () => {
-    const driver = createDriver(<Button disabled={true}/>);
+    const driver = createDriver(<Button disabled/>);
 
     expect(driver.isButtonDisabled()).toBe(true);
   });

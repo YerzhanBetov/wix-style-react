@@ -2,10 +2,10 @@ import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import {isClassExists} from '../../test/utils';
 
 const tagDriverFactory = ({element, wrapper, component}) => {
 
-  const isClassExists = (element, className) => (element && element.className.indexOf(className) !== -1);
   const removeButton = $(element).find('a')[0];
   const thumb = $(element).find('span')[0];
   const contentWithoutThumb = $(element).find('span')[0];
@@ -13,6 +13,9 @@ const tagDriverFactory = ({element, wrapper, component}) => {
   return {
     exists: () => !!element,
     isLarge: () => isClassExists(element, 'large'),
+    isStandardTheme: () => isClassExists(element, 'standardTheme'),
+    isWarningTheme: () => isClassExists(element, 'warningTheme'),
+    isErrorTheme: () => isClassExists(element, 'errorTheme'),
     isRemovable: () => isClassExists(removeButton, 'tagRemoveButton'),
     removeTag: () => ReactTestUtils.Simulate.click(removeButton),
     isThumbExists: () => isClassExists(thumb, 'thumb'),

@@ -10,7 +10,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    height: '40px',
+    height: '40px'
   },
   text: {
     padding: '0 25px 0 5px'
@@ -43,7 +43,7 @@ export default () =>
         <ControlledToggleSwitch
           dataHook="controlled-switch-x-small"
           size="x-small"
-        />
+          />
       </div>
     </div>
 

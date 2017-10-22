@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash.omit';
-
+import omit from 'omit';
 import Input from '../Input';
-
 import styles from './DatePickerInput.scss';
 
 export default class DatePickerInput extends Component {
@@ -14,19 +12,17 @@ export default class DatePickerInput extends Component {
     dateFormat: PropTypes.func,
     style: PropTypes.object,
     onEnterPressed: PropTypes.func,
-    customInput: PropTypes.node
+    customInput: PropTypes.node,
+    dataHook: PropTypes.string
   };
 
   static defaultProps = {
+    prefix: <div className={styles.icon}/>,
     onEnterPressed: () => {}
-  };
-
-  static defaultProps = {
-    prefix: <div className={styles.icon}/>
   }
 
   render() {
-    const desiredProps = omit(this.props, ['style', 'customInput']);
+    const desiredProps = omit(['style', 'customInput'], this.props);
     const {style, onClick, onEnterPressed} = this.props;
     const customInput = this.props.customInput || <Input/>;
 

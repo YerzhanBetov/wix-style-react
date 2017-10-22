@@ -21,7 +21,7 @@ class ControlledInputArea extends Component {
 
   render() {
     const onChange = event => this.setState({value: event.target.value});
-    const onClear = event => {
+    const onClear = () => {
       this.setState({value: ''});
       this.refs.inputtest.focus();
     };

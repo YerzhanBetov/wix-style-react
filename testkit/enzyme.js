@@ -12,6 +12,9 @@ export const inputAreaTestkitFactory = enzymeTestkitFactoryCreator(inputAreaDriv
 import tooltipDriverFactory from '../src/Tooltip/Tooltip.driver';
 export const tooltipTestkitFactory = enzymeTestkitFactoryCreator(tooltipDriverFactory);
 
+import backofficeTooltipDriverFactory from '../src/Backoffice/Tooltip/Tooltip.driver';
+export const backofficeTooltipTestkitFactory = enzymeTestkitFactoryCreator(backofficeTooltipDriverFactory);
+
 import labelDriverFactory from '../src/Label/Label.driver';
 export const labelTestkitFactory = enzymeTestkitFactoryCreator(labelDriverFactory);
 
@@ -26,6 +29,12 @@ export const dropdownLayoutTestkitFactory = enzymeTestkitFactoryCreator(dropdown
 
 import inputWithOptionsDriverFactory from '../src/InputWithOptions/InputWithOptions.driver';
 export const inputWithOptionsTestkitFactory = enzymeTestkitFactoryCreator(inputWithOptionsDriverFactory);
+
+import buttonWithOptionsDriverFactory from '../src/ButtonWithOptions/ButtonWithOptions.driver';
+export const buttonWithOptionsTestkitFactory = enzymeTestkitFactoryCreator(buttonWithOptionsDriverFactory);
+
+import languagePickerDriverFactory from '../src/LanguagePicker/LanguagePicker.driver';
+export const languagePickerTestkitFactory = enzymeTestkitFactoryCreator(languagePickerDriverFactory);
 
 import autoCompleteDriverFactory from '../src/AutoComplete/AutoComplete.driver';
 export const autoCompleteTestkitFactory = enzymeTestkitFactoryCreator(autoCompleteDriverFactory);
@@ -44,9 +53,6 @@ export const checkboxTestkitFactory = enzymeTestkitFactoryCreator(checkboxDriver
 
 import buttonDriverFactory from '../src/Backoffice/Button/Button.driver';
 export const buttonTestkitFactory = enzymeTestkitFactoryCreator(buttonDriverFactory);
-
-import viewerButtonDriverFactory from '../src/Viewer/Button/Button.driver';
-export const viewerButtonTestkitFactory = enzymeTestkitFactoryCreator(viewerButtonDriverFactory);
 
 import textLinkDriverFactory from '../src/BaseComponents/TextLink/TextLink.driver';
 export const textLinkTestkitFactory = enzymeTestkitFactoryCreator(textLinkDriverFactory);
@@ -99,6 +105,9 @@ export const buttonHeaderTestkitFactory = enzymeTestkitFactoryCreator(buttonHead
 import linkHeaderDriverFactory from '../src/Card/LinkHeader/LinkHeader.driver';
 export const linkHeaderTestkitFactory = enzymeTestkitFactoryCreator(linkHeaderDriverFactory);
 
+import collapsedHeaderDriverFactory from '../src/Card/CollapsedHeader/CollapsedHeader.driver';
+export const collapsedHeaderTestkitFactory = enzymeTestkitFactoryCreator(collapsedHeaderDriverFactory);
+
 import headerDriverFactory from '../src/Card/Header/Header.driver';
 export const headerTestkitFactory = enzymeTestkitFactoryCreator(headerDriverFactory);
 
@@ -117,8 +126,6 @@ export const filePickerTestkitFactory = enzymeTestkitFactoryCreator(filePickerDr
 import timeInputDriverFactory from '../src/TimeInput/TimeInput.driver';
 export const timeInputTestkitFactory = enzymeTestkitFactoryCreator(timeInputDriverFactory);
 
-export {toastTestkitFactory} from '../src/Toast/testkit/Toast.enzyme';
-
 import {sliderDriverFactory} from '../src/Slider/testkit/Slider';
 export const sliderTestkitFactory = enzymeTestkitFactoryCreator(sliderDriverFactory);
 
@@ -131,11 +138,47 @@ export const imageViewerTestkitFactory = enzymeTestkitFactoryCreator(imageViewer
 import textDriverFactory from '../src/Text/Text.driver';
 export const textTestkitFactory = enzymeTestkitFactoryCreator(textDriverFactory);
 
-import dividerDriverFactory from '../src/Viewer/Divider/Divider.driver';
-export const dividerTestkitFactory = enzymeTestkitFactoryCreator(dividerDriverFactory);
-
 import sideMenuDriverFactory from '../src/SideMenu/core/SideMenu.driver';
 export const sideMenuTestkitFactory = enzymeTestkitFactoryCreator(sideMenuDriverFactory);
 
 import sideMenuDrillDriverFactory from '../src/SideMenu/DrillView/DrillView.driver';
 export const sideMenuDrillTestkitFactory = enzymeTestkitFactoryCreator(sideMenuDrillDriverFactory);
+
+import tpaButtonDriverFactory from '../src/TPA/Button/Button.driver';
+export const tpaButtonTestkitFactory = enzymeTestkitFactoryCreator(tpaButtonDriverFactory);
+
+import tpaInputDriverFactory from '../src/TPA/Input/Input.driver';
+export const tpaInputTestkitFactory = enzymeTestkitFactoryCreator(tpaInputDriverFactory);
+
+import tpaTextLinkDriverFactory from '../src/TPA/TextLink/TextLink.driver';
+export const tpaTextLinkTestkitFactory = enzymeTestkitFactoryCreator(tpaTextLinkDriverFactory);
+
+import tpaFloatingTabsDriverFactory from '../src/TPA/FloatingTabs/FloatingTabs.driver';
+export const tpaFloatingTabsTestkitFactory = enzymeTestkitFactoryCreator(tpaFloatingTabsDriverFactory);
+
+import fieldLabelAttributesDriverFactory from '../src/FieldLabelAttributes/FieldLabelAttributes.driver';
+export const fieldLabelAttributesTestkitFactory = enzymeTestkitFactoryCreator(fieldLabelAttributesDriverFactory);
+
+import popoverMenuDriverFactory from '../src/PopoverMenu/PopoverMenu.driver';
+export const popoverMenuTestkitFactory = enzymeTestkitFactoryCreator(popoverMenuDriverFactory);
+
+import badgeDriverFactory from '../src/Badge/Badge.driver';
+export const badgeTestkitFactory = enzymeTestkitFactoryCreator(badgeDriverFactory);
+
+import datePickerFactory from '../src/DatePicker/DatePicker.driver';
+export const datePickerTestkitFactory = enzymeTestkitFactoryCreator(datePickerFactory);
+
+import selectorDriverFactory from '../src/Selector/Selector.driver';
+export const selectorTestkitFactory = enzymeTestkitFactoryCreator(selectorDriverFactory);
+
+import editableSelectorDriverFactory from '../src/EditableSelector/EditableSelector.driver';
+export const editableSelectorTestkitFactory = enzymeTestkitFactoryCreator(editableSelectorDriverFactory);
+
+import editableRowDriverFactory from '../src/EditableSelector/EditableRow/EditableRow.driver';
+export const editableRowTestkitFactory = enzymeTestkitFactoryCreator(editableRowDriverFactory);
+
+import modalSelectorDriverFactory from '../src/ModalSelector/ModalSelector.driver';
+export const modalSelectorTestkitFactory = enzymeTestkitFactoryCreator(modalSelectorDriverFactory);
+
+import iconWithOptionsDriverFactory from '../src/IconWithOptions/IconWithOptions.driver';
+export const iconWithOptionsTestkitFactory = enzymeTestkitFactoryCreator(iconWithOptionsDriverFactory);

@@ -1,0 +1,7 @@
+.example {
+  padding: 6px 8px;
+  transition: background-color .4s;
+  &.active {
+    background-color: #eaf7ff;
+  }
+}

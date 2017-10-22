@@ -67,6 +67,38 @@ describe('Component: Text', () => {
       });
     });
   });
+
+  describe('ellipsis prop', () => {
+    it('should not have ellipsis by default', () => {
+      const driver = createDriver(<Text>zombo</Text>);
+      expect(driver.hasEllipsis()).toBe(false);
+    });
+
+    it('should have ellipsis', () => {
+      const driver = createDriver(<Text ellipsis>zombo</Text>);
+      expect(driver.hasEllipsis()).toBe(true);
+    });
+
+    it('should not have title attribute when not given ellipsis prop', () => {
+      const driver = createDriver(<Text>zombo</Text>);
+      expect(driver.getTitle()).toBe('');
+    });
+
+    it('should not have title attribute when given ellipsis and forceHideTitle props', () => {
+      const driver = createDriver(<Text ellipsis forceHideTitle>zombo</Text>);
+      expect(driver.getTitle()).toBe('');
+    });
+
+    it('should not have title attribute when given ellipsis prop but none string children', () => {
+      const driver = createDriver(<Text ellipsis><span>zombo</span></Text>);
+      expect(driver.getTitle()).toBe('');
+    });
+
+    it('should have title attribute when given ellipsis prop', () => {
+      const driver = createDriver(<Text ellipsis>zombo</Text>);
+      expect(driver.getTitle()).toBe('zombo');
+    });
+  });
 });
 
 describe('testkit', () => {

@@ -1,29 +1,48 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import isUndefined from 'lodash.isundefined';
+import isUndefined from 'lodash/isUndefined';
 import classNames from 'classnames';
 import moment from 'moment';
 
 import Input from '../Input';
 import styles from './TimeInput.scss';
 
+/**
+  * An uncontrolled time input component with a stepper and am/pm support
+  */
 export default class extends Component {
   static displayName = 'TimePicker'
 
   static propTypes = {
+    /** Should time be shown as "--:--" when disabled */
+    dashesWhenDisabled: PropTypes.bool,
+    dataHook: PropTypes.string,
+
+    /** The control's starting time */
     defaultValue: PropTypes.object,
-    onChange: PropTypes.func,
-    rtl: PropTypes.bool,
-    style: PropTypes.object,
+
+    /** 24h mode  */
     disableAmPm: PropTypes.bool,
-    dataHook: PropTypes.string
+
+    /** Is disabled  */
+    disabled: PropTypes.bool,
+
+    /** Called upon blur */
+    onChange: PropTypes.func,
+
+    /** Display in RTL  */
+    rtl: PropTypes.bool,
+
+    style: PropTypes.object
   }
 
   static defaultProps = {
     defaultValue: moment(),
     onChange: () => {},
     style: {},
-    disableAmPm: false
+    disableAmPm: false,
+    disabled: false,
+    dashesWhenDisabled: false
   }
 
   constructor(props) {
@@ -138,7 +157,7 @@ export default class extends Component {
   }
 
   handleAmPmClick = () =>
-    this.updateDate({am: !this.state.am})
+    !this.props.disabled && this.updateDate({am: !this.state.am})
 
   handleFocus = input =>
     this.setState({focus: true, lastFocus: input})
@@ -148,8 +167,12 @@ export default class extends Component {
     this.updateDate({time: this.state.text});
   }
 
-  handleInputChange = ({target}) =>
-    this.setState({text: target.value})
+  handleInputChange = ({target}) => {
+    if (this.props.disabled && this.props.dashesWhenDisabled) {
+      return;
+    }
+    return this.setState({text: target.value});
+  }
 
   handleHover = hover =>
     this.setState({hover})
@@ -161,6 +184,10 @@ export default class extends Component {
     this.timeStep(1)
 
   handleInputBlur = ({target}) => {
+    if (this.props.disabled && this.props.dashesWhenDisabled) {
+      return;
+    }
+
     const caretIdx = target.selectionEnd || 0;
     let lastFocusedTimeUnit;
 
@@ -173,6 +200,8 @@ export default class extends Component {
   }
 
   renderTimeTextbox() {
+    const text = this.props.disabled && this.props.dashesWhenDisabled ? '-- : --' : this.state.text;
+
     const suffix = (
       <Input.Group>
         {this.state.ampmMode &&
@@ -184,7 +213,12 @@ export default class extends Component {
             {this.state.am ? 'am' : 'pm'}
           </span>
         }
-        <Input.Ticker onUp={this.handlePlus} onDown={this.handleMinus}/>
+        <Input.Ticker
+          upDisabled={this.props.disabled}
+          downDisabled={this.props.disabled}
+          onUp={this.handlePlus}
+          onDown={this.handleMinus}
+          />
       </Input.Group>
     );
 
@@ -192,24 +226,27 @@ export default class extends Component {
       <div className={styles.input}>
         <Input
           ref="input"
-          value={this.state.text}
+          value={text}
           onFocus={this.handleFocus}
           onChange={this.handleInputChange}
           onBlur={this.handleInputBlur}
           suffix={suffix}
           dataHook="time-input"
+          disabled={this.props.disabled}
           />
       </div>
     );
   }
 
   render() {
-    const {style, dataHook, rtl} = this.props;
+    const {style, dataHook, rtl, disabled} = this.props;
     const {focus, hover} = this.state;
 
     return (
       <div
-        className={styles.wrapper}
+        className={classNames(styles.wrapper, {
+          [styles.disabled]: disabled
+        })}
         style={style}
         data-hook={dataHook}
         >

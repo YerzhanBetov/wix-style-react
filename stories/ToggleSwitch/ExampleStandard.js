@@ -11,4 +11,6 @@ export default () =>
   <div>
     <div style={style}>Default not checked<br/><br/><ToggleSwitch/></div>
     <div style={style}>Default checked<br/><br/><ToggleSwitch checked/></div>
+    <div style={style}>Default not checked disabled<br/><br/><ToggleSwitch disabled/></div>
+    <div style={style}>Default checked disabled<br/><br/><ToggleSwitch checked disabled/></div>
   </div>;

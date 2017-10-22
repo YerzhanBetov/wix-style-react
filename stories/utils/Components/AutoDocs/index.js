@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {parse} from 'react-docgen';
 
 import Markdown from '../Markdown';
-import ComponentResolver from './component-resolver';
+import parser from './parser';
 
 const shouldHideForE2E = process.env.STORYBOOK_E2E;
 
@@ -19,15 +18,16 @@ const prepareParsedProps = props => {
   return required.concat(notRequired);
 };
 
-const renderPropType = (type = {}) => {
-  const wrap = name => children =>
-    <span>{name} [{children}]</span>;
+const wrap = name => children =>
+  <span>{name} [{children}]</span>;
 
-  const failSafe = type => () =>
-    <span>
-      Sorry, unable to parse this propType:
-      <pre>{JSON.stringify(type, null, 2)}</pre>
-    </span>;
+const failSafe = type => () =>
+  <span>
+    Sorry, unable to parse this propType:
+    <pre>{JSON.stringify(type, null, 2)}</pre>
+  </span>;
+
+const renderPropType = (type = {}) => {
 
   const typeHandlers = {
     custom: () => wrap('custom')(),
@@ -51,6 +51,7 @@ const renderPropType = (type = {}) => {
             <li key={i}>
               {v.key}:&nbsp;
               {renderPropType(v)}
+              {v.required && <small><strong>&nbsp;required</strong></small>}
             </li>)
         }
       </ul>
@@ -66,8 +67,8 @@ const renderPropType = (type = {}) => {
   return <span>{type.name}</span>;
 };
 
-const AutoDocs = ({source = ''}) => {
-  const {description, displayName, props} = parse(source, ComponentResolver);
+const AutoDocs = ({source = '', parsedSource, showTitle}) => {
+  const {description, displayName, props, composes = [], methods = []} = parsedSource ? parsedSource : parser(source);
 
   const propRow = (prop, index) =>
     <tr key={index}>
@@ -78,20 +79,29 @@ const AutoDocs = ({source = ''}) => {
       <td>{prop.description && <Markdown source={prop.description}/>}</td>
     </tr>;
 
+  const methodsToMarkdown = methods =>
+    methods
+      .filter(({name}) => !name.startsWith('_'))
+      .map(method =>
+        `* __${method.name}(${method.params.map(({name}) => name).join(', ')})__: ${method.docblock || ''}`
+      )
+      .join('\n');
+
   return !shouldHideForE2E && (
     <div className="markdown-body">
-      <div>
-        <h1>
-          { displayName && <code>{`<${displayName}/>`}</code> }
-          Component
-        </h1>
-      </div>
+      { showTitle && displayName &&
+        <div>
+          <h1>
+            { displayName && <code>{`<${displayName}/>`}</code> }
+          </h1>
+        </div>
+      }
 
       { !displayName && <blockquote>This component has no <code>displayName</code></blockquote> }
 
       { description && <Markdown source={description}/> }
 
-      <h2>Component <code>props</code></h2>
+      <h2>Available <code>props</code></h2>
 
       <table>
         <thead>
@@ -106,14 +116,39 @@ const AutoDocs = ({source = ''}) => {
 
         <tbody>
           { prepareParsedProps(props).map(propRow) }
+
+          { composes.length > 0 &&
+            <tr>
+              <td colSpan={5}>
+                Also includes props from:
+
+                <ul>
+                  {composes.map((path, i) =>
+                    <li key={i}>
+                      {path}
+                    </li>
+                  )}
+                </ul>
+              </td>
+            </tr>
+          }
         </tbody>
       </table>
+
+      { methods.length > 0 && <h2>Available <code>methods</code></h2> }
+      { methods.length > 0 && <Markdown source={methodsToMarkdown(methods)}/> }
     </div>
   );
 };
 
 AutoDocs.propTypes = {
-  source: PropTypes.string.isRequired
+  source: PropTypes.string.isRequired,
+  parsedSource: PropTypes.object,
+  showTitle: PropTypes.bool
+};
+
+AutoDocs.defaultProps = {
+  showTitle: true
 };
 
 export default AutoDocs;

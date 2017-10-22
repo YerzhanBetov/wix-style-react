@@ -21,9 +21,19 @@ $padding-vertical: 14px;
   line-height: 14px;
 }
 
-.link-layout {
+.linkLayout {
   position: relative;
   display: block;
+
+  &.linkDisabled {
+    background: transparent !important;
+    a {
+      pointer-events: none;
+      color: $D80 !important;
+      opacity: 0.45;
+      background: transparent !important;
+    }
+  }
 
   &:hover,
   &:focus {
@@ -59,12 +69,12 @@ $padding-vertical: 14px;
   }
 }
 
-.link-layout, .link-layout a {
+.linkLayout, .linkLayout a {
   font-family: $FontRoman;
   color: $D80;
 }
 
-.link-layout a {
+.linkLayout a {
   @extend .link-base;
 }
 
@@ -81,6 +91,13 @@ $padding-vertical: 14px;
   opacity: 0;
   font-size: 10px;
   transition: 0.5s;
+}
+
+:global(.rtl) {
+  .linkArrow {
+    right: inherit;
+    left: 25px;
+  }
 }
 
 .separator {
@@ -111,6 +128,16 @@ $padding-vertical: 14px;
   transition: 0.5s;
 }
 
+:global(.rtl) {
+  .backArrow {
+    margin: 0 0 0 10px;
+  }
+
+  .backLink:hover .backArrow {
+    margin:: 0 -5px 0 15px;
+  }
+}
+
 .categoryLabel {
   font-size: 12px;
   color: rgba(255,255,255,0.6);
@@ -121,29 +148,18 @@ $padding-vertical: 14px;
 }
 
 .linkBadge {
-  &::before {
-    content: '';
-    vertical-align: top;
-    display: inline-block;
-    height: 0.5em;
-    width: 0.5em;
-    background: red;
-    border-radius: 50%;
-  }
-}
+  content: '';
+  vertical-align: top;
+  display: inline-block;
+  height: 0.5em;
+  width: 0.5em;
+  background: #fb7d33;
+  border-radius: 50%;
+  position: absolute;
+  background-clip:content-box;
+  padding: 17px 26px;
+  top: 0;
+  right:0;
 
-.inlineLinkBadge {
-  &::before {
-    position: relative;
-    left: 0.6em;
-    top: 0.3em;
-  }
-}
 
-.fixedLinkBadge {
-  &::before {
-    position: absolute;
-    right: 1.8em;
-    top: 1.3em;
-  }
 }

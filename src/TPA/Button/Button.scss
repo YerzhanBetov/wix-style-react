@@ -1,0 +1,47 @@
+.wix-style-react-button {
+  padding: 13px 20px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.wix-style-react-button-fill {
+  background-color: "{{ color-8 }}";
+  color: "{{ color-1 }}";
+  border: 1px "{{ color-8 }}" solid;
+
+  &:hover {
+    background-color: "{{ color-9 }}";
+    border-color: "{{ color-9 }}";
+  }
+
+  &:disabled {
+    background-color: "{{ color-7 }}";
+    border-color: "{{ color-7 }}";
+  }
+
+  &:active {
+    background-color: "{{ color-8 }}";
+    border: 1px "{{ color-8 }}" solid;
+  }
+}
+
+.wix-style-react-button-outline {
+  background-color: "{{ color-1 }}";
+  color: "{{ color-8 }}";
+  border: 1px "{{ color-8 }}" solid;
+
+  &:hover {
+    background-color: "{{ color-8 }}";
+    color: "{{ color-1 }}";
+  }
+
+  &:disabled {
+    color: "{{ color-7 }}";
+    border-color: "{{ color-7 }}";
+  }
+
+  &:active {
+    background-color: "{{ color-8 }}";
+    color: "{{ color-1 }}";
+  }
+}

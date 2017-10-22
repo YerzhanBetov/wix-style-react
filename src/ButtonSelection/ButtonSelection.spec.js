@@ -28,7 +28,7 @@ describe('ButtonSelection', () => {
     const props = {
       buttonsNames,
       onChange,
-      value: 'A',
+      value: 'A'
     };
 
     const driver = createDriver(<ButtonSelection {...props}/>);
@@ -38,7 +38,7 @@ describe('ButtonSelection', () => {
   it('should select value', () => {
     const props = {
       buttonsNames,
-      onChange,
+      onChange
     };
 
     const driver = createDriver(<ButtonSelection {...props}/>);

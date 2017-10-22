@@ -13,6 +13,7 @@ export default class Markdown extends Component {
     const shouldHideForE2E = process.env.STORYBOOK_E2E;
 
     const options = {
+      html: true,
       linkTarget: '_parent',
       highlight(code, lang) {
         return hljs.highlight(lang, code).value;

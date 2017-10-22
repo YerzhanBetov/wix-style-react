@@ -4,21 +4,21 @@ import PropTypes from 'prop-types';
 import Tooltip from '../Tooltip';
 import InputHelpSuffix from './InputHelpSuffix';
 
-import {InfoMaterial} from '../Icons/dist';
+import InfoMaterial from '../Icons/dist/components/InfoMaterial';
 import styles from './Input.scss';
 
 const placementToMoveBy = {
   right: {x: 10, y: -10},
   left: {x: -10, y: -10},
   top: {x: 0, y: -5},
-  bottom: {x: 0, y: -15},
+  bottom: {x: 0, y: -15}
 };
 
 const AmaterialHelpSuffix = ({help, helpMessage, placement, onShow}) =>
   <Tooltip
     dataHook="input-tooltip"
     disabled={!help || helpMessage.length === 0}
-    maxWidth="250px"
+    maxWidth="230px"
     placement={placement}
     moveBy={placementToMoveBy[placement]}
     alignment="center"

@@ -44,26 +44,41 @@ describe('GoogleAddressInput', () => {
       const component = createShallow({Client: GmapsTestClient});
       expect(component.find('InputWithOptions').props().magnifyingGlass).toEqual(true);
     });
+
     it('should allow hiding magnifying glass', () => {
       const component = createShallow({Client: GmapsTestClient, magnifyingGlass: false});
       expect(component.find('InputWithOptions').props().magnifyingGlass).toEqual(false);
     });
+
     it('should allow setting theme for the nested input', () => {
       const component = createShallow({Client: GmapsTestClient, theme: 'material'});
       expect(component.find('InputWithOptions').props().theme).toEqual('material');
     });
+
     it('should allow the input to be readOnly', () => {
       const component = createShallow({Client: GmapsTestClient, readOnly: true});
       expect(component.find('InputWithOptions').props().readOnly).toEqual(true);
     });
+
     it('should show a footer', () => {
       const component = createShallow({Client: GmapsTestClient, readOnly: true, footer: 'foo bar', footerOptions: {overrideStyle: true, disabled: true}});
+
       expect(component.find('InputWithOptions').props().options).toEqual([{
         id: 0,
         value: 'foo bar',
         overrideStyle: true,
         disabled: true
       }]);
+    });
+
+    it('should show the powered by google footer', () => {
+      const component = createMount({Client: GmapsTestClient, poweredByGoogle: true});
+      expect(component.find('[data-hook="google-footer"]').exists()).toEqual(true);
+    });
+
+    it('should not show the powered by google footer', () => {
+      const component = createShallow({Client: GmapsTestClient});
+      expect(component.find('[data-hook="google-footer"]').exists()).toEqual(false);
     });
   });
 

@@ -6,12 +6,22 @@ import styles from './Input.scss';
 const inputDriverFactory = ({element, wrapper, component}) => {
   const input = element && element.querySelector('input');
   const clearButton = element && element.querySelector(`.${styles.clearButton}`);
+  const suffixNode = element && element.querySelector(`.${styles.suffix}`);
 
-  return {
+  const driver = {
     trigger: (trigger, event) => ReactTestUtils.Simulate[trigger](input, event),
-    focus: () => input.focus(),
-    blur: () => ReactTestUtils.Simulate.blur(input),
+    focus: () => {
+      input.focus();
+      ReactTestUtils.Simulate.focus(input);
+    },
+    blur: () => {
+      input.blur();
+      ReactTestUtils.Simulate.blur(input);
+    },
+    keyDown: key => ReactTestUtils.Simulate.keyDown(input, {key}),
+    clickSuffix: () => ReactTestUtils.Simulate.click(suffixNode),
     clickClear: () => ReactTestUtils.Simulate.click(clearButton),
+    clearText: () => driver.enterText(''),
     enterText: text => ReactTestUtils.Simulate.change(input, {target: {value: text}}),
     getValue: () => input.value,
     getPlaceholder: () => input.placeholder,
@@ -22,19 +32,22 @@ const inputDriverFactory = ({element, wrapper, component}) => {
     getAriaLabel: () => input.getAttribute('aria-label'),
     getAriaControls: () => input.getAttribute('aria-controls'),
     getAriaDescribedby: () => input.getAttribute('aria-describedby'),
+    getAutocomplete: () => input.getAttribute('autocomplete'),
     getType: () => input.type,
     hasPrefix: () => element.querySelectorAll(`.${styles.prefix}`).length === 1,
     hasPrefixClass: () => element.querySelectorAll(`.${styles.input}.${styles.withPrefix}`).length === 1,
-    hasSuffix: () => element.querySelectorAll(`.${styles.suffix}`).length === 1,
+    hasSuffix: () => !!suffixNode,
     hasSuffixClass: () => element.querySelectorAll(`.${styles.input}.${styles.withSuffix}`).length === 1,
     hasSuffixesClass: () => element.querySelectorAll(`.${styles.input}.${styles.withSuffixes}`).length === 1,
     prefixComponentExists: style => !!element.querySelector(`.${styles.prefix} ${style}`),
     suffixComponentExists: style => !!element.querySelector(`.${styles.suffix} ${style}`),
+    isMenuArrowLast: () => element.querySelectorAll(`.${styles.suffixes} .${styles.suffix}:last-child > .${styles.menuArrow}`).length === 1,
     hasExclamation: () => !!element.querySelector(`.${styles.exclamation}`),
     hasHelp: () => !!element.querySelector(`.${styles.help}`),
     hasError: () => element.classList.contains(styles.hasError),
     getTooltipElement: () => element,
     getTooltipDataHook: () => 'input-tooltip',
+    getDataHook: () => element.getAttribute('data-hook'),
     getUnit: () => element.querySelector(`.${styles.unit}`).textContent,
     hasMagnifyingGlass: () => !!element.querySelector(`.${styles.magnifyingGlass}`),
     hasMenuArrow: () => !!element.querySelector(`.${styles.menuArrow}`),
@@ -47,12 +60,15 @@ const inputDriverFactory = ({element, wrapper, component}) => {
     isOfSize: size => element.classList.contains(styles[`size-${size}`]),
     isFocus: () => document.activeElement === input,
     exists: () => !!(element && element.querySelector('input')),
-    hasIconLeft: () => !!element.querySelectorAll(`.${styles.prefix}`),
+    startComposing: () => ReactTestUtils.Simulate.compositionStart(input),
+    endComposing: () => ReactTestUtils.Simulate.compositionEnd(input),
     setProps: props => {
       const ClonedWithProps = React.cloneElement(component, Object.assign({}, component.props, props), ...(component.props.children || []));
       ReactDOM.render(<div ref={r => element = r}>{ClonedWithProps}</div>, wrapper);
     }
   };
+
+  return driver;
 };
 
 export default inputDriverFactory;

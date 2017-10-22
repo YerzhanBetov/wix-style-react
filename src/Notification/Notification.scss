@@ -62,7 +62,7 @@
 }
 
 .warning-theme {
-  background-color: $Y20;
+  background-color: $Y10;
 }
 
 .premium-theme {
@@ -115,7 +115,7 @@ $easeInOutSine: cubic-bezier(0.445, 0.05, 0.55, 0.95);
   }
 }
 
-.notification-animation-leave {
+.notification-animation-exit {
   max-height: 500px;
 
   .label-wrapper {
@@ -132,7 +132,7 @@ $easeInOutSine: cubic-bezier(0.445, 0.05, 0.55, 0.95);
   }
 }
 
-.notification-animation-leave-active {
+.notification-animation-exit-active {
   transition: all 0.25s $easeInOutSine 0.1s;
   max-height: 0;
 

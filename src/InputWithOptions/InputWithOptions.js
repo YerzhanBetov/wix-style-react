@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import WixComponent from '../BaseComponents/WixComponent';
 import Input from '../Input';
-import omit from 'lodash.omit';
+import omit from 'omit';
 import DropdownLayout from '../DropdownLayout/DropdownLayout';
 
 class InputWithOptions extends WixComponent {
@@ -24,6 +24,7 @@ class InputWithOptions extends WixComponent {
 
     this._onSelect = this._onSelect.bind(this);
     this._onFocus = this._onFocus.bind(this);
+    this._onBlur = this._onBlur.bind(this);
     this._onChange = this._onChange.bind(this);
     this._onKeyDown = this._onKeyDown.bind(this);
     this.focus = this.focus.bind(this);
@@ -35,6 +36,17 @@ class InputWithOptions extends WixComponent {
     this._renderDropdownLayout = this._renderDropdownLayout.bind(this);
     this._onInputClicked = this._onInputClicked.bind(this);
     this.closeOnSelect = this.closeOnSelect.bind(this);
+    this.onCompositionChange = this.onCompositionChange.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.options.length) {
+      this.setState({showOptions: false});
+    }
+  }
+
+  onCompositionChange(isComposing) {
+    this.setState({isComposing});
   }
 
   onClickOutside() {
@@ -42,7 +54,7 @@ class InputWithOptions extends WixComponent {
   }
 
   renderInput() {
-    const inputProps = Object.assign(omit(this.props, Object.keys(DropdownLayout.propTypes).concat(['onChange', 'dataHook'])), this.inputAdditionalProps());
+    const inputProps = Object.assign(omit(Object.keys(DropdownLayout.propTypes).concat(['onChange', 'dataHook']), this.props), this.inputAdditionalProps());
     const {inputElement} = inputProps;
     return React.cloneElement(inputElement, {
       menuArrow: true,
@@ -51,12 +63,15 @@ class InputWithOptions extends WixComponent {
       theme: this.props.theme,
       onChange: this._onChange,
       onInputClicked: this._onInputClicked,
-      onFocus: this.showOptions
+      onFocus: this._onFocus,
+      onBlur: this._onBlur,
+      onCompositionChange: this.onCompositionChange,
+      width: inputElement.props.width
     });
   }
 
   _renderDropdownLayout() {
-    const dropdownProps = Object.assign(omit(this.props, Object.keys(Input.propTypes).concat(['dataHook'])), this.dropdownAdditionalProps());
+    const dropdownProps = Object.assign(omit(Object.keys(Input.propTypes).concat(['dataHook']), this.props), this.dropdownAdditionalProps());
     const customStyle = {marginLeft: this.props.dropdownOffsetLeft};
     if (this.props.dropdownWidth) {
       customStyle.width = this.props.dropdownWidth;
@@ -71,6 +86,7 @@ class InputWithOptions extends WixComponent {
           visible={this.state.showOptions}
           onClose={this.hideOptions}
           onSelect={this._onSelect}
+          isComposing={this.state.isComposing}
           />
       </div>
     );
@@ -81,7 +97,7 @@ class InputWithOptions extends WixComponent {
     return (
       <div>
         {dropDirectionUp ? this._renderDropdownLayout() : null}
-        <div onKeyDown={this._onKeyDown} onFocus={this._onFocus} className={this.inputClasses()}>
+        <div onKeyDown={this._onKeyDown} className={this.inputClasses()}>
           {this.renderInput()}
         </div>
         {!dropDirectionUp ? this._renderDropdownLayout() : null}
@@ -90,12 +106,18 @@ class InputWithOptions extends WixComponent {
   }
 
   hideOptions() {
-    this.setState({showOptions: false});
-    this.input.blur();
+    if (this.state.showOptions) {
+      this.setState({showOptions: false});
+      if (this._focused) {
+        this.input.blur();
+      }
+    }
   }
 
   showOptions() {
-    this.setState({showOptions: true, lastOptionsShow: Date.now()});
+    if (this.props.options.length) {
+      this.setState({showOptions: true, lastOptionsShow: Date.now()});
+    }
   }
 
   closeOnSelect() {
@@ -103,6 +125,10 @@ class InputWithOptions extends WixComponent {
   }
 
   _onManuallyInput(inputValue) {
+    if (this.state.isComposing) {
+      return;
+    }
+
     inputValue = inputValue.trim();
     if (this.closeOnSelect()) {
       this.hideOptions();
@@ -151,6 +177,10 @@ class InputWithOptions extends WixComponent {
   }
 
   _onFocus() {
+    if (this.props.disabled) {
+      return;
+    }
+    this._focused = true;
     this.setState({isEditing: false});
     this.showOptions();
     if (this.props.onFocus) {
@@ -158,8 +188,20 @@ class InputWithOptions extends WixComponent {
     }
   }
 
+  _onBlur(e) {
+    this._focused = false;
+    if (this.props.onBlur) {
+      this.props.onBlur(e);
+    }
+  }
+
   _onKeyDown(event) {
-    this.setState({isEditing: true});
+    if (this.props.disabled) {
+      return;
+    }
+    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
+      this.setState({isEditing: true});
+    }
     if (!this.dropdownLayout._onKeyDown(event)) {
       switch (event.key) {
         case 'Enter':

@@ -6,11 +6,13 @@ describe('Backoffice Button', () => {
   const beforeClickState = 'Click Me!';
   const clickedState = 'Clicked!';
 
+  beforeEach(() => {
+    browser.get(storyUrl);
+  });
+
   eyes.it('should click a button', () => {
     const dataHook = 'story-button-enabled';
     const driver = buttonTestkitFactory({dataHook});
-
-    browser.get(storyUrl);
 
     waitForVisibilityOf(driver.element(), 'Cannot find Button')
       .then(() => {
@@ -28,7 +30,6 @@ describe('Backoffice Button', () => {
     const driverPrefix = buttonTestkitFactory({dataHook: dataHookPrefix});
     const driverSuffix = buttonTestkitFactory({dataHook: dataHookSuffix});
 
-    // browser.get(storyUrl);
     waitForVisibilityOf([driverDisabled.element(), driverPrefix.element(), driverSuffix.element()], 'Cannot find Button')
       .then(() => {
         expect(driverDisabled.isButtonDisabled()).toBe(true);

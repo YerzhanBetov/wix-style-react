@@ -1,3 +1,3 @@
-import {Container, Row, AutoAdjustedRow, Col, Card} from './Grid';
+import {Container, RawContainer, Row, AutoAdjustedRow, Col, Card} from './Grid';
 
-export {Container, Row, AutoAdjustedRow, Col, Card};
+export {Container, RawContainer, Row, AutoAdjustedRow, Col, Card};

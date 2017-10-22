@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import WixComponent from '../BaseComponents/WixComponent';
 import classNames from 'classnames';
 
-import {Button} from '../Backoffice';
+import Button from '../Backoffice/Button';
 import SvgX from '../svg/X.js';
 
 import * as styles from './MessageBoxMarketerialLayout.scss';
@@ -15,7 +15,7 @@ class MessageBoxMarketerialLayout extends WixComponent {
 
     const headerClasses = classNames({
       [styles.header]: true,
-      [styles[`header-${theme}`]]: true,
+      [styles[`header-${theme}`]]: true
     });
 
     return (
@@ -59,7 +59,7 @@ class MessageBoxMarketerialLayout extends WixComponent {
 MessageBoxMarketerialLayout.propTypes = {
   title: PropTypes.node.isRequired,
   content: PropTypes.node.isRequired,
-  primaryButtonLabel: PropTypes.string.isRequired,
+  primaryButtonLabel: PropTypes.string,
   secondaryButtonLabel: PropTypes.string,
   onPrimaryButtonClick: PropTypes.func,
   onSecondaryButtonClick: PropTypes.func,

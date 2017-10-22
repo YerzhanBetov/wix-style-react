@@ -25,6 +25,11 @@ describe('DropdownLayout', () => {
     expect(driver.isDown()).toBeTruthy();
   });
 
+  it('should throw an error when trying to click on a non exists option', () => {
+    const driver = createDriver(<DropdownLayout visible options={options}/>);
+    expect(() => driver.clickAtOption(20)).toThrow();
+  });
+
   it('should be visible and drop down', () => {
     const driver = createDriver(<DropdownLayout visible options={options}/>);
     expect(driver.isShown()).toBeTruthy();
@@ -33,15 +38,15 @@ describe('DropdownLayout', () => {
 
   it('should have a default tab index', () => {
     const driver = createDriver(<DropdownLayout visible options={options}/>);
-    expect(driver.tabIndex()).toBe(1);
+    expect(driver.tabIndex()).toBe(0);
   });
 
-  it('should have an options', () => {
+  it('should have options', () => {
     const driver = createDriver(<DropdownLayout visible options={options}/>);
     expect(driver.optionsLength()).toBe(6);
-
     expect(driver.optionContentAt(0)).toBe('Option 1');
     expect(driver.isOptionADivider(4)).toBeTruthy();
+    expect(driver.optionByHook('dropdown-item-divider1').isDivider()).toBeTruthy();
     expect(driver.optionContentAt(5)).toBe('Option 4');
   });
 
@@ -56,6 +61,15 @@ describe('DropdownLayout', () => {
     expect(driver.isOptionHovered(0)).toBeTruthy();
     driver.mouseLeaveAtOption(0);
     expect(driver.isOptionHovered(0)).toBeFalsy();
+  });
+
+  it('should hover when mouse enter and unhover when mouse leave by data hook', () => {
+    const driver = createDriver(<DropdownLayout visible options={options}/>);
+    const option = driver.optionByHook('dropdown-item-0');
+    option.mouseEnter();
+    expect(option.isHovered()).toBeTruthy();
+    option.mouseLeave();
+    expect(option.isHovered()).toBeFalsy();
   });
 
   it('should not hover divider or a disabled item when mouse enter', () => {
@@ -117,6 +131,13 @@ describe('DropdownLayout', () => {
     expect(onSelect).toBeCalledWith(options[5], false);
   });
 
+  it('should not call onSelect when composing text via external means', () => {
+    const onSelect = jest.fn();
+    const driver = createDriver(<DropdownLayout visible options={options} onSelect={onSelect}/>);
+    driver.pressEnterKey();
+    expect(onSelect).not.toBeCalled();
+  });
+
   it('should click an option by value', () => {
     const onSelect = jest.fn();
     const driver = createDriver(<DropdownLayout visible options={options} onSelect={onSelect}/>);
@@ -129,6 +150,13 @@ describe('DropdownLayout', () => {
     const driver = createDriver(<DropdownLayout visible options={options} onSelect={onSelect} selectedId={0}/>);
     driver.clickAtOption(0);
     expect(onSelect).toBeCalledWith(options[0], true);
+  });
+
+  it('should call onSelect with false value when clicking on a selected option by hook', () => {
+    const onSelect = jest.fn();
+    const driver = createDriver(<DropdownLayout visible options={options} onSelect={onSelect} selectedId={0}/>);
+    driver.optionByHook('dropdown-item-3').click();
+    expect(onSelect).toBeCalledWith(options[3], false);
   });
 
   it('should call select when enter key is pressed', () => {
@@ -151,29 +179,42 @@ describe('DropdownLayout', () => {
     const selectedId = 0;
     const driver = createDriver(<DropdownLayout visible options={options} selectedId={selectedId}/>);
     expect(driver.isOptionSelected(0)).toBeTruthy();
+    expect(driver.optionByHook('dropdown-item-0').isSelected()).toBeTruthy();
+  });
+
+  it('should remember the selected option when getting re-opened after got closed', () => {
+    const selectedId = 1;
+    const driver = createDriver(<DropdownLayout visible options={options} selectedId={selectedId}/>);
+    expect(driver.isOptionSelected(selectedId)).toBeTruthy();
+    driver.setProps({visible: false});
+    driver.setProps({visible: true});
+    expect(driver.isOptionSelected(selectedId)).toBeTruthy();
   });
 
   it('should hover when mouse enter and unhover when mouse leave when overrideStyle is true', () => {
     const options = [
-      {id: 0, value: 'Option 1', overrideStyle: true},
+      {id: 0, value: 'Option 1', overrideStyle: true}
     ];
 
     const driver = createDriver(<DropdownLayout visible options={options}/>);
 
     driver.mouseEnterAtOption(0);
     expect(driver.isOptionHoveredWithGlobalClassName(0)).toBeTruthy();
+    expect(driver.optionByHook('dropdown-item-0').isHoveredWithGlobalClassName()).toBeTruthy();
     driver.mouseLeaveAtOption(0);
     expect(driver.isOptionHoveredWithGlobalClassName(0)).toBeFalsy();
+    expect(driver.optionByHook('dropdown-item-0').isHoveredWithGlobalClassName()).toBeFalsy();
   });
 
   it('should select the chosen value when overrideStyle is true', () => {
     const selectedId = 0;
     const options = [
-      {id: 0, value: 'Option 1', overrideStyle: true},
+      {id: 0, value: 'Option 1', overrideStyle: true}
     ];
     const driver = createDriver(<DropdownLayout visible options={options} selectedId={selectedId}/>);
 
     expect(driver.isOptionSelectedWithGlobalClassName(0)).toBeTruthy();
+    expect(driver.optionByHook('dropdown-item-0').isSelectedWithGlobalClassName()).toBeTruthy();
   });
 
   it('should not contain pointer arrow without the withArrow property', () => {
@@ -184,6 +225,58 @@ describe('DropdownLayout', () => {
   it('should contain pointer arrow when withArrow property is true', () => {
     const driver = createDriver(<DropdownLayout visible withArrow options={options}/>);
     expect(driver.hasTopArrow()).toBeTruthy();
+  });
+
+  it('should support mouse events', () => {
+    const onMouseEnter = jest.fn();
+    const onMouseLeave = jest.fn();
+    const driver = createDriver(
+      <DropdownLayout visible options={options} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}/>
+    );
+    driver.mouseEnter();
+    expect(onMouseEnter).toBeCalled();
+    expect(onMouseLeave).not.toBeCalled();
+
+    driver.mouseLeave();
+    expect(onMouseLeave).toBeCalled();
+  });
+
+  describe('itemHeight prop', () => {
+    it('should be small by default', () => {
+      const driver = createDriver(<DropdownLayout visible options={options}/>);
+      expect(driver.isOptionHeightSmall(0)).toBe(true);
+    });
+
+    it('should be small', () => {
+      const driver = createDriver(<DropdownLayout visible options={options} itemHeight="small"/>);
+      expect(driver.isOptionHeightSmall(0)).toBe(true);
+    });
+
+    it('should be big', () => {
+      const driver = createDriver(<DropdownLayout visible options={options} itemHeight="big"/>);
+      expect(driver.isOptionHeightBig(0)).toBe(true);
+    });
+  });
+
+  describe('options that are links', () => {
+    it('should not be link by default', () => {
+      const driver = createDriver(<DropdownLayout visible options={options}/>);
+      expect(driver.isLinkOption(0)).toBe(false);
+    });
+
+    it('should be a link option', () => {
+      const driver = createDriver(<DropdownLayout visible options={options.map(opt => ({...opt, linkTo: 'http://wix.com'}))}/>);
+      expect(driver.isLinkOption(0)).toBe(true);
+    });
+  });
+
+  describe('theme support', () => {
+    it('should allow setting a custom theme', () => {
+      const props = {dataHook: 'myDataHook', theme: 'material', options};
+      const wrapper = mount(<DropdownLayout {...props}/>);
+      const testkit = enzymeDropdownLayoutTestkitFactory({wrapper, dataHook: props.dataHook});
+      expect(testkit.hasTheme('material')).toBe(true);
+    });
   });
 
   describe('testkit', () => {
@@ -206,14 +299,4 @@ describe('DropdownLayout', () => {
       expect(dropdownLayoutTestkit.optionsLength()).toBe(6);
     });
   });
-
-  describe('theme support', () => {
-    it('should allow setting a custom theme', () => {
-      const props = {dataHook: 'myDataHook', theme: 'material', options};
-      const wrapper = mount(<DropdownLayout {...props}/>);
-      const testkit = enzymeDropdownLayoutTestkitFactory({wrapper, dataHook: props.dataHook});
-      expect(testkit.hasTheme('material')).toBe(true);
-    });
-  });
-
 });

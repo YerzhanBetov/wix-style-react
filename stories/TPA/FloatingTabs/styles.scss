@@ -1,0 +1,21 @@
+.contentStyle {
+	border: 1px red solid;
+}
+
+.tabStyle {
+	background: red;
+	border-radius: 10px;
+	color: white;
+	border: white;
+
+	&:hover {
+		background: pink;
+	}
+}
+
+.activeTab {
+	background: white;
+	border: 1px red solid;
+	border-color: red;
+	color: red;
+}

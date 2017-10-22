@@ -1,6 +1,6 @@
 import React from 'react';
-import {Container, Row, Col, Card} from '../../src/Grid'
-import styles from './ExampleGrid.scss'
+import {Container, Row, Col, Card} from '../../src/Grid';
+import styles from './ExampleGrid.scss';
 
 import TextField from '../../src/TextField';
 import Input from '../../src/Input';
@@ -11,13 +11,13 @@ function renderStandardInput() {
     <TextField>
       <Label
         for="textField"
-      >
+        >
         Text Field
       </Label>
       <Input
         id="textField"
         placeholder="Default text goes"
-      />
+        />
     </TextField>
   );
 }
@@ -90,7 +90,7 @@ export default () =>
       <Row>
         <Col span={12}>
           <Card>
-            <Card.Header  title="Main card" subtitle="Subtitle"/>
+            <Card.Header title="Main card" subtitle="Subtitle"/>
             <Card.Content>
               <Row>
                 <Col span={4}>

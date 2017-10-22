@@ -17,17 +17,22 @@ describe('Checkbox', () => {
   });
 
   it('should be checked', () => {
-    const driver = createDriver(<Checkbox checked={true}/>);
+    const driver = createDriver(<Checkbox checked/>);
     expect(driver.isChecked()).toBeTruthy();
   });
 
   it('should be disabled', () => {
-    const driver = createDriver(<Checkbox disabled={true}/>);
+    const driver = createDriver(<Checkbox disabled/>);
     expect(driver.isDisabled()).toBeTruthy();
   });
 
+  it('should have an error state', () => {
+    const driver = createDriver(<Checkbox hasError/>);
+    expect(driver.hasError()).toBeTruthy();
+  });
+
   it('should have a label', () => {
-    const driver = createDriver(<Checkbox disabled={true}>Hey</Checkbox>);
+    const driver = createDriver(<Checkbox disabled>Hey</Checkbox>);
     expect(driver.getLabel()).toBe('Hey');
   });
 
@@ -43,7 +48,7 @@ describe('Checkbox', () => {
   it('should not call onChange when clicking disabled Checkbox', () => {
     const onChange = jest.fn();
 
-    const driver = createDriver(<Checkbox onChange={onChange} disabled={true}/>);
+    const driver = createDriver(<Checkbox onChange={onChange} disabled/>);
 
     driver.click();
     expect(onChange).not.toBeCalled();
@@ -56,7 +61,7 @@ describe('Checkbox', () => {
   });
 
   it('should run in indeterminate mode when specified', () => {
-    const driver = createDriver(<Checkbox indeterminate={true}/>);
+    const driver = createDriver(<Checkbox indeterminate/>);
 
     expect(driver.isIndeterminate()).toBeTruthy();
   });

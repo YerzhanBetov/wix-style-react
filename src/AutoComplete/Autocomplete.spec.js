@@ -8,10 +8,10 @@ import {autoCompleteTestkitFactory as enzymeAutoCompleteTestkitFactory} from '..
 import {mount} from 'enzyme';
 import {runInputWithOptionsTest} from '../InputWithOptions/InputWithOptions.spec';
 
+const asciiA = '97';
 runInputWithOptionsTest(autoCompleteDriverFactory);
 
 describe('Autocomplete', () => {
-
   const createDriver = createDriverFactory(autoCompleteDriverFactory);
 
   const options = [
@@ -23,21 +23,28 @@ describe('Autocomplete', () => {
     {id: 'element1', value: <span style={{color: 'brown'}}>ccc</span>}
   ];
 
+  const predicate = option => option.value.toString().toLowerCase().indexOf('a') !== -1;
+
   it('should not filter anything without predicate function', () => {
-    const {driver, dropdownLayoutDriver} = createDriver(<AutoComplete options={options}/>);
-    driver.focus();
-    expect(dropdownLayoutDriver.optionsLength()).toBe(6);
+    const {dropdownLayoutDriver} = createDriver(<AutoComplete options={options}/>);
+    expect(dropdownLayoutDriver.optionsLength()).toBe(options.length);
   });
 
-  it('should filter items according to predicate function', () => {
-    const predicate = option => option.value.toString().toLowerCase().indexOf('a') !== -1;
+  ['ArrowUp', 'ArrowDown'].forEach(key => {
+    it(`should not filter items according to predicate function when pressing ${key}`, () => {
+      const {inputDriver, dropdownLayoutDriver} = createDriver(<AutoComplete options={options} predicate={predicate}/>);
+      inputDriver.trigger('keyDown', {key});
+      expect(dropdownLayoutDriver.optionsLength()).toBe(options.length);
+    });
+  });
+
+  it('should filter items according to predicate function when typing characters', () => {
     const {inputDriver, dropdownLayoutDriver} = createDriver(<AutoComplete options={options} predicate={predicate}/>);
-    inputDriver.trigger('keyDown', {});
+    inputDriver.trigger('keyDown', {key: asciiA});
     expect(dropdownLayoutDriver.optionsLength()).toBe(2);
   });
 
   it('should show all items when focusing even if some text exist', () => {
-    const predicate = option => option.value.toString().toLowerCase().indexOf('a') !== -1;
     const {dropdownLayoutDriver, inputDriver} = createDriver(<AutoComplete options={options} predicate={predicate}/>);
     inputDriver.enterText('aaa');
     inputDriver.focus();

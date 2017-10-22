@@ -69,6 +69,11 @@ describe('Breadcrumbs', () => {
     expect(driver.getActiveItemId()).toBe(itemIndex);
   });
 
+  it('should return null if not exists active id', () => {
+    createComponent({onClick, items});
+    expect(driver.getActiveItemId()).toBe(null);
+  });
+
   describe('label appearance', () => {
     const itemIndex = 0;
     const activeItemIndex = 1;
@@ -155,7 +160,7 @@ describe('Breadcrumbs', () => {
     ];
 
     const customItemsWithLinks = [
-      {id: 0, value: 'value', customElement: <a href="//www.wix.com">Custom value</a>, link: 'www.bla.com'},
+      {id: 0, value: 'value', customElement: <a href="//www.wix.com">Custom value</a>, link: 'www.bla.com'}
     ];
 
     it('should render the customElement when given', () => {

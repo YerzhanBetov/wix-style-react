@@ -6,6 +6,7 @@ $FontThin: "HelveticaNeueW01-Thin", "HelveticaNeueW02-Thin", "HelveticaNeueW10-3
 $FontLight: "HelveticaNeueW01-45Ligh", "HelveticaNeueW02-45Ligh", "HelveticaNeueW10-45Ligh", $fonts-fallback;
 $FontRoman: "HelveticaNeueW01-55Roma", "HelveticaNeueW02-55Roma", "HelveticaNeueW10-55Roma", $fonts-fallback;
 $FontMedium: "HelveticaNeueW01-65Medi", "HelveticaNeueW02-65Medi", "HelveticaNeueW10-65Medi", $fonts-fallback;
+$FontBold: "HelveticaNeueW01-75Bold", "HelveticaNeueW02-75Bold", "HelveticaNeueW10-75Bold", $fonts-fallback;
 
 
 @mixin FontUltraThin() {
@@ -25,6 +26,10 @@ $FontMedium: "HelveticaNeueW01-65Medi", "HelveticaNeueW02-65Medi", "HelveticaNeu
 
 @mixin FontMedium() {
 	font-family: $FontMedium;
+}
+
+@mixin FontBold() {
+	font-family: $FontBold;
 }
 
 /* New swatches! */
@@ -72,6 +77,7 @@ $R05: #d8504c;   // CTA
 $R10: #ee5951;   // Errors, CTA hover
 $R20: #ff6666;   // Notifications
 $R30: #ffd7d7;   // Notifications
+$R40: #ffe1e1;
 
 $G00: #44823f;
 $G05: #61ad5a;   // CTA
@@ -84,6 +90,7 @@ $Y05: #eda200;   // CTA
 $Y10: #fdb10c;   // CTA hover
 $Y20: #fac249;   // Notifications
 $Y30: #fef0ba;   // Notifications
+$Y40: #fef4cd;
 
 $WR00: #e05050;  // Wix Restaurant red
 
@@ -133,3 +140,5 @@ $paletteR1  : #EE5951;
 $paletteR2  : #F1726B;
 $paletteR3  : #FACDCA;
 $paletteR4  : #FCE6E5;
+
+$BMCounter  : #F4553F;

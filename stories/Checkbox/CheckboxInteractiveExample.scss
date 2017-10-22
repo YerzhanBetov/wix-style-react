@@ -1,0 +1,29 @@
+@import '../../src/common.scss';
+
+.form {
+  display: flex;
+  align-items: top;
+  padding: 20px;
+}
+
+.options {
+	flex-grow: 1;
+}
+
+.option {
+  margin-bottom: 10px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.preview {
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 20px;
+}

@@ -12,9 +12,11 @@ describe('Badge', () => {
     waitForVisibilityOf(driver.element(), 'Cannot find <Badge/>')
       .then(() => {
         expect(driver.text()).toBe('Primary H2');
+        expect(driver.isBadge()).toBe(true);
         expect(driver.isOfType('primary')).toBe(true);
         expect(driver.isOfAppearance('H2')).toBe(true);
         expect(driver.isOfAlignment('middle')).toBe(true);
+        expect(driver.isOfShape('ellipse')).toBe(true);
       });
   });
 

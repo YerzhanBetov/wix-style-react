@@ -82,6 +82,18 @@ describe('TimeInput', () => {
       expect(props.onChange.calledTwice).toBeTruthy();
     });
 
+    it(`should not do anything upon clicking input's up/down ticker when disabled`, () => {
+      const props = {
+        onChange: sinon.spy(),
+        disabled: true
+      };
+      const driver = createDriver(<TimePicker {...props}/>);
+
+      driver.clickTickerUp();
+      driver.clickTickerDown();
+      expect(props.onChange.called).toBeFalsy();
+    });
+
     it(`should increase input value by 20 minutes upon clicking the input's up ticker`, () => {
       const props = {
         defaultValue: moment()

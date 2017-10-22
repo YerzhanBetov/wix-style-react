@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {CloseThin, ArrowDownThin, Search4} from '../Icons';
+import CloseThin from './../Icons/dist/components/CloseThin';
+import ArrowDownThin from './../Icons/dist/components/ArrowDownThin';
+import Search4 from './../Icons/dist/components/Search4';
 import ThemedInputErrorSuffix from './ThemedInputErrorSuffix';
 import ThemedInputHelpSuffix from './ThemedInputHelpSuffix';
-import values from 'lodash.values';
 
 import styles from './Input.scss';
 
@@ -22,7 +23,7 @@ const suffixRules = {
 };
 
 const getVisibleSuffixCount = args =>
-   values(suffixRules)
+   Object.keys(suffixRules).map(key => suffixRules[key])
     .map(fn => fn(args))
     .filter(x => x)
     .length;
@@ -50,17 +51,10 @@ const InputSuffix = ({theme, errorMessage, error, disabled, help, helpMessage, o
     },
     {
       component: () =>
-        <div onClick={onClear} className={styles.clearButton}>
-          <CloseThin size={'6px'}/>
+        <div onClick={onClear} className={styles.clearButton} data-hook="input-clear-button">
+          <CloseThin size="8px"/>
         </div>,
       isVisible: suffixRules.clearButton({isClearButtonVisible})
-    },
-    {
-      component: () =>
-        <div className={styles.menuArrow} disabled={disabled} onClick={onIconClicked}>
-          <ArrowDownThin size={'0.6em'}/>
-        </div>,
-      isVisible: suffixRules.menuArrow({menuArrow, isClearButtonVisible, error, magnifyingGlass})
     },
     {
       component: () => <div className={styles.unitSeparator}/>,
@@ -73,6 +67,13 @@ const InputSuffix = ({theme, errorMessage, error, disabled, help, helpMessage, o
     {
       component: () => suffix,
       isVisible: suffixRules.customSuffix({suffix})
+    },
+    {
+      component: () =>
+        <div className={styles.menuArrow} disabled={disabled} onClick={onIconClicked}>
+          <ArrowDownThin size={'0.6em'}/>
+        </div>,
+      isVisible: suffixRules.menuArrow({menuArrow, isClearButtonVisible, error, magnifyingGlass})
     }
   ].filter(isFixVisible);
 

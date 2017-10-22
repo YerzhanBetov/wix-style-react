@@ -80,6 +80,16 @@ describe('DrillView', () => {
     );
   }
 
+  it('should have a sticky footer through props', () => {
+    const driver = createDriver(
+      <SideMenuDrill stickyFooter={<SideMenu.Footer>{getFooter(1)}</SideMenu.Footer>}>
+        {createLinksForLevel(0, {})}
+      </SideMenuDrill>
+    );
+
+    expect(!!driver.getStickyFooter()).toBe(true);
+  });
+
   it('should render a one level drill view', () => {
     const driver = createSideMenu(0);
 

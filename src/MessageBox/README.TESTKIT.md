@@ -34,9 +34,9 @@
   ***************/
   
   const component = mount(<div/><MessageBoxFunctionalLayout dataHook='messageBox'/></div>);
-  enzymeMessageBoxMarketerialLayoutTestKit = enzymeMessageBoxFunctionalLayoutTestkitFactory({wrapper: component, dataHook: 'messageBox'})
+  enzymeMessageBoxFunctionalLayoutTestKit = enzymeMessageBoxFunctionalLayoutTestkitFactory({wrapper: component, dataHook: 'messageBox'})
   
-  expect(enzymeMessageBoxMarketerialLayoutTestKit.getConfirmationButtonText()).toBe('OK');
+  expect(enzymeMessageBoxFunctionalLayoutTestKit.getConfirmationButtonText()).toBe('OK');
 
   /***********************
    ReactTestUtils exmaple

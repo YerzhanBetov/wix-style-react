@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Range} from 'rc-slider';
-import uniqueId from 'lodash.uniqueid';
+import uniqueId from 'lodash/uniqueId';
 import SliderHandle from './SliderHandle';
 import classNames from 'classnames';
 import './Slider.scss';
 
+/**
+  * A slider component with multi-range support
+  */
 export default class Slider extends Component {
   getRange() {
     const {min, max, step} = this.props;
@@ -64,19 +67,40 @@ export default class Slider extends Component {
   }
 }
 
+Slider.displayName = 'Slider';
+
 Slider.propTypes = {
-  id: PropTypes.string,
-  value: PropTypes.arrayOf(PropTypes.number),
-  min: PropTypes.number,
-  max: PropTypes.number,
-  step: PropTypes.number,
-  onChange: PropTypes.func.isRequired,
-  onAfterChange: PropTypes.func,
+  /** Allows the slider's handles to cross. */
   allowCross: PropTypes.bool,
-  displayTooltip: PropTypes.bool,
+  dataHook: PropTypes.string,
+
+  /** Controls the visibility of the marks. */
   displayMarks: PropTypes.bool,
+
+  /** Controls visibility of slide handle tooltip */
+  displayTooltip: PropTypes.bool,
+  id: PropTypes.string,
+
+  /** The absolute maximum of the slider's range */
+  max: PropTypes.number,
+
+  /** The absolute minimum of the slider's range */
+  min: PropTypes.number,
+
+  /** Called after every value change */
+  onAfterChange: PropTypes.func,
+
+  /** Called upon every value change */
+  onChange: PropTypes.func.isRequired,
+
+  /** Adjust for RTL dir. */
   rtl: PropTypes.bool,
-  dataHook: PropTypes.string
+
+  /** The slider's step */
+  step: PropTypes.number,
+
+  /** The slider's selected range */
+  value: PropTypes.arrayOf(PropTypes.number)
 };
 
 Slider.defaultProps = {

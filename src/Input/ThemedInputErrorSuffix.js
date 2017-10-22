@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import InputErrorSuffix from './InputErrorSuffix';
 import Tooltip from '../Tooltip';
 
-import {Error} from '../Icons/dist';
+import Error from '../Icons/dist/components/Error';
 
 
 import styles from './Input.scss';
@@ -14,7 +14,7 @@ const placementToMoveBy = {
   right: {x: 2, y: -10},
   left: {x: -2, y: -10},
   top: {x: 0, y: -10},
-  bottom: {x: 0, y: -8},
+  bottom: {x: 0, y: -8}
 };
 
 const AmaterialErrorSuffix = ({focused, error, errorMessage, placement, onShow}) => focused ?
@@ -22,7 +22,7 @@ const AmaterialErrorSuffix = ({focused, error, errorMessage, placement, onShow})
     dataHook="input-tooltip"
     disabled={!error && !errorMessage}
     placement={placement}
-    maxWidth="250px"
+    maxWidth="230px"
     hideDelay={5}
     showDelay={5}
     active={focused}

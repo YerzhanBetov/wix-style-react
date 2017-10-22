@@ -27,22 +27,27 @@ describe('google 2 address', () => {
     expect(google2address(aGoogleResponse({components: [component]})).state).toEqual(someState);
   });
 
-  it('should set city according to locality and ignore sublocality', () => {
+  describe('city', () => {
     const someLocality = 'some-locality';
     const someSublocality = 'some-sublocality';
-    const components = [
-      aComponent(someLocality, null, 'locality'),
-      aComponent(someSublocality, null, 'sublocality')
-    ];
+    const somePostalTown = 'some-postal_town';
+    const localityComponent = aComponent(someLocality, null, 'locality');
+    const subLocalityComponent = aComponent(someSublocality, null, 'sublocality');
+    const postalTownComponent = aComponent(somePostalTown, null, 'postal_town');
 
-    expect(google2address(aGoogleResponse({components})).city).toEqual(someLocality);
-  });
+    it('should be according to locality, ignore sublocality and postal_town', () => {
+      const components = [localityComponent, subLocalityComponent, postalTownComponent];
+      expect(google2address(aGoogleResponse({components})).city).toEqual(someLocality);
+    });
 
-  it('should set city according to sublocality if locality is missing', () => {
-    const someCity = 'some-city';
-    const component = aComponent(someCity, null, 'sublocality');
+    it('should be according to sublocality if locality is missing, ignore postal_town', () => {
+      const components = [subLocalityComponent, postalTownComponent];
+      expect(google2address(aGoogleResponse({components})).city).toEqual(someSublocality);
+    });
 
-    expect(google2address(aGoogleResponse({components: [component]})).city).toEqual(someCity);
+    it('should be according to postal_town if locality and sublocality are missing', () => {
+      expect(google2address(aGoogleResponse({components: [postalTownComponent]})).city).toEqual(somePostalTown);
+    });
   });
 
   it('should set street according to route', () => {

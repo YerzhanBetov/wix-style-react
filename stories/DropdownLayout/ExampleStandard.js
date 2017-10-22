@@ -13,14 +13,14 @@ const options = [
   {id: 1, value: 'Option 2'},
   {id: 2, value: 'Option 3'},
   {id: 3, value: 'Option 4'},
-  {id: 'footer', overrideStyle: true, value: <div style={{height: "240px", padding: "20px", fontSize: "20", backgroundColor: "#F0F"}}>Click <a href="http://www.wix.com">here</a> to go to wix.</div>}
+  {id: 'footer', overrideStyle: true, value: <div style={{height: '240px', padding: '20px', fontSize: '20', backgroundColor: '#F0F'}}>Click <a href="http://www.wix.com">here</a> to go to wix.</div>}
 ];
 
 const rtlOptions = [
   {id: 0, value: 'אופציה 1'},
   {id: 1, value: 'אופציה 2'},
   {id: 2, value: 'אופציה 3'},
-  {id: 3, value: 'אופציה 4'},
+  {id: 3, value: 'אופציה 4'}
 ];
 
 export default () =>

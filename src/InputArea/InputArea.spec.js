@@ -10,6 +10,8 @@ import {isTestkitExists, isEnzymeTestkitExists} from '../../testkit/test-common'
 describe('InputArea', () => {
   const createDriver = createDriverFactory(inputAreaDriverFactory);
 
+  const InputAreaForTesting = props => (<InputArea {...props} dataHook="textarea-div"/>);
+
   describe('value attribute', () => {
     it('should pass down to the wrapped input', () => {
       const props = {
@@ -17,7 +19,7 @@ describe('InputArea', () => {
         onChange: () => {}
       };
 
-      const driver = createDriver(<InputArea {...props}/>);
+      const driver = createDriver(<InputAreaForTesting {...props}/>);
       expect(driver.getValue()).toEqual(props.value);
     });
   });
@@ -26,7 +28,7 @@ describe('InputArea', () => {
     it('should pass down to the wrapped input', () => {
       const defaultValue = 'hello';
 
-      const driver = createDriver(<InputArea defaultValue={defaultValue}/>);
+      const driver = createDriver(<InputAreaForTesting defaultValue={defaultValue}/>);
       expect(driver.getDefaultValue()).toEqual(defaultValue);
     });
   });
@@ -35,7 +37,7 @@ describe('InputArea', () => {
     it('should pass down to the wrapped input', () => {
       const rows = 5;
 
-      const driver = createDriver(<InputArea rows={rows}/>);
+      const driver = createDriver(<InputAreaForTesting rows={rows}/>);
       expect(driver.getRowsCount()).toEqual(rows);
     });
   });
@@ -44,7 +46,7 @@ describe('InputArea', () => {
     it('should pass down to the wrapped input', () => {
       const maxHeight = '50px';
 
-      const driver = createDriver(<InputArea maxHeight={maxHeight}/>);
+      const driver = createDriver(<InputAreaForTesting maxHeight={maxHeight}/>);
       expect(driver.getStyle().maxHeight).toEqual(maxHeight);
     });
   });
@@ -53,7 +55,7 @@ describe('InputArea', () => {
     it('should pass down to the wrapped input - with max length', () => {
       const maxLength = 5;
 
-      const driver = createDriver(<InputArea maxLength={maxLength}/>);
+      const driver = createDriver(<InputAreaForTesting maxLength={maxLength}/>);
       expect(driver.getMaxLength()).toEqual(maxLength);
     });
   });
@@ -61,24 +63,24 @@ describe('InputArea', () => {
 
   describe('hasCounter attribute', () => {
     it('should pass down to the wrapped input', () => {
-      const driver = createDriver(<InputArea hasCounter/>);
+      const driver = createDriver(<InputAreaForTesting hasCounter/>);
       expect(driver.getHasCounter()).toBeTruthy();
     });
 
     it('should pass down to the wrapped input with default false value', () => {
-      const driver = createDriver(<InputArea/>);
+      const driver = createDriver(<InputAreaForTesting/>);
       expect(driver.getHasCounter()).toBeFalsy();
     });
   });
 
   describe('resizable attribute', () => {
     it('should pass down to the wrapped input', () => {
-      const driver = createDriver(<InputArea resizable/>);
+      const driver = createDriver(<InputAreaForTesting resizable/>);
       expect(driver.getResizable()).toBeTruthy();
     });
 
     it('should pass down to the wrapped input with default false value', () => {
-      const driver = createDriver(<InputArea/>);
+      const driver = createDriver(<InputAreaForTesting/>);
       expect(driver.getResizable()).toBeFalsy();
     });
   });
@@ -87,7 +89,7 @@ describe('InputArea', () => {
     it('should pass down to the wrapped input', () => {
       const rows = 5;
 
-      const driver = createDriver(<InputArea rows={rows}/>);
+      const driver = createDriver(<InputAreaForTesting rows={rows}/>);
       expect(driver.getRowsCount()).toEqual(rows);
     });
   });
@@ -96,26 +98,26 @@ describe('InputArea', () => {
     it('should pass down to the wrapped input', () => {
       const tabIndex = 1;
 
-      const driver = createDriver(<InputArea tabIndex={tabIndex}/>);
+      const driver = createDriver(<InputAreaForTesting tabIndex={tabIndex}/>);
       expect(driver.getTabIndex()).toEqual(tabIndex);
     });
   });
 
   describe('readOnly attribute', () => {
     it('should pass down to the wrapped input', () => {
-      const driver = createDriver(<InputArea readOnly/>);
+      const driver = createDriver(<InputAreaForTesting readOnly/>);
       expect(driver.getReadOnly()).toBeTruthy();
     });
 
     it('should pass down to the wrapped input with default false value', () => {
-      const driver = createDriver(<InputArea/>);
+      const driver = createDriver(<InputAreaForTesting/>);
       expect(driver.getReadOnly()).toBeFalsy();
     });
   });
 
   describe('error attribute', () => {
     it('should display an error icon if error is true', () => {
-      const driver = createDriver(<InputArea error/>);
+      const driver = createDriver(<InputAreaForTesting error/>);
 
       expect(driver.hasError()).toBeTruthy();
     });
@@ -127,7 +129,7 @@ describe('InputArea', () => {
       const onChange = jest.fn();
       const event = {target: {value: 'world'}};
 
-      const driver = createDriver(<InputArea onChange={onChange}/>);
+      const driver = createDriver(<InputAreaForTesting onChange={onChange}/>);
 
       driver.trigger('change', event);
 
@@ -140,7 +142,7 @@ describe('InputArea', () => {
       const onKeyUp = jest.fn();
       const event = {target: {value: 'world'}};
 
-      const driver = createDriver(<InputArea onKeyUp={onKeyUp}/>);
+      const driver = createDriver(<InputAreaForTesting onKeyUp={onKeyUp}/>);
 
       driver.trigger('keyUp', event);
 
@@ -151,7 +153,7 @@ describe('InputArea', () => {
   describe('onFocus attribute', () => {
     it('should be called when the input gets focused', () => {
       const onFocus = jest.fn();
-      const driver = createDriver(<InputArea onFocus={onFocus}/>);
+      const driver = createDriver(<InputAreaForTesting onFocus={onFocus}/>);
 
       driver.trigger('focus');
 
@@ -162,7 +164,7 @@ describe('InputArea', () => {
   describe('onBlur attribute', () => {
     it('should be called when the input gets blured', () => {
       const onBlur = jest.fn();
-      const driver = createDriver(<InputArea onBlur={onBlur}/>);
+      const driver = createDriver(<InputAreaForTesting onBlur={onBlur}/>);
 
       driver.trigger('blur');
 
@@ -175,7 +177,7 @@ describe('InputArea', () => {
       const onKeyDown = jest.fn();
       const event = {keyCode: 40};
 
-      const driver = createDriver(<InputArea onKeyDown={onKeyDown}/>);
+      const driver = createDriver(<InputAreaForTesting onKeyDown={onKeyDown}/>);
 
       driver.trigger('keyDown', event);
 
@@ -188,7 +190,7 @@ describe('InputArea', () => {
       const onEnterPressed = jest.fn();
       const event = {key: 'Enter', keyCode: 13, which: 13};
 
-      const driver = createDriver(<InputArea onEnterPressed={onEnterPressed}/>);
+      const driver = createDriver(<InputAreaForTesting onEnterPressed={onEnterPressed}/>);
 
       driver.trigger('keyDown', event);
 
@@ -198,19 +200,19 @@ describe('InputArea', () => {
 
   describe('forceFocus attribute', () => {
     it('should have focus class on input if forceFocus is true', () => {
-      const driver = createDriver(<InputArea forceFocus/>);
+      const driver = createDriver(<InputAreaForTesting forceFocus/>);
       expect(driver.isFocusedStyle()).toBeTruthy();
     });
   });
 
   describe('forceHover attribute', () => {
     it('should have hover class on input if forceHover is true', () => {
-      const driver = createDriver(<InputArea forceHover/>);
+      const driver = createDriver(<InputAreaForTesting forceHover/>);
       expect(driver.isHoveredStyle()).toBeTruthy();
     });
 
     it('should be hovered if forceFocus is false and forceHover is true', () => {
-      const driver = createDriver(<InputArea forceHover forceFocus={false}/>);
+      const driver = createDriver(<InputAreaForTesting forceHover forceFocus={false}/>);
       expect(driver.isHoveredStyle()).toBeTruthy();
     });
   });
@@ -218,7 +220,7 @@ describe('InputArea', () => {
   describe('autoFocus attribute', () => {
     it('Mounting an input element with autoFocus=false, should give it the focus', () => {
       let autoFocus = false;
-      const driver = createDriver(<InputArea autoFocus={false}/>);
+      const driver = createDriver(<InputAreaForTesting autoFocus={false}/>);
       expect(driver.isFocus()).toBeFalsy();
       autoFocus = true;
       driver.setProps({autoFocus});
@@ -226,14 +228,14 @@ describe('InputArea', () => {
     });
 
     it('Mounting an input element with autoFocus=true, gives it the focus', () => {
-      const driver = createDriver(<InputArea autoFocus/>);
+      const driver = createDriver(<InputAreaForTesting autoFocus/>);
       expect(driver.isFocus()).toBeTruthy();
     });
   });
 
   describe('focus function', () => {
     it('calling focus should give focus to the input', () => {
-      const driver = createDriver(<InputArea autoFocus={false}/>);
+      const driver = createDriver(<InputAreaForTesting autoFocus={false}/>);
       expect(driver.isFocus()).toBeFalsy();
       driver.focus();
       expect(driver.isFocus()).toBeTruthy();
@@ -242,17 +244,17 @@ describe('InputArea', () => {
 
   describe('theme attribute', () => {
     it('should set the theme by default to "normal"', () => {
-      const driver = createDriver(<InputArea/>);
+      const driver = createDriver(<InputAreaForTesting/>);
       expect(driver.isOfStyle('normal')).toBeTruthy();
     });
 
     it('should allowing setting the theme to "paneltitle"', () => {
-      const driver = createDriver(<InputArea theme="paneltitle"/>);
+      const driver = createDriver(<InputAreaForTesting theme="paneltitle"/>);
       expect(driver.isOfStyle('paneltitle')).toBeTruthy();
     });
 
     it('should allow setting the theme to "material"', () => {
-      const driver = createDriver(<InputArea theme="material"/>);
+      const driver = createDriver(<InputAreaForTesting theme="material"/>);
       expect(driver.isOfStyle('material')).toBeTruthy();
     });
   });
@@ -261,32 +263,32 @@ describe('InputArea', () => {
     const createDriver = createDriverFactory(inputAreaDriverFactory);
 
     it('should allow adding a custom aria-label', () => {
-      const driver = createDriver(<InputArea ariaLabel="hello"/>);
+      const driver = createDriver(<InputAreaForTesting ariaLabel="hello"/>);
       expect(driver.getAriaLabel()).toBe('hello');
     });
 
     it('should not have any aria label buy default', () => {
-      const driver = createDriver(<InputArea/>);
+      const driver = createDriver(<InputAreaForTesting/>);
       expect(driver.getAriaLabel()).toBeNull;
     });
 
     it('should allow adding aria-controls', () => {
-      const driver = createDriver(<InputArea ariaControls="id"/>);
+      const driver = createDriver(<InputAreaForTesting ariaControls="id"/>);
       expect(driver.getAriaControls()).toBe('id');
     });
 
     it('should not have any aria controls buy default', () => {
-      const driver = createDriver(<InputArea/>);
+      const driver = createDriver(<InputAreaForTesting/>);
       expect(driver.getAriaControls()).toBeNull;
     });
 
     it('should allow adding aria-controls', () => {
-      const driver = createDriver(<InputArea ariaDescribedby="blabla"/>);
+      const driver = createDriver(<InputAreaForTesting ariaDescribedby="blabla"/>);
       expect(driver.getAriaDescribedby()).toBe('blabla');
     });
 
     it('should not have any aria controls buy default', () => {
-      const driver = createDriver(<InputArea/>);
+      const driver = createDriver(<InputAreaForTesting/>);
       expect(driver.getAriaDescribedby()).toBeNull;
     });
 
@@ -304,7 +306,7 @@ describe('InputArea', () => {
 
     describe('onTooltipShow attribute', () => {
       it('should not display the tooltip by default', () => {
-        const driver = createDriver(<InputArea error errorMessage="I'm the error message"/>);
+        const driver = createDriver(<InputAreaForTesting error errorMessage="I'm the error message"/>);
         const dataHook = driver.getTooltipDataHook();
         const wrapper = driver.getTooltipElement();
         const tooltipDriver = tooltipTestkitFactory({wrapper, dataHook});
@@ -315,7 +317,7 @@ describe('InputArea', () => {
       });
 
       it('should display the tooltip on mouse hover', () => {
-        const driver = createDriver(<InputArea error errorMessage="I'm the error message"/>);
+        const driver = createDriver(<InputAreaForTesting error errorMessage="I'm the error message"/>);
         const dataHook = driver.getTooltipDataHook();
         const wrapper = driver.getTooltipElement();
         const tooltipDriver = tooltipTestkitFactory({wrapper, dataHook});
@@ -328,7 +330,7 @@ describe('InputArea', () => {
 
       it('should call onTooltipShow callback when error tooltip become active', () => {
         const onTooltipShow = sinon.spy();
-        const driver = createDriver(<InputArea error errorMessage="I'm the error message" onTooltipShow={onTooltipShow}/>);
+        const driver = createDriver(<InputAreaForTesting error errorMessage="I'm the error message" onTooltipShow={onTooltipShow}/>);
         const dataHook = driver.getTooltipDataHook();
         const wrapper = driver.getTooltipElement();
         const tooltipDriver = tooltipTestkitFactory({wrapper, dataHook});
@@ -343,7 +345,7 @@ describe('InputArea', () => {
     describe('tooltipPlacement attribute', () => {
       ['top', 'bottom', 'left', 'right'].forEach(placement => {
         it(`should have a tooltip positioned to the ${placement}`, () => {
-          const driver = createDriver(<InputArea error errorMessage="I'm the error message" tooltipPlacement={placement}/>);
+          const driver = createDriver(<InputAreaForTesting error errorMessage="I'm the error message" tooltipPlacement={placement}/>);
           const dataHook = driver.getTooltipDataHook();
           const wrapper = driver.getTooltipElement();
           const tooltipDriver = tooltipTestkitFactory({wrapper, dataHook});
@@ -362,7 +364,7 @@ describe('testkit', () => {
   it('should exist', () => {
     const value = 'hello';
     const onChange = () => {};
-    expect(isTestkitExists(<InputArea value={value} onChange={onChange}/>, inputAreaTestkitFactory)).toBe(true);
+    expect(isTestkitExists(<InputArea dataHook="texarea-div" value={value} onChange={onChange}/>, inputAreaTestkitFactory)).toBe(true);
   });
 });
 
@@ -370,6 +372,6 @@ describe('enzyme testkit', () => {
   it('should exist', () => {
     const value = 'hello';
     const onChange = () => {};
-    expect(isEnzymeTestkitExists(<InputArea value={value} onChange={onChange}/>, enzymeInputAreaTestkitFactory)).toBe(true);
+    expect(isEnzymeTestkitExists(<InputArea dataHook="texarea-div" value={value} onChange={onChange}/>, enzymeInputAreaTestkitFactory)).toBe(true);
   });
 });

@@ -21,7 +21,7 @@ const runInputWithOptionsTest = driverFactory => {
     ];
 
     it('should show dropdown when autofocus is on', () => {
-      const {inputDriver, dropdownLayoutDriver} = createDriver(<InputWithOptions options={options} autoFocus={true}/>);
+      const {inputDriver, dropdownLayoutDriver} = createDriver(<InputWithOptions options={options} autoFocus/>);
       expect(inputDriver.isFocus()).toBeTruthy();
       expect(dropdownLayoutDriver.isShown()).toBeTruthy();
     });
@@ -69,6 +69,21 @@ const runInputWithOptionsTest = driverFactory => {
       expect(dropdownLayoutDriver.isShown()).toBeFalsy();
     });
 
+    it('should start keyboard navigation from last selected option when re-opening the dropdown layout', () => {
+      const {driver, dropdownLayoutDriver} = createDriver(<InputWithOptions options={options} selectedId={1}/>);
+      driver.focus();
+
+      dropdownLayoutDriver.clickAtOption(1);
+      driver.outsideClick();
+      driver.focus();
+
+      expect(dropdownLayoutDriver.isOptionSelected(1)).toBeTruthy();
+      expect(dropdownLayoutDriver.isOptionHovered(1)).toBeTruthy();
+
+      driver.pressDownKey(); // going to skip disabled option at index 2
+      expect(dropdownLayoutDriver.isOptionHovered(3)).toBeTruthy();
+    });
+
     it('should call onManuallyInput on enter key press with a trimed value', () => {
       const onManuallyInput = jest.fn();
       const {driver, inputDriver} = createDriver(<InputWithOptions options={options} onManuallyInput={onManuallyInput}/>);
@@ -91,6 +106,30 @@ const runInputWithOptionsTest = driverFactory => {
       inputDriver.enterText('my text');
       driver.pressTabKey();
       expect(onManuallyInput).toBeCalledWith('my text', undefined);
+    });
+
+    it('should blur on tab key press', () => {
+      const onManuallyInput = jest.fn();
+      const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<InputWithOptions options={options} onManuallyInput={onManuallyInput}/>);
+      inputDriver.focus();
+      inputDriver.enterText('Option 1');
+      driver.pressDownKey();
+      expect(inputDriver.isFocus()).toBe(true);
+      driver.pressTabKey();
+      expect(inputDriver.isFocus()).toBe(false);
+      expect(dropdownLayoutDriver.isShown()).toBe(false);
+    });
+
+    it('should stay focused on tab key press with closeOnSelect=false', () => {
+      const onManuallyInput = jest.fn();
+      const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<InputWithOptions options={options} onManuallyInput={onManuallyInput} closeOnSelect={false}/>);
+      inputDriver.focus();
+      inputDriver.enterText('Option 1');
+      driver.pressDownKey();
+      expect(inputDriver.isFocus()).toBe(true);
+      driver.pressTabKey();
+      expect(inputDriver.isFocus()).toBe(true);
+      expect(dropdownLayoutDriver.isShown()).toBe(true);
     });
 
     it('should suggest an option when calling onManuallyInput', () => {
@@ -142,6 +181,28 @@ const runInputWithOptionsTest = driverFactory => {
       const {driver} = createDriver(<InputWithOptions options={options} onFocus={onFocus}/>);
       driver.focus();
       expect(onFocus).toBeCalled();
+    });
+
+    it('should call onBlur if clicked outside and input is focused', () => {
+      const onBlur = jest.fn();
+      const {driver, inputDriver} = createDriver(<InputWithOptions options={options} onBlur={onBlur}/>);
+      driver.outsideClick();
+      expect(onBlur).not.toBeCalled();
+      driver.focus();
+      driver.outsideClick();
+      inputDriver.blur(); // apparently, jsdom does not fire onBlur after input.blur() is called
+      expect(onBlur).toBeCalled();
+    });
+
+    it('should not call onManuallyInput when composing text via external means', () => {
+      const onManualInput = jest.fn();
+      const {driver, inputDriver} = createDriver(<InputWithOptions options={options} onManuallyInput={onManualInput}/>);
+      inputDriver.startComposing();
+      driver.pressEnterKey();
+      expect(onManualInput).not.toBeCalled();
+      inputDriver.endComposing();
+      driver.pressEnterKey();
+      expect(onManualInput).toBeCalled();
     });
 
     describe('testkit', () => {

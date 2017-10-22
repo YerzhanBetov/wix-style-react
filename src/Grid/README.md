@@ -55,6 +55,17 @@ The card is a container component of a rounded corner layout.
 | tooltip | node | - | - | If set, this tooltip will wrap the link |
 | withoutDivider | bool | false | - | Whether to show divider or not |
 
+#### Card.CollapsedHeader
+
+| propName | propType | defaultValue | isRequired | description |
+|----------|----------|--------------|------------|-------------|
+| title | string | - | + | The title of the card |
+| subtitle | string | - | - | The subtitle of the card |
+| collapsed | bool | false | - | True when the card should be collapsed |
+| toggleSwitch | 'button' / 'switch' | 'switch' | - | The style of the collapsed card toggle |
+| withoutDivider | bool | false | - | Whether to show divider or not |
+
+
 #### Row
 
 A simple row according to the bootstrap docs.

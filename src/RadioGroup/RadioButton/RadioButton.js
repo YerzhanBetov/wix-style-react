@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import uniqueId from 'lodash.uniqueid';
+import uniqueId from 'lodash/uniqueId';
 import styles from '../RadioGroup.scss';
 import classNames from 'classnames';
 import WixComponent from '../../BaseComponents/WixComponent';
+import typography, {convertFromUxLangToCss} from '../../Typography';
 
 class RadioButton extends WixComponent {
   constructor(props) {
@@ -22,26 +23,28 @@ class RadioButton extends WixComponent {
 
     const labelClasses = classNames({
       [styles.vcenter]: vAlign === 'center',
-      [styles.vtop]: vAlign === 'top'
+      [styles.vtop]: vAlign === 'top',
+      [typography[convertFromUxLangToCss('T1.1')]]: true
     });
 
     const buttonClasses = classNames({
       [styles.checked]: checked,
+      [styles.radioButton]: true
     });
 
+    const {icon, children} = this.props;
     return (
         type === 'button' ? (
-          <div className={styles.buttonWrapper}>
-            <button
-              className={buttonClasses}
-              checked={checked}
-              disabled={disabled}
-              id={this.id}
-              onClick={() => (!checked && !disabled) ? onChange(value) : null}
-              >
-              {this.props.children}
-            </button>
-          </div>
+          <button
+            className={buttonClasses}
+            checked={checked}
+            disabled={disabled}
+            id={this.id}
+            onClick={() => (!checked && !disabled) ? onChange(value) : null}
+            >
+            {icon ? <span>{icon}</span> : null}
+            {children ? <span>{children}</span> : null}
+          </button>
         ) : (
           <div className={styles.radioWrapper} style={style}>
             <input
@@ -78,7 +81,7 @@ RadioButton.propTypes = {
   disabled: PropTypes.bool,
   children: PropTypes.any,
   style: PropTypes.object,
-  type: PropTypes.string,
+  type: PropTypes.string
 };
 
 RadioButton.displayName = 'RadioGroup.Button';

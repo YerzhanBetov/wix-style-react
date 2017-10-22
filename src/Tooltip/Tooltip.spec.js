@@ -183,6 +183,34 @@ describe('Tooltip', () => {
     expect(onShow).not.toHaveBeenCalled();
     return resolveIn(30).then(() => {
       expect(onShow).toHaveBeenCalled();
+      expect(driver.isShown()).toBeTruthy();
+    });
+  });
+
+  it('should call onHide when tooltip is hidden', () => {
+    const onHide = jest.fn();
+    const driver = createDriver(<Tooltip {...{..._props, onHide}}>{children}</Tooltip>);
+
+    driver.mouseEnter();
+    return resolveIn(30).then(() => {
+      expect(driver.isShown()).toBeTruthy();
+
+      driver.mouseLeave();
+
+      return resolveIn(30).then(() => {
+        expect(driver.isShown()).toBeFalsy();
+        expect(onHide).toHaveBeenCalled();
+      });
+    });
+
+  });
+
+  it('should append to element selected', () => {
+    const el = document.createElement('div');
+    const driver = createDriver(<Tooltip {..._props} appendTo={el}>{children}</Tooltip>);
+    driver.mouseEnter();
+    return resolveIn(30).then(() => {
+      expect(el.childElementCount).toEqual(1);
     });
   });
 
@@ -204,6 +232,43 @@ describe('Tooltip', () => {
         return resolveIn(30).then(() => {
           expect(driver.getPlacement()).toBe(placement);
         });
+      });
+    });
+  });
+
+  describe('max-width attribute', () => {
+    it('should set default max-width 378', () => {
+      const driver = createDriver(<Tooltip {..._props}>{children}</Tooltip>);
+      driver.mouseEnter();
+      return resolveIn(30).then(() => {
+        expect(driver.getMaxWidth()).toBe('378px');
+      });
+    });
+
+    it('should set custom max-width', () => {
+      const props = {..._props, maxWidth: '400px'};
+      const driver = createDriver(<Tooltip {...props}>{children}</Tooltip>);
+      driver.mouseEnter();
+      return resolveIn(30).then(() => {
+        expect(driver.getMaxWidth()).toBe('400px');
+      });
+    });
+  });
+
+  describe('padding attribute', () => {
+    it('should set default to none', () => {
+      const driver = createDriver(<Tooltip {..._props}>{children}</Tooltip>);
+      driver.mouseEnter();
+      return resolveIn(30).then(() => {
+        expect(driver.getPadding()).toBe(undefined);
+      });
+    });
+    it('should set custom padding', () => {
+      const props = {..._props, padding: '5px'};
+      const driver = createDriver(<Tooltip {...props}>{children}</Tooltip>);
+      driver.mouseEnter();
+      return resolveIn(30).then(() => {
+        expect(driver.getPadding()).toBe('5px');
       });
     });
   });

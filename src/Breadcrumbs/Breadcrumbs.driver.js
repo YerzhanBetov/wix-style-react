@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
+import {isClassExists} from '../../test/utils';
 
 const breadcrumbsDriverFactory = ({element, wrapper, component}) => {
   const optionAt = position => element.childNodes[position];
-  const isClassExists = (element, className) => !!(element.className.match(new RegExp('\\b' + className + '\\b')));
 
   return {
     exists: () => !!element,
@@ -13,6 +13,11 @@ const breadcrumbsDriverFactory = ({element, wrapper, component}) => {
     clickBreadcrumbAt: position => ReactTestUtils.Simulate.click(optionAt(position).querySelector('[data-hook="breadcrumb-clickable"]')),
     getActiveItemId: () => {
       const activeItem = element.querySelector('.active');
+
+      if (!activeItem) {
+        return null;
+      }
+
       return Array.from(activeItem.parentNode.children).indexOf(activeItem);
     },
     isLarge: () => isClassExists(element, 'large'),

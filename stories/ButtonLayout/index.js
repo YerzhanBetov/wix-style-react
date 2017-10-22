@@ -1,29 +1,26 @@
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
-import Markdown from '../utils/Components/Markdown';
-import CodeExample from '../utils/Components/CodeExample';
-import Readme from '../../src/ButtonLayout/README.md';
-import TabbedView from '../utils/Components/TabbedView';
-import ReadmeTestKit from '../../src/ButtonLayout/README.TESTKIT.md';
+import story from '../utils/Components/Story';
 
-import ExampleControlled from './ExampleControlled';
-import ExampleControlledRaw from '!raw!./ExampleControlled';
+import component from 'wix-style-react/ButtonLayout';
+import source from '!raw-loader!wix-style-react/ButtonLayout/ButtonLayout';
+import readmeTestkit from '../../src/ButtonLayout/README.TESTKIT.md';
 
-storiesOf('Core', module)
-  .add('Button Layout', () => (
-    <TabbedView tabs={['API', 'TestKits']}>
-      <div>
-        <Markdown source={Readme}/>
-
-        <h1>Example</h1>
-
-        <CodeExample title="Controlled" code={ExampleControlledRaw}>
-          <ExampleControlled/>
-        </CodeExample>
-
-      </div>
-      <div>
-        <Markdown source={ReadmeTestKit}/>
-      </div>
-    </TabbedView>
-  ));
+story({
+  category: 'Core',
+  name: 'ButtonLayout',
+  source,
+  readmeTestkit,
+  component,
+  componentProps: {
+    children: (
+      <a
+        href="http://www.wix.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{textDecoration: 'inherit'}}
+        >
+        Link Like Button
+      </a>
+    )
+  }
+});

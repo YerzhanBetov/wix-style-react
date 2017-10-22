@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '../Tooltip';
 import styles from './InputArea.scss';
-import {Error} from '../Icons/dist';
+import Error from '../Icons/dist/components/Error';
 
 const Exclamation = ({errorMessage, tooltipPlacement, onTooltipShow}) =>
   <div className={styles.suffix}>

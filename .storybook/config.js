@@ -1,84 +1,20 @@
-import {configure} from '@kadira/storybook';
-import {setOptions} from '@kadira/storybook-addon-options';
+import {configure, storiesOf} from '@storybook/react';
+import {setOptions} from '@storybook/addon-options';
 
 function loadStories() {
+  if (process.env.STORYBOOK_E2E) {
+    require('./e2e-styles.scss');
+  }
+
   require('../stories/stories.scss');
-
-  // Introduction
-  require('../stories/Introduction');
-
-  // Core
-  require('../stories/AutoComplete');
-  require('../stories/Breadcrubms');
-  require('../stories/Badge');
-  require('../stories/ButtonLayout');
-  require('../stories/ButtonSelection');
-  require('../stories/Checkbox');
-  require('../stories/DataTable');
-  require('../stories/DatePicker');
-  require('../stories/Dropdown');
-  require('../stories/DropdownLayout');
-  require('../stories/EndorseContentLayout');
-  require('../stories/FilePicker');
-  require('../stories/GoogleAddressInput');
-  require('../stories/ImageViewer');
-  require('../stories/Input');
-  require('../stories/InputArea');
-  require('../stories/InputWithOptions');
-  require('../stories/Label');
-  require('../stories/Loader');
-  require('../stories/MessageBox');
-  require('../stories/Modal');
-  require('../stories/MultiSelect');
-  require('../stories/RadioGroup');
-  require('../stories/SideBar');
-  require('../stories/SideMenu');
-  require('../stories/Slider');
-  require('../stories/Tag');
-  require('../stories/TimeInput');
-  // require('../stories/Toast'); DEPRECATED
-  require('../stories/ToggleSwitch');
-  require('../stories/Tooltip/Core');
-
-  //BackOffice
-  require('../stories/BackOffice/Button');
-  // require('../stories/BackOffice/TextLink');
-
-  //Viewer
-  require('../stories/Viewer/Button');
-  require('../stories/Viewer/TextLink');
-  require('../stories/ViewerSnippet/TextLink/CompositeStory');
-  require('../stories/Viewer/Divider');
-  require('../stories/ViewerSnippet/Divider/CompositeStory');
-
-  // Common
-  require('../stories/Composite');
-  require('../stories/GridWithCardLayout');
-  require('../stories/Icons');
-  require('../stories/Common');
-
-  // Composites
-  require('../stories/TextField');
-  require('../stories/TextArea');
-  require('../stories/Text');
-  require('../stories/RichTextArea');
-  require('../stories/RichTextAreaComposite');
-  require('../stories/FieldWithSelectionComposite');
-  require('../stories/Range');
-  require('../stories/AutoCompleteComposite');
-  require('../stories/GoogleAddressInputWithLabel');
-  require('../stories/BackOffice/Button/CompositeStory');
-  require('../stories/Breadcrubms/CompositeStory');
-  require('../stories/Tabs');
-  require('../stories/Tooltip/Composite/CompositeStory');
-  require('../stories/Notification');
-
-  // Animations
-  // require('../stories/Animations');
+  require('./stories');
 }
 
 configure(loadStories, module);
 
 setOptions({
-  showDownPanel: false
+  showDownPanel: false,
+  name: 'wix-style-react',
+  url: 'https://github.com/wix/wix-style-react',
+  sidebarAnimations: true
 });

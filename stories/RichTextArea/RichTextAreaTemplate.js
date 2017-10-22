@@ -26,13 +26,13 @@ class RichTextAreaTemplate extends Component {
 
 RichTextAreaTemplate.propTypes = {
   onTemplateChange: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 function getExampleCode(element) {
   return reactElementToJSXString(element, {
     filterProps: ['onChange'],
-    showDefaultProps: false,
+    showDefaultProps: false
   });
 }
 

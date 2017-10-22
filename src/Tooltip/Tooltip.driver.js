@@ -2,7 +2,7 @@ import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import ReactDOM from 'react-dom';
 import Tooltip from './Tooltip';
-import last from 'lodash.last';
+import last from 'lodash/last';
 
 const arrowDirectionToPlacement = {
   top: 'bottom',
@@ -34,6 +34,16 @@ const tooltipDriverFactory = ({element, wrapper}) => {
         content = content.children[0];
       }
       return content.innerHTML;
+    },
+    getMaxWidth: () => {
+      const content = document.body.querySelector('.tooltip');
+      const values = content.style._values;
+      return values['max-width'];
+    },
+    getPadding: () => {
+      const content = document.body.querySelector('.tooltip');
+      const values = content.style._values;
+      return values.padding;
     },
     setProps: props => {
       ReactDOM.render(<div ref={r => element = r}><Tooltip {...props}/></div>, wrapper);

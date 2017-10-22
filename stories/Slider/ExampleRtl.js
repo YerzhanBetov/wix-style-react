@@ -8,5 +8,5 @@ const style = {
 
 export default () =>
   <div style={{direction: 'rtl'}}>
-    <div style={style}>Single handle<Slider rtl={true} value={[3]} min={1} max={10}/></div>
+    <div style={style}>Single handle<Slider rtl value={[3]} min={1} max={10}/></div>
   </div>;

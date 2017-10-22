@@ -5,18 +5,22 @@
 
 @mixin Size($height, $fontSize) {
     height: $height;
+    line-height: $height - 2px;
     font-size: $fontSize;
     .input {
         display: block;
-        line-height: 24px;
         font-size: $fontSize;
+        &:-webkit-autofill {
+          -webkit-box-shadow: 0 0 0 $height white inset;
+        }
     }
 
     .prefix,
     .suffix {
+        margin-top: -1px;
         height: $height;
+        line-height: $height;
     }
-
 }
 
 @mixin ThemeDefault($borderColor, $backgroundColor, $color) {
@@ -24,6 +28,13 @@
     background-color: $backgroundColor;
     color: $color;
     .input { color: $color; }
+}
+
+@mixin BorderRadius($borderRadius) {
+  border-radius: $borderRadius;
+  &:-webkit-autofill {
+    border-radius: $borderRadius;
+  }
 }
 
 @mixin ThemeHover($backgroundColor) {
@@ -36,7 +47,19 @@
         border-color: $borderColor;
         background-color: $backgroundColor;
         color: $color;
-        .input { color: $color; }
+        .input,
+        .unit {
+            color: $color;
+        }
+    }
+}
+
+@mixin ThemeDisableHover($borderColor) {
+    &.disabled {
+        &:hover,
+        &.hasHover {
+            border-color: $borderColor;
+        }
     }
 }
 

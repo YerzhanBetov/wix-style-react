@@ -1,19 +1,20 @@
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import CodeExample from '../utils/Components/CodeExample';
-import Markdown from '../utils/Components/Markdown';
+import AutoDocs from '../utils/Components/AutoDocs';
 
-import Readme from '../../src/Text/README.md';
+import TextSource from '!raw-loader!wix-style-react/Text/Text';
 
 import ExampleStandard from './ExampleStandard';
-import ExampleStandardRaw from '!raw!./ExampleStandard';
+import ExampleStandardRaw from '!raw-loader!./ExampleStandard';
 
 
 storiesOf('Core', module)
   .add('Text', () => {
     return (
       <div>
-        <Markdown source={Readme}/>
+        <AutoDocs source={TextSource}/>
+
         <CodeExample title="Standard" code={ExampleStandardRaw}>
           <ExampleStandard/>
         </CodeExample>

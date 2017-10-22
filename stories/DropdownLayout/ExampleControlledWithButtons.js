@@ -28,7 +28,7 @@ const longOptions = [
   {id: 21, value: '-'},
   {id: 22, value: 'Option 3'},
   {id: 23, value: 'Disabled', disabled: true},
-  {id: 24, value: 'Option 4'},
+  {id: 24, value: 'Option 4'}
 ];
 
 const options = [
@@ -37,7 +37,7 @@ const options = [
   {id: 0, value: '-'},
   {id: 3, value: 'Option 3'},
   {id: 'disabled', value: 'Disabled', disabled: true},
-  {id: 4, value: 'Option 4'},
+  {id: 4, value: 'Option 4'}
 ];
 
 class ControlledExample extends Component {
@@ -53,9 +53,9 @@ class ControlledExample extends Component {
     return (
       <div>
         <div className={styles.buttons_holder}>
-          <div className={styles.button}><Button height="medium" suffixIcon={<ArrowDownThin />} onClick={onClick(1)} theme="fullblue">Click On Me</Button></div>
-          <div className={styles.button}><Button height="medium" suffixIcon={<ArrowDownThin />} onClick={onClick(2)} theme="fullblue">Click On Me Too</Button></div>
-          <div className={styles.button}><Button height="medium" suffixIcon={<ArrowDownThin />} onClick={onClick(3)} theme="fullblue">Click On Me Now</Button></div>
+          <div className={styles.button}><Button height="medium" suffixIcon={<ArrowDownThin/>} onClick={onClick(1)} theme="fullblue">Click On Me</Button></div>
+          <div className={styles.button}><Button height="medium" suffixIcon={<ArrowDownThin/>} onClick={onClick(2)} theme="fullblue">Click On Me Too</Button></div>
+          <div className={styles.button}><Button height="medium" suffixIcon={<ArrowDownThin/>} onClick={onClick(3)} theme="fullblue">Click On Me Now</Button></div>
         </div>
         <div className={`ltr ${styles.dropdown_a}`}>
           <DropdownLayout visible={this.state.visible === 1} options={options} maxHeightPixels={100} onClose={onClose} onClickOutside={onClose}/>

@@ -1,33 +1,33 @@
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import CodeExample from '../utils/Components/CodeExample';
 import Markdown from '../utils/Components/Markdown';
 import AutoDocs from '../utils/Components/AutoDocs';
 import TabbedView from '../utils/Components/TabbedView';
 
 import Readme from '../../src/Breadcrumbs/README.md';
-import BreadcrumbsSource from '!raw!../../src/Breadcrumbs/Breadcrumbs';
+import BreadcrumbsSource from '!raw-loader!../../src/Breadcrumbs/Breadcrumbs';
 import ReadmeTestKit from '../../src/Breadcrumbs/README.TESTKIT.md';
 
-import ExampleStandardRow from '!raw!../Breadcrubms/ExampleStandard';
+import ExampleStandardRow from '!raw-loader!../Breadcrubms/ExampleStandard';
 import ExampleStandard from '../Breadcrubms/ExampleStandard';
 
-import ExampleSizesRow from '!raw!../Breadcrubms/ExampleSizes';
+import ExampleSizesRow from '!raw-loader!../Breadcrubms/ExampleSizes';
 import ExampleSizes from '../Breadcrubms/ExampleSizes';
 
-import ExampleThemesRow from '!raw!../Breadcrubms/ExampleThemes';
+import ExampleThemesRow from '!raw-loader!../Breadcrubms/ExampleThemes';
 import ExampleThemes from '../Breadcrubms/ExampleThemes';
 
-import ExampleWithNodesRow from '!raw!../Breadcrubms/ExampleWithNodes';
+import ExampleWithNodesRow from '!raw-loader!../Breadcrubms/ExampleWithNodes';
 import ExampleWithNodes from '../Breadcrubms/ExampleWithNodes';
 
-import ExampleWithOnClickRow from '!raw!../Breadcrubms/ExampleWithOnClick';
+import ExampleWithOnClickRow from '!raw-loader!../Breadcrubms/ExampleWithOnClick';
 import ExampleWithOnClick from '../Breadcrubms/ExampleWithOnClick';
 
-import ExampleWithChosenActiveElementRaw from '!raw!../Breadcrubms/ExampleWithChosenActiveElement';
+import ExampleWithChosenActiveElementRaw from '!raw-loader!../Breadcrubms/ExampleWithChosenActiveElement';
 import ExampleWithChosenActiveElement from '../Breadcrubms/ExampleWithChosenActiveElement';
 
-import ExampleUsingURLRaw from '!raw!../Breadcrubms/ExampleUsingURL';
+import ExampleUsingURLRaw from '!raw-loader!../Breadcrubms/ExampleUsingURL';
 import ExampleUsingURL from '../Breadcrubms/ExampleUsingURL';
 
 storiesOf('Core', module)

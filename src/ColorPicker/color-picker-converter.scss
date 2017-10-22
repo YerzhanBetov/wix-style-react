@@ -1,0 +1,11 @@
+.root {
+  padding: 12px 18px 0 18px;
+}
+
+.distribute {
+  display: flex;
+  justify-content: space-between;
+  & > * {
+    width: 28%;
+  }
+}

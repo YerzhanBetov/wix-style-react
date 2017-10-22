@@ -2,51 +2,50 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Tooltip from '../Tooltip';
-import {Bold, Italic, Underline, UnorderedList, OrderedList, Link, Image} from '../Icons/dist';
+import Bold from './../Icons/dist/components/Bold';
+import Italic from './../Icons/dist/components/Italic';
+import Underline from './../Icons/dist/components/Underline';
+import UnorderedList from './../Icons/dist/components/UnorderedList';
+import OrderedList from './../Icons/dist/components/OrderedList';
+import Link from './../Icons/dist/components/Link';
+import Image from './../Icons/dist/components/Image';
 import styles from './RichTextAreaButton.scss';
 
 const buttons = {
   bold: {
     icon: Bold,
     tooltipText: 'Bold',
-    iconWidth: 11,
-    iconHeight: 14,
+    size: 30
   },
   italic: {
     icon: Italic,
     tooltipText: 'Italic',
-    iconWidth: 8,
-    iconHeight: 14,
+    size: 30
   },
   underline: {
     icon: Underline,
     tooltipText: 'Underline',
-    iconWidth: 15,
-    iconHeight: 15,
+    size: 30
   },
   'unordered-list': {
     icon: UnorderedList,
     tooltipText: 'Bulletted list',
-    iconWidth: 15,
-    iconHeight: 15,
+    size: 30
   },
   'ordered-list': {
     icon: OrderedList,
     tooltipText: 'Numbered list',
-    iconWidth: 15,
-    iconHeight: 16,
+    size: 30
   },
   link: {
     icon: Link,
     tooltipText: 'Link',
-    iconWidth: 15,
-    iconHeight: 16,
+    size: 30
   },
   image: {
     icon: Image,
     tooltipText: 'Image',
-    iconWidth: 15,
-    iconHeight: 16
+    size: 14
   }
 };
 
@@ -67,6 +66,7 @@ class RichTextAreaButton extends Component {
     });
     return (
       <Tooltip
+        appendToParent
         content={tooltipContent}
         overlay=""
         theme="dark"
@@ -89,8 +89,8 @@ class RichTextAreaButton extends Component {
   }
 
   renderIcon() {
-    const {icon: Icon, iconWidth, iconHeight} = buttons[this.props.type];
-    return <Icon width={`${iconWidth}px`} height={`${iconHeight}px`}/>;
+    const {icon: Icon, size} = buttons[this.props.type];
+    return <Icon size={`${size}px`}/>;
   }
 }
 
@@ -99,7 +99,7 @@ RichTextAreaButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   isActive: PropTypes.bool,
   isTooltipDisabled: PropTypes.bool,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 export default RichTextAreaButton;

@@ -12,6 +12,9 @@ export const inputAreaTestkitFactory = testkitFactoryCreator(inputAreaDriverFact
 import tooltipDriverFactory from '../src/Tooltip/Tooltip.driver';
 export const tooltipTestkitFactory = testkitFactoryCreator(tooltipDriverFactory);
 
+import backofficeTooltipDriverFactory from '../src/Backoffice/Tooltip/Tooltip.driver';
+export const backofficeTooltipTestkitFactory = testkitFactoryCreator(backofficeTooltipDriverFactory);
+
 import labelDriverFactory from '../src/Label/Label.driver';
 export const labelTestkitFactory = testkitFactoryCreator(labelDriverFactory);
 
@@ -26,6 +29,12 @@ export const dropdownLayoutTestkitFactory = testkitFactoryCreator(dropdownLayout
 
 import inputWithOptionsDriverFactory from '../src/InputWithOptions/InputWithOptions.driver';
 export const inputWithOptionsTestkitFactory = testkitFactoryCreator(inputWithOptionsDriverFactory);
+
+import buttonWithOptionsDriverFactory from '../src/ButtonWithOptions/ButtonWithOptions.driver';
+export const buttonWithOptionsTestkitFactory = testkitFactoryCreator(buttonWithOptionsDriverFactory);
+
+import languagePickerDriverFactory from '../src/LanguagePicker/LanguagePicker.driver';
+export const languagePickerTestkitFactory = testkitFactoryCreator(languagePickerDriverFactory);
 
 import autoCompleteDriverFactory from '../src/AutoComplete/AutoComplete.driver';
 export const autoCompleteTestkitFactory = testkitFactoryCreator(autoCompleteDriverFactory);
@@ -44,9 +53,6 @@ export const checkboxTestkitFactory = testkitFactoryCreator(checkboxDriverFactor
 
 import buttonDriverFactory from '../src/Backoffice/Button/Button.driver';
 export const buttonTestkitFactory = testkitFactoryCreator(buttonDriverFactory);
-
-import viewerButtonDriverFactory from '../src/Viewer/Button/Button.driver';
-export const viewerButtonTestkitFactory = testkitFactoryCreator(viewerButtonDriverFactory);
 
 import textLinkDriverFactory from '../src/BaseComponents/TextLink/TextLink.driver';
 export const textLinkTestkitFactory = testkitFactoryCreator(textLinkDriverFactory);
@@ -99,6 +105,9 @@ export const buttonHeaderTestkitFactory = testkitFactoryCreator(buttonHeaderDriv
 import linkHeaderDriverFactory from '../src/Card/LinkHeader/LinkHeader.driver';
 export const linkHeaderTestkitFactory = testkitFactoryCreator(linkHeaderDriverFactory);
 
+import collapsedHeaderDriverFactory from '../src/Card/CollapsedHeader/CollapsedHeader.driver';
+export const collapsedHeaderTestkitFactory = testkitFactoryCreator(collapsedHeaderDriverFactory);
+
 import headerDriverFactory from '../src/Card/Header/Header.driver';
 export const headerTestkitFactory = testkitFactoryCreator(headerDriverFactory);
 
@@ -132,7 +141,47 @@ export const sideMenuTestkitFactory = testkitFactoryCreator(sideMenuDriverFactor
 import sideMenuDrillDriverFactory from '../src/SideMenu/DrillView/DrillView.driver';
 export const sideMenuDrillTestkitFactory = testkitFactoryCreator(sideMenuDrillDriverFactory);
 
-export {toastTestkitFactory} from '../src/Toast/testkit/Toast';
+import tpaButtonDriverFactory from '../src/TPA/Button/Button.driver';
+export const tpaButtonTestkitFactory = testkitFactoryCreator(tpaButtonDriverFactory);
 
-import dividerDriverFactory from '../src/Viewer/Divider/Divider.driver';
-export const dividerTestkitFactory = testkitFactoryCreator(dividerDriverFactory);
+import tpaTextLinkDriverFactory from '../src/TPA/TextLink/TextLink.driver';
+export const tpaTextLinkTestkitFactory = testkitFactoryCreator(tpaTextLinkDriverFactory);
+
+import tpaFloatingTabsDriverFactory from '../src/TPA/FloatingTabs/FloatingTabs.driver';
+export const tpaFloatingTabsTestkitFactory = testkitFactoryCreator(tpaFloatingTabsDriverFactory);
+
+import tpaInputDriverFactory from '../src/TPA/Input/Input.driver';
+export const tpaInputTestkitFactory = testkitFactoryCreator(tpaInputDriverFactory);
+
+import tpaBadgeDriverFactory from '../src/TPA/Badge/Badge.driver';
+export const tpaBadgeTestkitFactory = testkitFactoryCreator(tpaBadgeDriverFactory);
+
+import tpaLabelDriverFactory from '../src/TPA/Label/Label.driver';
+export const tpaLabelTestkitFactory = testkitFactoryCreator(tpaLabelDriverFactory);
+
+import fieldLabelAttributesDriverFactory from '../src/FieldLabelAttributes/FieldLabelAttributes.driver';
+export const fieldLabelAttributesTestkitFactory = testkitFactoryCreator(fieldLabelAttributesDriverFactory);
+
+import popoverMenuDriverFactory from '../src/PopoverMenu/PopoverMenu.driver';
+export const popoverMenuTestkitFactory = testkitFactoryCreator(popoverMenuDriverFactory);
+
+import badgeDriverFactory from '../src/Badge/Badge.driver';
+export const badgeTestkitFactory = testkitFactoryCreator(badgeDriverFactory);
+
+import datePickerDriverFactory from '../src/DatePicker/DatePicker.driver';
+export const datePickerTestkitFactory = testkitFactoryCreator(datePickerDriverFactory);
+
+import selectorDriverFactory from '../src/Selector/Selector.driver';
+export const selectorTestkitFactory = testkitFactoryCreator(selectorDriverFactory);
+
+import editableSelectorDriverFactory from '../src/EditableSelector/EditableSelector.driver';
+export const editableSelectorTestkitFactory = testkitFactoryCreator(editableSelectorDriverFactory);
+
+import editableRowDriverFactory from '../src/EditableSelector/EditableRow/EditableRow.driver';
+export const editableRowTestkitFactory = testkitFactoryCreator(editableRowDriverFactory);
+
+import modalSelectorDriverFactory from '../src/ModalSelector/ModalSelector.driver';
+export const modalSelectorTestkitFactory = testkitFactoryCreator(modalSelectorDriverFactory);
+
+import iconWithOptionsDriverFactory from '../src/IconWithOptions/IconWithOptions.driver';
+export const iconWithOptionsTestkitFactory = testkitFactoryCreator(iconWithOptionsDriverFactory);

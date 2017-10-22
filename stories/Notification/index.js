@@ -1,5 +1,5 @@
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import InteractiveCodeExample from '../utils/Components/InteractiveCodeExample';
 import Markdown from '../utils/Components/Markdown';
 
@@ -45,7 +45,7 @@ storiesOf('8. Notification Bars', module)
           <ExampleStandard theme="warning"/>
         </InteractiveCodeExample>
       </div>
-    )
+    );
   })
   .add('8.5 Premium', () => {
     return (

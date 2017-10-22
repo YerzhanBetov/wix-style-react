@@ -41,7 +41,7 @@ class TabsExample extends Component {
                   <Label
                     appearance="T1.1"
                     for="firstName"
-                  >
+                    >
                     Tab Width
                   </Label>
                   <Input
@@ -53,19 +53,19 @@ class TabsExample extends Component {
                     value={this.state.width}
                     suffix={
                       <Input.Group>
-                        <Input.Unit value="px" />
+                        <Input.Unit value="px"/>
                         <Input.Ticker
                           onDown={() => {
-                            this.setState({width: (this.state.width - 1)})
+                            this.setState({width: (this.state.width - 1)});
                           }}
                           onUp={() => {
-                            this.setState({width: (this.state.width + 1)})
+                            this.setState({width: (this.state.width + 1)});
                           }}
                           />
                       </Input.Group>}
                     theme="normal"
                     type="number"
-                  />
+                    />
                 </TextField>
                 <br/>
               </div>
@@ -80,7 +80,7 @@ class TabsExample extends Component {
               value={this.state.hasDivider}
               onChange={hasDivider => this.setState({hasDivider})}
               >
-              <RadioGroup.Radio value={true}>Visible</RadioGroup.Radio>
+              <RadioGroup.Radio value>Visible</RadioGroup.Radio>
               <RadioGroup.Radio value={false}>Hidden</RadioGroup.Radio>
             </RadioGroup>
           </div>
@@ -99,7 +99,7 @@ class TabsExample extends Component {
 }
 
 TabsExample.propTypes = {
-  onChange: PropTypes.func,
+  onChange: PropTypes.func
 };
 
 export default TabsExample;

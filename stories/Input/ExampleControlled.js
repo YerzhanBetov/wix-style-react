@@ -11,23 +11,23 @@ const style = {
 
 class ControlledInput extends Component {
   static propTypes = {
-    value: PropTypes.bool
+    value: PropTypes.string
   };
 
-  constructor({value = ''}) {
-    super();
-    this.state = {value};
-  }
+  state = {
+    value: ''
+  };
 
   render() {
     const onChange = event => this.setState({value: event.target.value});
-    const onClear = event => {
-      this.setState({value: ''});
-      this.refs.inputtest.focus();
-    };
 
     return (
-      <Input {...this.props} error={this.state.value === 'Starwars'} value={this.state.value} onChange={onChange} onClear={onClear}/>
+      <Input
+        {...this.props}
+        error={this.state.value === 'Starwars'}
+        value={this.state.value}
+        onChange={onChange}
+        />
     );
   }
 }

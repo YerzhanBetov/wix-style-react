@@ -1,7 +1,7 @@
 @import '../common';
 
 .input {
-  min-width: 100px;
+  min-width: 30px;
 }
 
 .hiddenDiv {
@@ -20,9 +20,13 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  overflow: none;
   color: $D30;
   font-size: 16px;
+  overflow-y: hidden;
+}
+
+.hasMaxHeight {
+  overflow-y: scroll;
 }
 
 .tagsContainer div {
@@ -39,4 +43,8 @@
 
 .disabled {
   border-color: $D55;
+}
+
+.hasFocus {
+  border-color: $B20;
 }

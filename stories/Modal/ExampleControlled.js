@@ -29,7 +29,14 @@ class ControlledModal extends Component {
           contentLabel="Modal Example"
           scrollableContent={false}
           >
-          <MessageBoxFunctionalLayout theme="blue" title="title" confirmText="OK" cancelText="Cancel" onOk={close} onCancel={close}>
+          <MessageBoxFunctionalLayout
+            theme="blue"
+            title="title"
+            confirmText="OK"
+            cancelText="Cancel"
+            onOk={close}
+            onCancel={close}
+            >
               Hello blue world!
           </MessageBoxFunctionalLayout>
         </Modal>

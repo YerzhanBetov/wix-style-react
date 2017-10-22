@@ -22,7 +22,7 @@ class ExamplePopoverMenu extends Component {
       {iconName: 'VisibilityHidden', text: 'Hide'},
       {iconName: 'Trash3', text: 'Delete'}
     ],
-    buttonTheme: 'icon-greybackground',
+    buttonTheme: 'icon-greybackground'
   };
 
   addRow = () => {
@@ -107,7 +107,7 @@ class ExamplePopoverMenu extends Component {
                 updateRowText={this.updateRowText}
                 addRow={this.addRow}
                 updateRowIcon={this.updateRowIcon}
-              />
+                />
             </div>
           </div>
         </div>
@@ -120,7 +120,7 @@ class ExamplePopoverMenu extends Component {
               placement={this.state.placement}
               onChange={this.props.onChange}
               buttonTheme={this.state.buttonTheme}
-            />
+              />
           </div>
         </div>
       </form>

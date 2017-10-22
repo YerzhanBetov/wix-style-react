@@ -26,17 +26,4 @@ describe('Data Table', () => {
           });
       });
   });
-
-  eyes.it('should highlight an important row', () => {
-    const driver = dataTableTestkitFactory({dataHook});
-    const indexToClick = 1;
-    const name = 'Sara Porter';
-
-    browser.get(storyUrl);
-
-    waitForVisibilityOf(driver.element(), 'Cant find Data Table Component')
-      .then(() => {
-        expect(driver.getFirstHighlightedRow()).toBe(`#${indexToClick + 1} ${name}`);
-      });
-  });
 });

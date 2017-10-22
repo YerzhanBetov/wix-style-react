@@ -1,43 +1,36 @@
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
-import Markdown from '../utils/Components/Markdown';
-import TabbedView from '../utils/Components/TabbedView';
+import story from '../utils/Components/Story';
+
 import CodeExample from '../utils/Components/CodeExample';
-import Readme from '../../src/ToggleSwitch/README.md';
-import ReadmeTestKit from '../../src/ToggleSwitch/README.TESTKIT.md';
 
 import ExampleStandard from './ExampleStandard';
-import ExampleStandardRaw from '!raw!./ExampleStandard';
+import ExampleStandardRaw from '!raw-loader!./ExampleStandard';
 
 import ExampleSizes from './ExampleSizes';
-import ExampleSizesRaw from '!raw!./ExampleSizes';
+import ExampleSizesRaw from '!raw-loader!./ExampleSizes';
 
 import ExampleControlled from './ExampleControlled';
-import ExampleControlledRaw from '!raw!./ExampleControlled';
+import ExampleControlledRaw from '!raw-loader!./ExampleControlled';
 
-storiesOf('Core', module)
-  .add('ToggleSwitch', () => (
-    <TabbedView tabs={['API Documentation', 'TestKits Documentation']}>
-      <div>
-        <Markdown source={Readme}/>
+story({
+  category: 'Core',
+  componentSrcFolder: 'ToggleSwitch',
+  componentProps: (setProps, getProps) => ({
+    onChange: () => setProps({checked: !getProps().checked})
+  }),
+  examples: (
+    <div>
+      <CodeExample title="Standard" code={ExampleStandardRaw}>
+        <ExampleStandard/>
+      </CodeExample>
 
-        <h1>Usage examples</h1>
+      <CodeExample title="Sizes" code={ExampleSizesRaw}>
+        <ExampleSizes/>
+      </CodeExample>
 
-        <CodeExample title="Standard" code={ExampleStandardRaw}>
-          <ExampleStandard/>
-        </CodeExample>
-
-        <CodeExample title="Sizes" code={ExampleSizesRaw}>
-          <ExampleSizes/>
-        </CodeExample>
-
-        <CodeExample title="Controlled input" code={ExampleControlledRaw}>
-          <ExampleControlled/>
-        </CodeExample>
-      </div>
-
-      <Markdown source={ReadmeTestKit}/>
-    </TabbedView>
-
-
-  ));
+      <CodeExample title="Controlled input" code={ExampleControlledRaw}>
+        <ExampleControlled/>
+      </CodeExample>
+    </div>
+  )
+});

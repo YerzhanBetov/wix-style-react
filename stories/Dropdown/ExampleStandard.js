@@ -21,7 +21,7 @@ const rtlOptions = [
   {id: 0, value: 'אופציה 1'},
   {id: 1, value: 'אופציה 2'},
   {id: 2, value: 'אופציה 3'},
-  {id: 3, value: 'אופציה 4'},
+  {id: 3, value: 'אופציה 4'}
 ];
 
 export default () =>
@@ -58,6 +58,14 @@ export default () =>
       <div className="ltr" style={style}>
         <div>With prefix</div>
         <Dropdown options={options} dropDirectionUp prefix={<Input.Unit>$</Input.Unit>}/>
+      </div>
+      <div className="ltr" style={style}>
+        <div>With suffix</div>
+        <Dropdown options={options} dropDirectionUp suffix={<Input.Unit>%</Input.Unit>}/>
+      </div>
+      <div className="rtl" style={style}>
+        <div>With suffix RTL</div>
+        <Dropdown options={options} dropDirectionUp suffix={<Input.Unit>%</Input.Unit>}/>
       </div>
     </div>
   </div>;

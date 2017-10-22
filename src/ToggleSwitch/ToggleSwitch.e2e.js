@@ -8,9 +8,12 @@ describe('toggle switch page', () => {
   const smallSwitchDataHook = 'controlled-switch-small';
   const largeSwitchDataHook = 'controlled-switch-large';
 
+  beforeEach(() => {
+    browser.get(storyUrl);
+  });
+
   eyes.it('should render x-small toggle switch', () => {
     const driver = toggleSwitchTestkitFactory({dataHook: xSmallSwitchDataHook});
-    browser.get(storyUrl);
 
     waitForVisibilityOf(driver.element(), 'Cant find ToggleSwitch')
       .then(() => {
@@ -20,7 +23,6 @@ describe('toggle switch page', () => {
 
   eyes.it('should render small toggle switch', () => {
     const driver = toggleSwitchTestkitFactory({dataHook: smallSwitchDataHook});
-    browser.get(storyUrl);
 
     waitForVisibilityOf(driver.element(), 'Cant find ToggleSwitch')
       .then(() => {
@@ -30,7 +32,6 @@ describe('toggle switch page', () => {
 
   eyes.it('should render large switch', () => {
     const driver = toggleSwitchTestkitFactory({dataHook: largeSwitchDataHook});
-    browser.get(storyUrl);
 
     waitForVisibilityOf(driver.element(), 'Cant find ToggleSwitch')
       .then(() => {
@@ -40,7 +41,6 @@ describe('toggle switch page', () => {
 
   eyes.it('should change state on click', () => {
     const driver = toggleSwitchTestkitFactory({dataHook: smallSwitchDataHook});
-    browser.get(storyUrl);
 
     waitForVisibilityOf(driver.element(), 'Cant find ToggleSwitch')
       .then(() => {

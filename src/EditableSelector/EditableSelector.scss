@@ -1,0 +1,67 @@
+// EditableSelector //
+$rows-margin: 6px;
+.row {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  margin-top: $rows-margin;
+
+  .selector:hover {
+    background-color: transparent;
+  }
+
+  &:hover .optionMenu{
+    visibility: visible;
+  }
+
+  [data-hook="editable-selector-item"] {
+    padding: 0;
+    height: initial;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+.title {
+  height: 34px;
+  line-height: 34px;
+}
+
+.newRowButton {
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 12px;
+}
+
+.optionMenu {
+  margin-left: auto;
+  visibility: hidden;
+  display: flex;
+
+  button {
+    transition: none;
+  }
+}
+
+.text {
+  margin-left: 6px;
+}
+
+// EditableRow //
+.editableRowContainer {
+  display: flex;
+  margin-top: $rows-margin;
+}
+
+.editableRowInput {
+  flex: 1;
+  margin-right: 18px;
+}
+
+.editableRowButtons {
+  display: flex;
+  & > button { margin-right: 12px}
+  & > button:last-child { margin-right: 0}
+}

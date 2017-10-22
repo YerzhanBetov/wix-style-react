@@ -1,12 +1,13 @@
 import React from 'react';
 import {mount} from 'enzyme';
-import {isTestkitExists, isEnzymeTestkitExists} from '../../testkit/test-common';
+import {isTestkitExists} from '../../testkit/test-common';
 import notificationDriverFactory from './Notification.driver';
 import {createDriverFactory} from '../test-common';
 import {notificationTestkitFactory} from '../../testkit';
-import {notificationTestkitFactory as enzymeNotificationTestkitFactory} from '../../testkit/enzyme';
+import {notificationTestkitFactory as enzymeNotificationTestkitFactory, buttonTestkitFactory as enzymeButtonTestkitFactory} from '../../testkit/enzyme';
 
 import Notification from './Notification';
+import Button from '../../src/Button';
 
 const renderNotificationWithProps = (props = {}) => (
   <Notification {...props}>
@@ -210,51 +211,53 @@ describe('Notification', () => {
       });
     });
 
-    describe('Closing after timeout for local Notification', () => {
-      const defaultTimeout = 6000;
+    ['local', 'sticky'].forEach(type => {
+      describe(`Closing after timeout for ${type} Notification`, () => {
+        const defaultTimeout = 6000;
 
-      it('should close after default timeout (6s)', () => {
-        driver = createDriver(renderNotificationWithProps({show: true, type: 'local'}));
-        jest.runAllTimers();
+        it('should close after default timeout (6s)', () => {
+          driver = createDriver(renderNotificationWithProps({show: true, type}));
+          jest.runAllTimers();
 
-        expect(driver.visible()).toBeFalsy();
-        expect(setTimeout.mock.calls.find(call => call[1] === defaultTimeout)).toBeTruthy();
-      });
+          expect(driver.visible()).toBeFalsy();
+          expect(setTimeout.mock.calls.find(call => call[1] === defaultTimeout)).toBeTruthy();
+        });
 
-      it('should close after a given timeout', () => {
-        const timeout = 132;
+        it('should close after a given timeout', () => {
+          const timeout = 132;
 
-        driver = createDriver(renderNotificationWithProps({show: true, type: 'local', timeout}));
+          driver = createDriver(renderNotificationWithProps({show: true, type, timeout}));
 
-        jest.runAllTimers();
+          jest.runAllTimers();
 
-        expect(driver.visible()).toBeFalsy();
-        expect(setTimeout.mock.calls.find(call => call[1] === timeout)).toBeTruthy();
-      });
+          expect(driver.visible()).toBeFalsy();
+          expect(setTimeout.mock.calls.find(call => call[1] === timeout)).toBeTruthy();
+        });
 
-      it('should be able to show notification again after timeout', () => {
-        driver = createDriver(renderNotificationWithProps({show: true, type: 'local'}));
+        it('should be able to show notification again after timeout', () => {
+          driver = createDriver(renderNotificationWithProps({show: true, type}));
 
-        jest.runAllTimers();
-        expect(driver.visible()).toBeFalsy();
-        expect(setTimeout.mock.calls.find(call => call[1] === defaultTimeout)).toBeTruthy();
-        jest.clearAllTimers();
+          jest.runAllTimers();
+          expect(driver.visible()).toBeFalsy();
+          expect(setTimeout.mock.calls.find(call => call[1] === defaultTimeout)).toBeTruthy();
+          jest.clearAllTimers();
 
-        driver.setProps({show: true});
-        expect(driver.visible()).toBeTruthy();
-      });
+          driver.setProps({show: true});
+          expect(driver.visible()).toBeTruthy();
+        });
 
-      it('should close after starting from a closed status', () => {
-        driver = createDriver(renderNotificationWithProps({show: false, type: 'local'}));
+        it('should close after starting from a closed status', () => {
+          driver = createDriver(renderNotificationWithProps({show: false, type}));
 
-        jest.runAllTimers();
-        expect(driver.visible()).toBeFalsy();
-        driver.setProps({show: true});
-        expect(driver.visible()).toBeTruthy();
-        jest.runAllTimers();
-        expect(driver.visible()).toBeFalsy();
+          jest.runAllTimers();
+          expect(driver.visible()).toBeFalsy();
+          driver.setProps({show: true});
+          expect(driver.visible()).toBeTruthy();
+          jest.runAllTimers();
+          expect(driver.visible()).toBeFalsy();
 
-        expect(setTimeout.mock.calls.find(call => call[1] === defaultTimeout)).toBeTruthy();
+          expect(setTimeout.mock.calls.find(call => call[1] === defaultTimeout)).toBeTruthy();
+        });
       });
     });
 
@@ -280,8 +283,17 @@ describe('Notification', () => {
 
   describe('enzyme testkit', () => {
     it('should exist', () => {
-      const component = renderNotificationWithProps({show: true});
-      expect(isEnzymeTestkitExists(component, enzymeNotificationTestkitFactory)).toBeTruthy();
+      const component = mount(<ControlledNotification/>);
+
+      const enzymeNotificationTestkit = enzymeNotificationTestkitFactory({wrapper: component, dataHook: 'notification_dh'});
+      const enzymeButtonTestkit = enzymeButtonTestkitFactory({wrapper: component, dataHook: 'button_dh'});
+
+      expect(enzymeNotificationTestkit.visible()).toBeFalsy();
+      expect(enzymeButtonTestkit.exists()).toBeTruthy();
+
+      enzymeButtonTestkit.click();
+
+      expect(enzymeNotificationTestkit.visible()).toBeTruthy();
     });
   });
 
@@ -317,3 +329,27 @@ describe('Notification', () => {
     });
   });
 });
+
+class ControlledNotification extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {showNotification: false};
+  }
+
+  render() {
+    return (
+      <div>
+        <Button dataHook="button_dh" onClick={() => this.setState({showNotification: !this.state.showNotification})}>
+          button
+        </Button>
+        <Notification dataHook="notification_dh" show={this.state.showNotification}>
+          <Notification.TextLabel>
+            label
+          </Notification.TextLabel>
+          <Notification.CloseButton/>
+        </Notification>
+      </div>
+    );
+  }
+}

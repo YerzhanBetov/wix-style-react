@@ -8,7 +8,7 @@ const style = {
   lineHeight: '22px'
 };
 
-const options = Array.apply(null, {length: 29}).map((_ , i) => ({ id: i, value: `Option ${i}`}));
+const options = Array.apply(null, {length: 29}).map((_, i) => ({id: i, value: `Option ${i}`}));
 
 export default () =>
   <div>

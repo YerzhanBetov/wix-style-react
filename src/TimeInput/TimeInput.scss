@@ -34,12 +34,21 @@
 }
 
 .ampm {
-    font-size: 14px;
-    line-height: 14px;
+    margin-top: 1px;
+    margin-right: 3px;
+    margin-left: 3px;
+    font-size: 16px;
+    line-height: 16px;
     text-transform: uppercase;
     color: $D10;
     @include FontRoman();
     &:hover { color: $B10; }
+}
+
+.disabled .ampm {
+    cursor: default;
+    color: $D50;
+    &:hover { color: $D50; }
 }
 
 .input {

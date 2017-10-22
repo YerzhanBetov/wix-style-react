@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import isundefined from 'lodash.isundefined';
+import isUndefined from 'lodash/isUndefined';
 import InputWithOptions from '../InputWithOptions/InputWithOptions';
 import styles from './Dropdown.scss';
 
@@ -12,7 +12,7 @@ class Dropdown extends InputWithOptions {
 
   update(props, {isFirstTime}) {
     let value = '', selectedId = -1;
-    if (!isundefined(props.selectedId)) {
+    if (!isUndefined(props.selectedId)) {
       const option = props.options.find(option => {
         return option.id === props.selectedId;
       });

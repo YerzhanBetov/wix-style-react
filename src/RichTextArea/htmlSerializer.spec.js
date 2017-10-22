@@ -80,13 +80,13 @@ describe('HTML serializer', () => {
                 {
                   kind: 'text',
                   text: 'Link to localhost'
-                },
+                }
               ]
             },
-            {kind: 'text', text: ''},
+            {kind: 'text', text: ''}
           ]
-        },
-      ],
+        }
+      ]
     };
 
     const deserialized = htmlSerializer.deserialize(text);
@@ -151,7 +151,7 @@ describe('HTML serializer', () => {
                     {type: 'underline'},
                     {type: 'italic'}
                   ]
-                },
+                }
               ]
             },
             {
@@ -164,7 +164,7 @@ describe('HTML serializer', () => {
                 {
                   kind: 'text',
                   text: 'Link'
-                },
+                }
               ]
             }
           ]

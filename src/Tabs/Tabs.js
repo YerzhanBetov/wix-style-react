@@ -24,7 +24,7 @@ class Tabs extends WixComponent {
       );
     });
     const className = classNames(styles[type], styles.container, {
-      [styles.hasDivider]: hasDivider,
+      [styles.hasDivider]: hasDivider
     });
 
     return <ul className={className}>{tabs}</ul>;
@@ -55,7 +55,7 @@ Tabs.propTypes = {
 };
 
 Tabs.defaultProps = {
-  hasDivider: true,
+  hasDivider: true
 };
 
 export default Tabs;

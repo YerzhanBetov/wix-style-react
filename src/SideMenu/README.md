@@ -71,10 +71,6 @@ The category of a group of links
 
 Shows a badge (pimple) next to the link title
 
-| propName          | propType | defaultValue | isRequired | description                                                      |
-| -                 | -        | -            | -          | -                                                                |
-| inline            | bool     | false        | -          | whether the badge should be inline or fixed |
-
 ### Promotion `<SideMenu.Promotion />`
 
 dump container for promotion button. Tries to stick to the bottom

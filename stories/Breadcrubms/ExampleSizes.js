@@ -6,8 +6,12 @@ const items = [{id: '1', value: 'first item'}, {id: '2', value: 'second item'}, 
 
 export default () =>
   <div className={`${styles.onGrayBackground} ${styles.exampleWrapper}`}>
-    <Breadcrumbs items={items}
-                 size={'medium'}/>
-    <Breadcrumbs dataHook={'story-breadcrumbs-large'}items={items}
-                 size={'large'}/>
+    <Breadcrumbs
+      items={items}
+      size={'medium'}
+      />
+    <Breadcrumbs
+      dataHook={'story-breadcrumbs-large'}items={items}
+      size={'large'}
+      />
   </div>;

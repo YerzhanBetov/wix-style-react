@@ -1,7 +1,8 @@
 import React from 'react';
+import sinon from 'sinon';
+
 import inputDriverFactory from './Input.driver';
 import Input from '.';
-import sinon from 'sinon';
 import {createDriverFactory} from '../test-common';
 import {inputTestkitFactory, tooltipTestkitFactory} from '../../testkit';
 import {inputTestkitFactory as enzymeInputTestkitFactory} from '../../testkit/enzyme';
@@ -9,6 +10,30 @@ import {isTestkitExists, isEnzymeTestkitExists} from '../../testkit/test-common'
 
 describe('Input', () => {
   const createDriver = createDriverFactory(inputDriverFactory);
+
+  class ControlledInput extends React.Component {
+    static propTypes = {
+      value: Input.propTypes.value
+    };
+
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        value: props.value || ''
+      };
+    }
+
+    render() {
+      return (
+        <Input
+          {...this.props}
+          value={this.state.value}
+          onChange={e => this.setState({value: e.target.value})}
+          />
+      );
+    }
+  }
 
   describe('test tooltip', () => {
     const resolveIn = timeout =>
@@ -104,6 +129,15 @@ describe('Input', () => {
 
       const driver = createDriver(<Input tabIndex={tabIndex}/>);
       expect(driver.getTabIndex()).toEqual(tabIndex);
+    });
+  });
+
+  describe('autocomplete attribute', () => {
+    it('should pass down to the wrapped input', () => {
+      const autocomplete = 'off';
+
+      const driver = createDriver(<Input autocomplete={autocomplete}/>);
+      expect(driver.getAutocomplete()).toEqual(autocomplete);
     });
   });
 
@@ -277,6 +311,18 @@ describe('Input', () => {
     });
   });
 
+  describe('onPaste attribute', () => {
+    it('should be called when pasting text to the input', () => {
+      const onPaste = jest.fn();
+
+      const driver = createDriver(<Input onPaste={onPaste}/>);
+
+      driver.trigger('paste');
+
+      expect(onPaste).toBeCalled();
+    });
+  });
+
   describe('forceFocus attribute', () => {
     it('should have focus class on input if forceFocus is true', () => {
       const driver = createDriver(<Input forceFocus/>);
@@ -355,26 +401,125 @@ describe('Input', () => {
     });
   });
 
-  describe('onClear attribute', () => {
-    it('should not be displayed when text is empty', () => {
-      const onClear = () => {};
-      const onChange = () => {};
-      const driver = createDriver(<Input onClear={onClear} value="" onChange={onChange}/>);
-      expect(driver.hasClearButton()).toBeFalsy();
+  describe('clearButton attribute', () => {
+    it('should be displayed when input text is not empty', () => {
+      const driver = createDriver(
+        <Input
+          value="some value"
+          clearButton
+          />
+      );
+      expect(driver.hasClearButton()).toBe(true);
     });
 
-    it('should display a X when text is not null, and be clickable', () => {
-      const onClear = sinon.spy();
-      const onChange = () => {};
-      const driver = createDriver(<Input onClear={onClear} value={'some value'} onChange={onChange}/>);
-      expect(driver.hasClearButton()).toBeTruthy();
+    // TODO
+    it.skip('should be displayed when using uncontrolled component with defaultValue', () => {
+      const driver = createDriver(
+        <Input
+          defaultValue="some value"
+          clearButton
+          />
+      );
+      expect(driver.hasClearButton()).toBe(true);
+    });
+
+    it('should not be displayed when input text is empty', () => {
+      const driver = createDriver(
+        <Input
+          value=""
+          clearButton
+          />
+      );
+      expect(driver.hasClearButton()).toBe(false);
+    });
+
+    // TODO
+    it.skip('should be displayed after entering text into empty uncontrolled input', () => {
+      const driver = createDriver(
+        <Input
+          clearButton
+          />
+      );
+      driver.enterText('some value');
+      expect(driver.hasClearButton()).toBe(true);
+    });
+
+    // TODO
+    it.skip('should clear input when using uncontrolled component', () => {
+      const driver = createDriver(
+        <Input
+          clearButton
+          />
+      );
+      driver.enterText('some value');
       driver.clickClear();
-      expect(onClear.calledOnce).toBeTruthy();
+      expect(driver.getValue()).toBe('');
+      expect(driver.isFocus()).toBe(true);
     });
 
-    it('should display a left icon when one is passed', () => {
-      const driver = createDriver(<Input iconLeft={<div/>}/>);
-      expect(driver.hasIconLeft()).toBeTruthy();
+    // TODO
+    it.skip('should be hidden after default value was overridden with some input', () => {
+      const driver = createDriver(
+        <Input
+          defaultValue="some default value"
+          clearButton
+          />
+      );
+      expect(driver.hasClearButton()).toBe(true);
+      driver.clearText();
+      driver.enterText('new value');
+      expect(driver.hasClearButton()).toBe(false);
+    });
+
+    it('should clear input and focus it', () => {
+      const driver = createDriver(
+        <ControlledInput
+          clearButton
+          value="some value"
+          />
+      );
+      driver.clickClear();
+      expect(driver.getValue()).toBe('');
+      expect(driver.isFocus()).toBe(true);
+    });
+
+    it('should trigger onChange on clearing as if input just emptied', () => {
+      const onChange = jest.fn();
+      const driver = createDriver(
+        <Input
+          onChange={onChange}
+          value="some value"
+          clearButton
+          />
+      );
+      driver.clickClear();
+      expect(onChange).toBeCalled();
+      expect(onChange.mock.calls[0][0].target.value).toBe('');
+    });
+  });
+
+  describe('onClear attribute', () => {
+    it('should display clear-button when input text is not empty', () => {
+      const driver = createDriver(
+        <Input
+          value="some value"
+          onClear={() => null}
+          />
+      );
+      expect(driver.hasClearButton()).toBe(true);
+    });
+
+    it('should invoke callback', () => {
+      const onClear = sinon.spy();
+      const driver = createDriver(
+        <Input
+          onClear={onClear}
+          value="some value"
+          />
+      );
+      expect(driver.hasClearButton()).toBe(true);
+      driver.clickClear();
+      expect(onClear.calledOnce).toBe(true);
     });
   });
 
@@ -382,6 +527,11 @@ describe('Input', () => {
     it('should use "normal" size by default', () => {
       const driver = createDriver(<Input/>);
       expect(driver.isOfSize('normal')).toBeTruthy();
+    });
+
+    it('should use "normal-with-selection" size if withSelection', () => {
+      const driver = createDriver(<Input size="normal" withSelection/>);
+      expect(driver.isOfSize('normal-with-selection')).toBeTruthy();
     });
 
     it('should use "small" size', () => {
@@ -424,6 +574,11 @@ describe('Input', () => {
     it('should add `withSuffixes` classname to input when more than 1 suffix applied', () => {
       const driver = createDriver(<Input suffix="hello" magnifyingGlass/>);
       expect(driver.hasSuffixesClass()).toBeTruthy();
+    });
+
+    it('should render menu arrow as the last suffix', () => {
+      const driver = createDriver(<Input suffix="hello" menuArrow/>);
+      expect(driver.isMenuArrowLast()).toBeTruthy();
     });
   });
 

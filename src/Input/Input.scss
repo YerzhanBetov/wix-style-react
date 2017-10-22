@@ -29,6 +29,7 @@ $material-gap: 8px;
     border: 0;
     outline: 0;
     background: transparent;
+    @include BorderRadius(6px);
     @include FontRoman();
     @include Placeholder($paletteE6);
     @include Selection($paletteB4);
@@ -60,7 +61,7 @@ $material-gap: 8px;
     flex-shrink: 0;
     flex-grow: 0;
     min-width: 0;
-    user-select: none;
+    user-select: none !important;
 }
 
 .prefix,
@@ -76,20 +77,21 @@ $material-gap: 8px;
 
 .roundInput {
     &.size-normal {
-        border-radius: 18px;
+        @include BorderRadius(18px);
     }
     &.size-small {
-        border-radius: 15px;
+        @include BorderRadius(15px);
     }
     &.size-large {
-        border-radius: 27px;
+        @include BorderRadius(27px);
     }
 }
 
 .size {
     &-small  { @include Size($height: 30px, $fontSize: 14px); }
     &-normal { @include Size($height: 36px, $fontSize: 16px); }
-    &-large  { @include Size($height: 54px, $fontSize: 16px); }
+    &-normal-with-selection { @include Size($height: 34px, $fontSize: 16px); }
+    &-large  { @include Size($height: 60px, $fontSize: 22px); }
 }
 
 .theme {
@@ -98,7 +100,8 @@ $material-gap: 8px;
         @include ThemeHover($backgroundColor: $B50);
         @include ThemeFocus($borderColor: $B20, $boxShadow: inset 0px 0px 5px 0px fade($B10, 60%));
         @include ThemeError($borderColor: $paletteR1, $boxShadow: inset 0px 0px 5px 0px fade($R10, 60%));
-        @include ThemeDisable($color: $D10, $borderColor: $GR40, $backgroundColor: $D80);
+        @include ThemeDisable($color: $D55, $borderColor: $D60, $backgroundColor: $D80);
+        @include ThemeDisableHover($borderColor: $GR20);
     }
     &-paneltitle {
         @include ThemeDefault($color: white, $borderColor: #c1e4fe, $backgroundColor: rgba(22,45,61,0.6));
@@ -136,7 +139,7 @@ $material-gap: 8px;
         .input {
             @include FontLight();
             @include Placeholder(rgba(0, 0, 0, 0));
-            z-index: 100;
+            z-index: 1;
             transition: border-bottom .3s, border-color .3s, border-width .3s, border .3s ease-in-out;
             line-height: 1;
             display: block;
@@ -263,7 +266,7 @@ $material-gap: 8px;
         border-radius: 0;
 
         &.size-large { @include Size($height: 54px, $fontSize: 20px); }
-       
+
         &:hover, &.hasFocus { @include ThemeFlat($B20); }
         &:active            { @include ThemeFlat($B10); }
         &.disabled          { @include ThemeFlat($D50); }
@@ -276,7 +279,7 @@ $material-gap: 8px;
         border-radius: 0;
 
         &.size-large { @include Size($height: 54px, $fontSize: 20px); }
-        
+
         &:hover, &.hasFocus { @include ThemeFlat($B20); }
         &:active            { @include ThemeFlat($B10); }
         &.disabled          { @include ThemeFlat($D50); }
@@ -347,6 +350,13 @@ $material-gap: 8px;
     padding-top: 4px;
 }
 
+:global(.rtl) {
+    .help,
+    .amaterial-help {
+        transform: scaleX(-1);
+    }
+}
+
 .amaterial-help {
     margin: 0 $gap;
     color: $B20;
@@ -354,19 +364,35 @@ $material-gap: 8px;
 }
 
 .clear-button {
+    $size: 24px;
+    $icon-size: 8px;
+
+    width: $size;
+    height: $size;
+    margin-top: 1px;
+    margin-right: 6px;
+    padding: $size - 2 * $icon-size 0;
+    border-radius: 50%;
+
+    line-height: 0;
+    text-align: center;
+
+    background-color: $B50;
     cursor: pointer;
-    padding: 0 $double-gap;
-    height: 6px;
-    line-height: 6px;
-    font-size: 6px;
 
     path { stroke: $B10; }
+
+    &:hover {
+        background-color: $B40;
+    }
+
+    &:active {
+        background-color: $B30;
+    }
 }
 
 .unit {
     padding: 0 $gap;
-    font-size: 13px;
-    line-height: 18px;
     color: $paletteD3;
     @include FontLight();
 }
@@ -385,7 +411,7 @@ $material-gap: 8px;
 }
 
 .menu-arrow {
-    padding: 0 $gap;
+    padding: 0 $double-gap;
     path { fill: $B10; }
 
     &[disabled] {

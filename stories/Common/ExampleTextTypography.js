@@ -52,5 +52,6 @@ export default () =>
       <li className="inverted">
         <Text appearance="T5.1">T5.1 - Helvetica_65 / 10px</Text>
       </li>
+      <li><Text appearance="T6">T6 - Helvetica_75 / 10px</Text></li>
     </ul>
   </div>;

@@ -2,7 +2,7 @@ import eyes from 'eyes.it';
 import {radioGroupTestkitFactory, getStoryUrl, waitForVisibilityOf} from '../../testkit/protractor';
 
 describe('RadioGroup', () => {
-  const storyUrl = getStoryUrl('Core', 'RadioGroup');
+  const storyUrl = getStoryUrl('4. Selection', '4.3 Radio Button Group');
   const dataHook = 'story-radio-group';
 
   eyes.it('should select the second option in a group', () => {

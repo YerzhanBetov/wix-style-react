@@ -9,7 +9,7 @@ const style = {
 };
 
 export default () =>
-  <div style={{display: "flex"}}>
+  <div style={{display: 'flex'}}>
     <div className="ltr" style={style}>InputArea<br/><InputArea resizable/></div>
     <div className="ltr" style={style}>Focus<br/><InputArea forceFocus resizable/></div>
     <div className="ltr" style={style}>Hover<br/><InputArea forceHover resizable/></div>

@@ -1,15 +1,15 @@
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import CodeExample from '../utils/Components/CodeExample';
 import Markdown from '../utils/Components/Markdown';
 
 import Readme from '../../src/Typography/README.md';
 
 import ExampleHeadersTypography from './ExampleHeadersTypography';
-import ExampleHeaderTypographyRaw from '!raw!./ExampleHeadersTypography';
+import ExampleHeaderTypographyRaw from '!raw-loader!./ExampleHeadersTypography';
 
 import ExampleTextTypography from './ExampleTextTypography';
-import ExampleTextTypographyRaw from '!raw!./ExampleTextTypography';
+import ExampleTextTypographyRaw from '!raw-loader!./ExampleTextTypography';
 
 storiesOf('Common', module)
   .add('Typography', () => (

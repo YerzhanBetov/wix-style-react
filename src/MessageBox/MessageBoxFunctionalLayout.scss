@@ -1,18 +1,24 @@
-@import '../common.scss';
+@import '../common';
 
-.content
-{
-    border-radius    : 8px;
-    background-color : white;
-    width            : 600px;
+.content {
+    border-radius: 8px;
+    background-color: white;
+    width: 600px;
 }
 
-.body
-{
+.body {
     @include FontLight();
-    padding   : 36px 30px 42px 30px;
     color     : $paletteD2;
     font-size : 16px;
     line-height: 24px;
+    padding   : 36px 30px 42px 30px;
 }
 
+
+.no-padding {
+    padding: 0;
+}
+
+.with-padding {
+    padding: 36px 30px 42px 30px;
+}

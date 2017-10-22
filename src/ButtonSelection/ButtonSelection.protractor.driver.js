@@ -1,4 +1,5 @@
 import _ from 'lodash/fp';
+import styles from './ButtonSelection.scss';
 
 const buttonSelectionDriverFactory = component => {
   const getButtons = () => component.$$('span');
@@ -9,7 +10,7 @@ const buttonSelectionDriverFactory = component => {
     getSelectedButton: () => {
       return component.$$('span').getAttribute('class')
           .then(classes => {
-            const selectedBtnClass = classes.filter(i => /__selected__/.test(i))[0];
+            const selectedBtnClass = classes.filter(i => styles.selected === i)[0];
             return component.$(`.${selectedBtnClass}`).getText();
           });
     },

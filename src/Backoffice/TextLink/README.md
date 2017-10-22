@@ -12,5 +12,6 @@
 | underlineStyle | 'always'/'hover'/'never' | hover | - | Hover - show the underline only on hover, Always - always show underline, Never - never show underline |
 | darkBackground | bool | - | - | Whether to use dark background |
 | size | 'small'/'medium' | 'medium' | - | The size of the button |
-| disabled | bool | false | - | disables the link |
+| disabled | bool | false | - | disables the link and the onClick |
+| onClick | func | - | - | Callback for the text link click, receiving the click event as first parameter |
 | ariaLabel | string | - | - | The aria label for accessibility, by default it will be the link text |

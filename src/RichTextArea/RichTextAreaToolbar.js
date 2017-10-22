@@ -62,7 +62,7 @@ class RichTextAreaToolbar extends WixComponent {
           disabled={disabled}
           onClick={onImageButtonClick}
           type="image"
-          isActive={true}
+          isActive={false}
           />
       </div>
     );

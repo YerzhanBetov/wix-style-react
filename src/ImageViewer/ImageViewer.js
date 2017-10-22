@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import style from './ImageViewer.scss';
 import Tooltip from '../Tooltip';
-import {Trash3, Replace, Plus2} from '../Icons/dist';
+import Trash3 from '../Icons/dist/components/Trash3';
+import Replace from '../Icons/dist/components/Replace';
+import Plus2 from '../Icons/dist/components/Plus2';
 import WixComponent from '../BaseComponents/WixComponent';
 
 class ImageViewer extends WixComponent {

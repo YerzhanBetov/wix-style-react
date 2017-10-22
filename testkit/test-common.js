@@ -11,9 +11,9 @@ export const isTestkitExists = (Element, testkitFactory) => {
   return testkit.exists();
 };
 
-export const isEnzymeTestkitExists = (Element, testkitFactory) => {
+export const isEnzymeTestkitExists = (Element, testkitFactory, options = {withoutDataHook: false}) => {
   const dataHook = 'myDataHook';
-  const elementToRender = React.cloneElement(Element, {dataHook});
+  const elementToRender = React.cloneElement(Element, {dataHook: options.withoutDataHook ? '' : dataHook});
   const wrapper = mount(elementToRender);
   const testkit = testkitFactory({wrapper, dataHook});
   return testkit.exists();

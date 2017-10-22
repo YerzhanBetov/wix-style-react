@@ -15,8 +15,11 @@ class ControlledExample extends Component {
     return (
       <div style={style}>
         <TextLink link="http://www.wix.com">Wix link</TextLink>
+        <br/>
         <TextLink underlineStyle="always" link="http://www.wix.com">Wix link underline</TextLink>
+        <br/>
         <TextLink underlineStyle="never" link="http://www.wix.com">Wix link without underline</TextLink>
+        <br/>
         <TextLink size="small" ariaLabel="wix.com site" link="http://www.wix.com">Small link with ariaLabel</TextLink>
       </div>
 

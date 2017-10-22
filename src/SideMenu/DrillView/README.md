@@ -41,16 +41,17 @@ In order to change the displayed menu you need to change the `isActive` flag of 
 Make sure that you only have a single `Link` marked with `isActive` at all times, otherwise the behaviour is unexpected.
 
 You can render as many `SubMenu`s as you wish! Each `SubMenu` can have a `SideMenu.Header`, `SideMenu.Promotion`, `SideMenu.Footer` or any other custom item.
-Make sure you wrap the internal `Link`s and `SubMenu`s with a `Navigation` component! 
+Make sure you wrap the internal `Link`s and `SubMenu`s with a `Navigation` component!
 
 
 ## Props
 
 | propName          | propType | defaultValue | isRequired | description                                                                        |
 | -                 | -        | -            | -          | -                                                                                  |
-| menuKey           | string   | root         | -          | A unique key for the menu                                                          |
-| inFlex            | bool     | false        | -          | Is in flex container (different styling to handle a Safari bug)                    |
-| children          | node     | -            | -          | A list of navigation items of types `SideMenuDrill.Link`, `SideMenuDrill.SubMenu`  |
+| menuKey           | string   | root         | -          | A unique key for the menu.                                                         |
+| inFlex            | bool     | false        | -          | Is in flex container (different styling to handle a Safari bug).                   |
+| children          | node     | -            | -          | A list of navigation items of types `SideMenuDrill.Link`, `SideMenuDrill.SubMenu`. |
+| stickyFooter      | node     | -            | -          | Render a stickyFooter which will retain it's position even when drilling down.     |
 
 ## Components
 
@@ -61,9 +62,10 @@ The children can be any node, but must contain an `anchor` element for the corre
 
 | propName          | propType | defaultValue | isRequired | description                                                                        |
 | -                 | -        | -            | -          | -                                                                                  |
-| isActive          | bool     | false        | -          | slightly different styling for hover (e.g. no background transition)               |
+| isActive          | bool     | false        | -          | Slightly different styling for hover (e.g. no background transition)               |
 | children          | node     | -            | -          | -                                                                                  |
-| ...rest           | *        | -            | -          | any other prop will be added to root element (e.g. `onClick`, `onMouseEnter` etc.) |
+| disabled          | node     | -            | -          | Link will be disabled without effects or pointer events -                                                                                  |
+| ...rest           | *        | -            | -          | Any other prop will be added to root element (e.g. `onClick`, `onMouseEnter` etc.) |
 
 ### SubMenu `<SideMenuDrill.SubMenu/>`
 

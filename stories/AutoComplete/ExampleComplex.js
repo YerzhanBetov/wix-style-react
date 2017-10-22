@@ -10,11 +10,11 @@ const style = {
 };
 
 const options = [
-  {id: 0, value: 'First option', v:'F'},
-  {id: 1, value: <div style={{color:'red'}}>test</div>, v:'S'},
-  {id: 2, value: 'Third option', v:'T', disabled: true},
-  {id: 3, value: 'Fifth option', v:'Fi'},
-  {id: 4, value: 'Fourth option', v:'Fo'},
+  {id: 0, value: 'First option', v: 'F'},
+  {id: 1, value: <div style={{color: 'red'}}>test</div>, v: 'S'},
+  {id: 2, value: 'Third option', v: 'T', disabled: true},
+  {id: 3, value: 'Fifth option', v: 'Fi'},
+  {id: 4, value: 'Fourth option', v: 'Fo'}
 ];
 
 // text -> value
@@ -23,7 +23,7 @@ const options = [
 class ControlledAutoComplete extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: '', suggestions:options};
+    this.state = {value: '', suggestions: options};
     this.onChange = this.onChange.bind(this);
     this.onSet = this.onSet.bind(this);
     this.onBlur = this.onBlur.bind(this);
@@ -33,22 +33,22 @@ class ControlledAutoComplete extends React.Component {
   }
 
   render() {
-      console.log('@@@@@@@@@@', this.state.suggestions);
+    console.log('@@@@@@@@@@', this.state.suggestions);
     return (
-        <AutoComplete
-            ref                 = 'title'
-            value               = {this.state.title}
-            error               = {true}
-            placeholder         = {'Place holder'}
-            autoSelect          = {true}
-            options             = {this.state.suggestions}
-            onSelect            = {this.onSet}
-            onManuallyInput     = {this.onManuallyInput}
-            onBlur              = {this.onBlur}
-            onFocus             = {this.onFocus}
-            onChange            = {this.onChange}
-            onEscapePressed     = {this.onEscapePressed}
-            onKeyDown           = {this.onKeyDown}
+      <AutoComplete
+        ref="title"
+        value={this.state.title}
+        error
+        placeholder={'Place holder'}
+        autoSelect
+        options={this.state.suggestions}
+        onSelect={this.onSet}
+        onManuallyInput={this.onManuallyInput}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
+        onChange={this.onChange}
+        onEscapePressed={this.onEscapePressed}
+        onKeyDown={this.onKeyDown}
         />
     );
   }
@@ -57,27 +57,27 @@ class ControlledAutoComplete extends React.Component {
   // onSet -> onSelect
 
   onChange(e) {
-      console.log('>> Change!', e.target.value);
-      const value = e.target.value;
-      this.setState({
-          suggestions: _.filter(options, o => o.value.toString().toLowerCase().indexOf(value.toLowerCase()) > -1)
-      });
+    console.log('>> Change!', e.target.value);
+    const value = e.target.value;
+    this.setState({
+      suggestions: options.filter(o => o.value.toString().toLowerCase().indexOf(value.toLowerCase()) > -1)
+    });
   }
 
   onSet(e) {
-      console.log('>> Set!', e);
+    console.log('>> Set!', e);
   }
 
-  onBlur(e) {
-      console.log('>> Blur!');
+  onBlur() {
+    console.log('>> Blur!');
   }
 
-  onFocus(e) {
-      console.log('>> Focus!');
+  onFocus() {
+    console.log('>> Focus!');
   }
 
-  onEscapePressed(e) {
-      console.log('>> Escape Pressed!');
+  onEscapePressed() {
+    console.log('>> Escape Pressed!');
   }
 
   onManuallyInput(e) {
@@ -85,7 +85,7 @@ class ControlledAutoComplete extends React.Component {
   }
 
   onKeyDown(e) {
-      console.log('>> Key down:', e, e.keyCode);
+    console.log('>> Key down:', e, e.keyCode);
   }
 
 }
