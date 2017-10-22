@@ -45,13 +45,13 @@ describe('Dropdown', () => {
   });
 
   it('should update text when selected option changes', () => {
-    let options = getOptions();
+    const options = getOptions();
     const {driver, inputDriver, dropdownLayoutDriver} = createDriver(<Dropdown options={options} selectedId={0}/>);
     driver.focus();
     dropdownLayoutDriver.clickAtOption(0);
     expect(inputDriver.getValue()).toBe('Option 1');
     options[0].value = 'Updated';
-    driver.setProps({options: options, selectedId:0});
+    driver.setProps({options, selectedId: 0});
     expect(inputDriver.getValue()).toBe('Updated');
   });
 
